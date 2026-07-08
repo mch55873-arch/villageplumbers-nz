@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'About Us | Baty's Pest Control',
-  description: 'Learn more about Baty's Pest Control, your trusted partner for professional pest control services.',
+  title: "About Us | Baty's Pest Control",
+  description: "Learn more about Baty's Pest Control, your trusted partner for professional pest control services.",
 };
 
 export default function AboutPage() {

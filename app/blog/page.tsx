@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Blog & Articles | Baty's Pest Control',
+  title: "Blog & Articles | Baty's Pest Control",
   description: 'Tips, guides, and insights about pest control and home improvement.',
 };
 
