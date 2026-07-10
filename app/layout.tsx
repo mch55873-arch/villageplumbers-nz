@@ -3,12 +3,42 @@ import { Inter, Outfit } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"], variable: '--font-inter' });
-const outfit = Outfit({ subsets: ["latin"], variable: '--font-outfit' });
+const inter = Inter({ subsets: ["latin"], variable: '--font-inter', display: 'swap' });
+const outfit = Outfit({ subsets: ["latin"], variable: '--font-outfit', display: 'swap' });
 
 export const metadata: Metadata = {
-  title: "Nationwide Pest Control",
-  description: "Fast and reliable 24/7 pest control services across the USA.",
+  metadataBase: new URL('https://www.batyspestcontrol.com'),
+  title: "Nationwide Pest Control | batyspestcontrol",
+  description: "Fast and reliable 24/7 pest control services across the USA. Trusted by thousands.",
+  keywords: ["Pest Control", "Exterminators Near Me", "Local Pest Control", "Termite Treatment", "Bed Bug Exterminator"],
+  publisher: "batyspestcontrol",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
+  alternates: {
+    canonical: 'https://www.batyspestcontrol.com',
+    languages: {
+      'en-US': 'https://www.batyspestcontrol.com',
+    },
+  },
+  openGraph: {
+    title: "Nationwide Pest Control | batyspestcontrol",
+    description: "Fast and reliable 24/7 pest control services across the USA.",
+    url: 'https://www.batyspestcontrol.com',
+    siteName: "batyspestcontrol",
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Nationwide Pest Control",
+    description: "Fast and reliable 24/7 pest control services across the USA.",
+  },
 };
 
 export default function RootLayout({
@@ -19,6 +49,84 @@ export default function RootLayout({
   return (
     <html lang="en" className={`scroll-smooth ${inter.variable} ${outfit.variable}`}>
       <body suppressHydrationWarning className="bg-white text-gray-900 antialiased font-sans">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": ["Person", "Organization"],
+                  "@id": "https://www.batyspestcontrol.com/#person",
+                  "name": "batyspestcontrol",
+                  "url": "https://www.batyspestcontrol.com",
+                  "logo": {
+                    "@type": "ImageObject",
+                    "@id": "https://www.batyspestcontrol.com/#logo",
+                    "url": "https://www.batyspestcontrol.com/logo.png",
+                    "contentUrl": "https://www.batyspestcontrol.com/logo.png",
+                    "caption": "batyspestcontrol",
+                    "inLanguage": "en-US"
+                  },
+                  "image": {
+                    "@id": "https://www.batyspestcontrol.com/#logo"
+                  },
+                  "contactPoint": {
+                    "@type": "ContactPoint",
+                    "telephone": "+1-614-926-0787",
+                    "contactType": "customer service"
+                  }
+                },
+                {
+                  "@type": "WebSite",
+                  "@id": "https://www.batyspestcontrol.com/#website",
+                  "url": "https://www.batyspestcontrol.com",
+                  "name": "Nationwide Pest Control",
+                  "publisher": {
+                    "@id": "https://www.batyspestcontrol.com/#person"
+                  },
+                  "inLanguage": "en-US",
+                  "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": "https://www.batyspestcontrol.com/?s={search_term_string}",
+                    "query-input": "required name=search_term_string"
+                  }
+                },
+                {
+                  "@type": "WebPage",
+                  "@id": "https://www.batyspestcontrol.com/#webpage",
+                  "url": "https://www.batyspestcontrol.com/",
+                  "name": "Nationwide Pest Control | batyspestcontrol",
+                  "about": {
+                    "@id": "https://www.batyspestcontrol.com/#person"
+                  },
+                  "isPartOf": {
+                    "@id": "https://www.batyspestcontrol.com/#website"
+                  },
+                  "inLanguage": "en-US"
+                },
+                {
+                  "@type": ["LocalBusiness", "HomeAndConstructionBusiness"],
+                  "@id": "https://www.batyspestcontrol.com/#localbusiness",
+                  "name": "batyspestcontrol",
+                  "description": "Fast and reliable 24/7 pest control services across the USA.",
+                  "url": "https://www.batyspestcontrol.com",
+                  "telephone": "614-926-0787",
+                  "priceRange": "$$",
+                  "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "Nationwide Service",
+                    "addressLocality": "Columbus",
+                    "addressRegion": "OH",
+                    "postalCode": "43215",
+                    "addressCountry": "USA"
+                  },
+                  "image": "https://www.batyspestcontrol.com/logo.png"
+                }
+              ]
+            })
+          }}
+        />
         
         {/* TOP BAR */}
         <div className="bg-surface-900 text-gray-300 hidden sm:block border-b border-white/5">
@@ -26,9 +134,9 @@ export default function RootLayout({
                 <div className="flex flex-col md:flex-row justify-between items-center py-2 text-xs md:text-sm">
                     {/* Social Icons */}
                     <div className="flex items-center space-x-3 mb-2 md:mb-0">
-                        <a href="#" className="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center hover:bg-white/10 hover:text-accent-400 transition-colors">f</a>
-                        <a href="#" className="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center hover:bg-white/10 hover:text-accent-400 transition-colors">t</a>
-                        <a href="#" className="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center hover:bg-white/10 hover:text-accent-400 transition-colors">in</a>
+                        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center hover:bg-white/10 hover:text-accent-400 transition-colors">f</a>
+                        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center hover:bg-white/10 hover:text-accent-400 transition-colors">t</a>
+                        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center hover:bg-white/10 hover:text-accent-400 transition-colors">in</a>
                     </div>
                     {/* Contact Info */}
                     <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-6">
@@ -62,7 +170,7 @@ export default function RootLayout({
                
                {/* Typography */}
                <div className="flex flex-col justify-center">
-                 <span className="font-extrabold text-xl tracking-tight leading-none text-white">Baty's</span>
+                 <span className="font-extrabold text-xl tracking-tight leading-none text-white">batyspestcontrol</span>
                  <span className="font-bold text-xs tracking-[0.2em] text-accent-400 uppercase mt-0.5">& Pest Control</span>
                </div>
             </Link>
@@ -83,7 +191,7 @@ export default function RootLayout({
                 <div>
                     <div className="text-[10px] text-surface-500 font-extrabold uppercase tracking-widest">Need Help? Talk to Experts</div>
                     <a href="tel:614-926-0787" className="text-sm font-extrabold text-brand-900 hover:text-accent-600 transition-colors">
-                        (614) 926-0787
+                        614-926-0787
                     </a>
                 </div>
             </div>
@@ -113,7 +221,7 @@ export default function RootLayout({
                     </div>
                     <div className="flex flex-col sm:flex-row gap-4 shrink-0">
                         <a href="tel:614-926-0787" className="bg-white text-brand-900 px-8 py-4 rounded-xl font-bold text-lg hover:bg-surface-50 transition-colors flex items-center justify-center gap-2 shadow-lg hover:-translate-y-1">
-                            📞 (614) 926-0787
+                            📞 614-926-0787
                         </a>
                         <a href="/#contact" className="bg-accent-500 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-accent-400 transition-colors shadow-lg hover:-translate-y-1 flex items-center justify-center gap-2">
                             Get Free Quote ➔
@@ -165,7 +273,7 @@ export default function RootLayout({
                             <div className="w-10 h-10 bg-brand-900 rounded-lg flex items-center justify-center shadow-lg">
                                 <span className="text-2xl">🐞</span>
                             </div>
-                            <span className="font-extrabold text-2xl text-white">Baty's Pest Control</span>
+                            <span className="font-extrabold text-2xl text-white">batyspestcontrol</span>
                         </div>
                         <p className="text-sm text-surface-400 mb-8 leading-relaxed font-light">
                             Your trusted local pest control partner. Fast, reliable relief anytime. Licensed & trusted – TPCL #0992001.
@@ -181,7 +289,7 @@ export default function RootLayout({
                             </div>
                             <div className="flex items-center gap-4">
                                 <span className="text-accent-500 text-lg">📞</span>
-                                <a href="tel:614-926-0787" className="hover:text-white transition-colors">(614) 926-0787</a>
+                                <a href="tel:614-926-0787" className="hover:text-white transition-colors">614-926-0787</a>
                             </div>
                         </div>
                     </div>
@@ -205,10 +313,10 @@ export default function RootLayout({
                         <ul className="space-y-4 text-sm text-surface-400">
                             <li><Link href="/" className="hover:text-accent-400 hover:translate-x-1 transition-all flex items-center gap-3"><span className="text-brand-500 text-[10px]">■</span> Home</Link></li>
                             <li><Link href="/about" className="hover:text-accent-400 hover:translate-x-1 transition-all flex items-center gap-3"><span className="text-brand-500 text-[10px]">■</span> About Us</Link></li>
-                            <li><Link href="/#areas-we-serve" className="hover:text-accent-400 hover:translate-x-1 transition-all flex items-center gap-3"><span className="text-brand-500 text-[10px]">■</span> Service Areas</Link></li>
-                            <li><Link href="/blog" className="hover:text-accent-400 hover:translate-x-1 transition-all flex items-center gap-3"><span className="text-brand-500 text-[10px]">■</span> Blog</Link></li>
                             <li><Link href="/#contact" className="hover:text-accent-400 hover:translate-x-1 transition-all flex items-center gap-3"><span className="text-brand-500 text-[10px]">■</span> Contact Us</Link></li>
-                            <li><a href="#" className="hover:text-accent-400 hover:translate-x-1 transition-all flex items-center gap-3"><span className="text-brand-500 text-[10px]">■</span> Privacy Policy</a></li>
+                            <li><Link href="/privacy-policy" className="hover:text-accent-400 hover:translate-x-1 transition-all flex items-center gap-3"><span className="text-brand-500 text-[10px]">■</span> Privacy Policy</Link></li>
+                            <li><Link href="/terms-of-service" className="hover:text-accent-400 hover:translate-x-1 transition-all flex items-center gap-3"><span className="text-brand-500 text-[10px]">■</span> Terms of Service</Link></li>
+                            <li><Link href="/sitemap.xml" className="hover:text-accent-400 hover:translate-x-1 transition-all flex items-center gap-3"><span className="text-brand-500 text-[10px]">■</span> HTML Sitemap</Link></li>
                         </ul>
                     </div>
 
@@ -216,17 +324,23 @@ export default function RootLayout({
                     <div>
                         <h4 className="text-white font-bold mb-8 text-lg">Latest From Our Blog</h4>
                         <ul className="space-y-5 text-sm text-surface-400 mb-10">
-                            <li><a href="#" className="hover:text-white transition-colors flex items-start gap-3 leading-snug"><span className="text-accent-500 text-[10px] mt-1 shrink-0">■</span> 24-Hour Emergency Pest Control: What to Expect & What It Costs</a></li>
-                            <li><a href="#" className="hover:text-white transition-colors flex items-start gap-3 leading-snug"><span className="text-accent-500 text-[10px] mt-1 shrink-0">■</span> How Much Does an Exterminator Cost?</a></li>
-                            <li><a href="#" className="hover:text-white transition-colors flex items-start gap-3 leading-snug"><span className="text-accent-500 text-[10px] mt-1 shrink-0">■</span> Termites vs. Ants: When to Call a Pro</a></li>
+                            <li><Link href="/blog" className="hover:text-white transition-colors flex items-start gap-3 leading-snug"><span className="text-accent-500 text-[10px] mt-1 shrink-0">■</span> 24-Hour Emergency Pest Control: What to Expect</Link></li>
+                            <li><Link href="/blog" className="hover:text-white transition-colors flex items-start gap-3 leading-snug"><span className="text-accent-500 text-[10px] mt-1 shrink-0">■</span> How Much Does an Exterminator Cost?</Link></li>
                         </ul>
                         <h4 className="text-white font-bold mb-4">Follow Us</h4>
                         <div className="flex gap-3">
-                            <a href="#" className="w-10 h-10 bg-white/5 hover:bg-accent-500 text-white rounded-lg flex items-center justify-center transition-all text-sm font-bold border border-white/5 hover:border-accent-500 hover:-translate-y-1">f</a>
-                            <a href="#" className="w-10 h-10 bg-white/5 hover:bg-accent-500 text-white rounded-lg flex items-center justify-center transition-all text-sm font-bold border border-white/5 hover:border-accent-500 hover:-translate-y-1">y</a>
-                            <a href="#" className="w-10 h-10 bg-white/5 hover:bg-accent-500 text-white rounded-lg flex items-center justify-center transition-all text-sm font-bold border border-white/5 hover:border-accent-500 hover:-translate-y-1">t</a>
-                            <a href="#" className="w-10 h-10 bg-white/5 hover:bg-accent-500 text-white rounded-lg flex items-center justify-center transition-all text-sm font-bold border border-white/5 hover:border-accent-500 hover:-translate-y-1">i</a>
+                            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/5 hover:bg-accent-500 text-white rounded-lg flex items-center justify-center transition-all text-sm font-bold border border-white/5 hover:border-accent-500 hover:-translate-y-1">f</a>
+                            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/5 hover:bg-accent-500 text-white rounded-lg flex items-center justify-center transition-all text-sm font-bold border border-white/5 hover:border-accent-500 hover:-translate-y-1">X</a>
+                            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/5 hover:bg-accent-500 text-white rounded-lg flex items-center justify-center transition-all text-sm font-bold border border-white/5 hover:border-accent-500 hover:-translate-y-1">in</a>
                         </div>
+                    </div>
+                </div>
+                
+                {/* Copyright Bar */}
+                <div className="max-w-7xl mx-auto mt-12 pt-8 border-t border-white/10 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-surface-500 relative z-10">
+                    <div>&copy; {new Date().getFullYear()} batyspestcontrol. All rights reserved. A subsidiary of Nationwide Home Services LLC.</div>
+                    <div className="flex items-center gap-2">
+                        <span className="bg-surface-800 px-2 py-1 rounded border border-white/5">DMCA Protected</span>
                     </div>
                 </div>
             </footer>

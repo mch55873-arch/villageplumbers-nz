@@ -1,8 +1,17 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export const metadata = {
-  title: "About Us | Baty's Pest Control",
-  description: "Learn more about Baty's Pest Control, your trusted partner for professional pest control services.",
+  title: "About Us | batyspestcontrol",
+  description: "Learn more about batyspestcontrol, your trusted partner for professional pest control services.",
+  alternates: {
+    canonical: '/about',
+  },
+  openGraph: {
+    title: "About Us | batyspestcontrol",
+    description: "Learn more about batyspestcontrol, your trusted partner for professional pest control services.",
+    url: 'https://www.batyspestcontrol.com/about',
+  }
 };
 
 export default function AboutPage() {
@@ -12,10 +21,12 @@ export default function AboutPage() {
       <section className="relative pt-32 pb-24 px-4 bg-[#0d1b2a] overflow-hidden flex flex-col items-center justify-center text-center min-h-[400px]">
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
-          <img 
+          <Image 
             src="/images/media__1783510889927.jpg" 
             alt="Pest Control Hero" 
-            className="w-full h-full object-cover opacity-30"
+            fill
+            sizes="100vw"
+            className="object-cover opacity-30"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-[#0d1b2a]/80 via-[#0d1b2a]/60 to-[#0d1b2a]/90"></div>
         </div>
@@ -27,7 +38,7 @@ export default function AboutPage() {
             <span className="text-[#b18c95]">About Us</span>
           </div>
           <h1 className="text-5xl md:text-6xl font-extrabold text-white mb-6 tracking-tight">
-            About Baty's Pest Control
+            About batyspestcontrol
           </h1>
           <p className="text-xl text-gray-200 font-light max-w-2xl mx-auto">
             Your trusted partner for professional 24/7 pest control services nationwide.
@@ -41,10 +52,12 @@ export default function AboutPage() {
           
           {/* Left: Image with Badge */}
           <div className="relative h-[500px] lg:h-[600px] rounded-3xl overflow-hidden shadow-2xl group">
-            <img 
+            <Image 
               src="/images/media__1783510889843.jpg" 
               alt="Our Team" 
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover transition-transform duration-700 group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-[#0d1b2a]/20 group-hover:bg-transparent transition-colors duration-500"></div>
             
@@ -75,7 +88,7 @@ export default function AboutPage() {
               Your Trusted Pest Control Partners Since 2010
             </h2>
             <p className="text-lg text-gray-600 mb-10 leading-relaxed">
-              Founded with a commitment to excellence, Baty's Pest Control has served local families and businesses for over a decade. Starting as a small family operation, we've grown into the go-to experts for pest control services. Our deep roots in the community mean we understand pest behaviors inside and out. You can rely on our certified team to deliver honest, efficient solutions that stand the test of time, always treating your home like our own.
+              Founded with a commitment to excellence, batyspestcontrol has served local families and businesses for over a decade. Starting as a small family operation, we've grown into the go-to experts for pest control services. Our deep roots in the community mean we understand pest behaviors inside and out. You can rely on our certified team to deliver honest, efficient solutions that stand the test of time, always treating your home like our own.
             </p>
             
             {/* Stats Grid */}
@@ -113,7 +126,7 @@ export default function AboutPage() {
               Why Choose Us
             </div>
             <h2 className="text-4xl md:text-5xl font-extrabold text-[#0d1b2a] mb-10 leading-tight tracking-tight">
-              Why Choose Baty's Pest Control?
+              Why Choose batyspestcontrol?
             </h2>
             
             <div className="space-y-8">
@@ -161,10 +174,12 @@ export default function AboutPage() {
 
           {/* Right: Image */}
           <div className="order-1 lg:order-2 relative h-[500px] lg:h-[700px] rounded-3xl overflow-hidden shadow-2xl group">
-            <img 
+            <Image 
               src="/images/media__1783510889865.jpg" 
               alt="Pest Control Equipment" 
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover transition-transform duration-700 group-hover:scale-105"
             />
             
             {/* Small Badge overlay */}
@@ -212,7 +227,7 @@ export default function AboutPage() {
         <div className="max-w-3xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-extrabold text-[#0d1b2a] mb-6 tracking-tight">Ready to Get Started?</h2>
           <p className="text-xl text-[#0d1b2a]/80 mb-10 font-medium">
-            Contact Baty's Pest Control today for a free consultation and let us help you with your 24/7 pest control needs.
+            Contact batyspestcontrol today for a free consultation and let us help you with your 24/7 pest control needs.
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
@@ -221,7 +236,7 @@ export default function AboutPage() {
               className="w-full sm:w-auto bg-[#0d1b2a] hover:bg-[#1a2b3c] text-white px-8 py-4 rounded-xl font-bold text-lg transition-all shadow-lg flex items-center justify-center gap-3 hover:-translate-y-1"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
-              (614) 926-0787
+              614-926-0787
             </a>
             <Link 
               href="/#contact" 

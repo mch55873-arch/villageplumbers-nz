@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import database from '../data/usa_database.json';
 
 export default function Home() {
@@ -8,10 +9,12 @@ export default function Home() {
       <section className="relative min-h-[90vh] flex items-center bg-surface-900 overflow-hidden">
         {/* Background Image with Premium Overlay */}
         <div className="absolute inset-0 z-0 animate-pulse-glow">
-               <img 
+               <Image 
                  src="/images/media__1783510889927.jpg" 
                  alt="Pest Control Hero" 
-                 className="w-full h-full object-cover opacity-50 mix-blend-overlay transform scale-105"
+                 fill
+                 className="object-cover opacity-50 mix-blend-overlay transform scale-105"
+                 priority
                /> 
                <div className="absolute inset-0 bg-gradient-to-r from-brand-900/95 via-brand-800/80 to-transparent"></div>
         </div>
@@ -29,13 +32,13 @@ export default function Home() {
                     </h1>
                     
                     <p className="text-lg md:text-xl text-green-50 mb-8 max-w-2xl font-light leading-relaxed drop-shadow">
-                        Baty's Pest Control eliminates termites, rodents, bed bugs, and more. Fast response times, eco-friendly treatments, and 100% guaranteed results nationwide. Call now for expert help!
+                        batyspestcontrol eliminates termites, rodents, bed bugs, and more. Fast response times, eco-friendly treatments, and 100% guaranteed results nationwide. Call now for expert help!
                     </p>
                     
                     {/* CTA Buttons */}
                     <div className="flex flex-wrap gap-4 mb-10">
                         <a href="tel:614-926-0787" className="group inline-flex items-center gap-3 bg-gradient-to-r from-accent-500 to-accent-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:from-accent-400 hover:to-accent-500 hover:-translate-y-1 transition-all shadow-[0_0_30px_-5px_rgba(245,158,11,0.5)]">
-                            (614) 926-0787
+                            614-926-0787
                         </a>
                         <a href="#services" className="inline-flex items-center bg-transparent border-2 border-white/30 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/10 hover:-translate-y-1 transition-all backdrop-blur-sm">
                             Book Online
@@ -46,8 +49,8 @@ export default function Home() {
                     <div className="flex items-center space-x-4 bg-white/5 backdrop-blur-xl rounded-2xl p-4 max-w-sm border border-white/10 shadow-xl">
                         <div className="flex -space-x-3">
                             {[1,2,3,4].map(i => (
-                              <div key={i} className="w-10 h-10 rounded-full border-2 border-brand-900 bg-gray-300 overflow-hidden shadow-md">
-                                <img src={`https://i.pravatar.cc/100?img=${i+10}`} alt="Customer" className="w-full h-full object-cover" />
+                              <div key={i} className="w-10 h-10 rounded-full border-2 border-brand-900 bg-gray-300 overflow-hidden shadow-md relative">
+                                <Image src={`https://i.pravatar.cc/100?img=${i+10}`} alt="Customer" fill sizes="40px" className="object-cover" />
                               </div>
                             ))}
                         </div>
@@ -124,7 +127,7 @@ export default function Home() {
                </h3>
                <h2 className="text-4xl lg:text-5xl font-extrabold text-surface-900 mb-6 leading-tight">Your Trusted Local Exterminators Nationwide</h2>
                <p className="text-surface-800/80 mb-6 leading-relaxed text-lg font-light">
-                 For over a decade, Baty's Pest Control has been the premier choice for residential and commercial pest control. We understand that dealing with pests is stressful, which is why our certified technicians are trained to handle any infestation quickly, safely, and discreetly.
+                 For over a decade, batyspestcontrol has been the premier choice for residential and commercial pest control. We understand that dealing with pests is stressful, which is why our certified technicians are trained to handle any infestation quickly, safely, and discreetly.
                </p>
                <p className="text-surface-800/80 mb-8 leading-relaxed font-light">
                  We use environmentally responsible products that are tough on pests but safe for your family and pets. When you choose us, you are choosing peace of mind.
@@ -162,7 +165,7 @@ export default function Home() {
               {/* Service Card 2 (Image top) */}
               <div className="bg-white rounded-3xl overflow-hidden shadow-xl shadow-brand-900/5 flex flex-col hover:-translate-y-2 transition-all duration-300 group border border-gray-100">
                  <div className="h-64 w-full relative overflow-hidden">
-                    <img src="/images/media__1783510930934.jpg" alt="Residential Pest Control" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                    <Image src="/images/media__1783510930934.jpg" alt="Residential Pest Control" fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover group-hover:scale-110 transition-transform duration-700" />
                     <div className="absolute inset-0 bg-gradient-to-t from-surface-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                  </div>
                  <div className="p-10 flex-1 flex flex-col justify-between">
@@ -181,7 +184,7 @@ export default function Home() {
               {/* Service Card 3 (Image top) */}
               <div className="bg-white rounded-3xl overflow-hidden shadow-xl shadow-brand-900/5 flex flex-col hover:-translate-y-2 transition-all duration-300 group border border-gray-100">
                  <div className="h-64 w-full relative overflow-hidden">
-                    <img src="/images/media__1783510931195.jpg" alt="Commercial Pest Control" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                    <Image src="/images/media__1783510931195.jpg" alt="Commercial Pest Control" fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover group-hover:scale-110 transition-transform duration-700" />
                     <div className="absolute inset-0 bg-gradient-to-t from-surface-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                  </div>
                  <div className="p-10 flex-1 flex flex-col justify-between">
@@ -327,8 +330,8 @@ export default function Home() {
                  ))}
               </div>
            </div>
-           <div className="rounded-3xl overflow-hidden shadow-2xl shadow-brand-900/20 h-[600px] border border-white/10">
-              <img src="/images/media__1783510930934.jpg" alt="Worker" className="w-full h-full object-cover" />
+           <div className="rounded-3xl overflow-hidden shadow-2xl shadow-brand-900/20 h-[600px] border border-white/10 relative">
+              <Image src="/images/media__1783510930934.jpg" alt="Worker" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
            </div>
         </div>
       </section>
@@ -337,9 +340,9 @@ export default function Home() {
       <section className="py-24 px-4 max-w-7xl mx-auto" id="contact">
          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="rounded-3xl overflow-hidden shadow-2xl h-[500px] relative group">
-               <img src="/images/media__1783510931195.jpg" alt="Service Van" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-               <div className="absolute inset-0 bg-gradient-to-t from-brand-900/80 to-transparent"></div>
-               <div className="absolute bottom-10 left-10 text-white">
+               <Image src="/images/media__1783510931195.jpg" alt="Service Van" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover group-hover:scale-105 transition-transform duration-700" />
+               <div className="absolute inset-0 bg-gradient-to-t from-brand-900/80 to-transparent z-10"></div>
+               <div className="absolute bottom-10 left-10 text-white z-20">
                   <div className="text-4xl font-extrabold mb-2">Fast Response.</div>
                   <div className="text-xl font-light text-brand-50">Local experts ready to help.</div>
                </div>
@@ -366,7 +369,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-4xl lg:text-5xl font-extrabold text-surface-900 mb-6">Top Cities We Serve Nationwide</h2>
-            <p className="text-lg text-surface-800/70 font-light leading-relaxed">Baty's Pest Control provides guaranteed pest control services across the entire United States. Find your city below.</p>
+            <p className="text-lg text-surface-800/70 font-light leading-relaxed">batyspestcontrol provides guaranteed pest control services across the entire United States. Find your city below.</p>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {[
@@ -453,7 +456,7 @@ export default function Home() {
                      <div className="w-14 h-14 rounded-2xl bg-surface-50 text-brand-700 flex items-center justify-center shrink-0 border border-gray-100 group-hover:border-brand-500 group-hover:bg-brand-50 transition-colors text-xl">📞</div>
                      <div>
                         <strong className="block text-surface-900 font-bold mb-1 text-lg">Phone</strong>
-                        <a href="tel:614-926-0787" className="text-surface-800/70 block leading-relaxed font-light hover:text-accent-600 transition-colors">(614) 926-0787</a>
+                        <a href="tel:614-926-0787" className="text-surface-800/70 block leading-relaxed font-light hover:text-accent-600 transition-colors">614-926-0787</a>
                      </div>
                   </div>
                   

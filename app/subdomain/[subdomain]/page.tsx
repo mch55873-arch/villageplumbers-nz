@@ -1,7 +1,50 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import database from '../../../data/usa_database.json';
 import servicesData from '../../../data/services.json';
+
+export async function generateMetadata({ params }: { params: Promise<{ subdomain: string }> }): Promise<Metadata> {
+  const resolvedParams = await params;
+  const subdomain = resolvedParams.subdomain.toLowerCase();
+
+  // State Subdomain (e.g. 'ca')
+  const stateData = database.states.find(s => s.code === subdomain);
+  if (stateData) {
+    return {
+      title: `Top Rated Pest Control in ${stateData.name} | batyspestcontrol`,
+      description: `Looking for pest control in ${stateData.name}? Our licensed exterminators provide 24/7 emergency service.`,
+      alternates: { canonical: `https://${stateData.code}.batyspestcontrol.com/` },
+      openGraph: {
+        title: `Top Rated Pest Control in ${stateData.name} | batyspestcontrol`,
+        description: `Looking for pest control in ${stateData.name}? Our licensed exterminators provide 24/7 emergency service.`,
+        url: `https://${stateData.code}.batyspestcontrol.com/`,
+      }
+    };
+  }
+
+  // City Subdomain (e.g. 'los-angeles-ca')
+  const lastDashIndex = subdomain.lastIndexOf('-');
+  if (lastDashIndex === -1) return {};
+  const stateCode = subdomain.slice(lastDashIndex + 1);
+  const citySlug = subdomain.slice(0, lastDashIndex);
+  
+  const parentState = database.states.find(s => s.code === stateCode);
+  if (!parentState) return {};
+  const cityData = parentState.cities.find(c => c.slug === citySlug);
+  if (!cityData) return {};
+
+  return {
+    title: `Top Rated Pest Control in ${cityData.name}, ${stateCode.toUpperCase()} | batyspestcontrol`,
+    description: `Looking for pest control in ${cityData.name}, ${stateCode.toUpperCase()}? Our licensed exterminators provide 24/7 emergency service.`,
+    alternates: { canonical: `https://${cityData.slug}-${stateCode}.batyspestcontrol.com/` },
+    openGraph: {
+      title: `Top Rated Pest Control in ${cityData.name}, ${stateCode.toUpperCase()} | batyspestcontrol`,
+      description: `Looking for pest control in ${cityData.name}, ${stateCode.toUpperCase()}? Our licensed exterminators provide 24/7 emergency service.`,
+      url: `https://${cityData.slug}-${stateCode}.batyspestcontrol.com/`,
+    }
+  };
+}
 
 export default async function SubdomainPage({ params }: { params: Promise<{ subdomain: string }> }) {
   const resolvedParams = await params;
@@ -31,7 +74,7 @@ export default async function SubdomainPage({ params }: { params: Promise<{ subd
               </p>
               <a href="tel:614-926-0787" className="group inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white px-8 py-4 rounded-full text-xl font-bold transition-all shadow-[0_0_40px_-10px_rgba(59,130,246,0.5)] hover:shadow-[0_0_60px_-15px_rgba(59,130,246,0.7)] hover:-translate-y-1">
                 <svg className="w-6 h-6 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
-                (614) 926-0787
+                614-926-0787
                 <span className="opacity-0 group-hover:opacity-100 transition-opacity ml-2">→</span>
               </a>
             </div>
@@ -199,7 +242,7 @@ export default async function SubdomainPage({ params }: { params: Promise<{ subd
             </p>
             <a href="tel:614-926-0787" className="group inline-flex items-center gap-3 bg-[#ff7340] hover:bg-[#ff5d20] text-white px-8 py-4 rounded-lg font-bold text-xl shadow-[0_0_30px_-5px_rgba(255,115,64,0.5)] transition-all hover:-translate-y-1 hover:shadow-[0_0_40px_-5px_rgba(255,115,64,0.7)]">
               <svg className="w-6 h-6 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
-              (614) 926-0787
+              614-926-0787
               <span className="opacity-0 group-hover:opacity-100 transition-opacity ml-1">→</span>
             </a>
           </div>

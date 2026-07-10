@@ -1,4 +1,26 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
+
+export async function generateMetadata({ params }: { params: Promise<{ service: string }> }): Promise<Metadata> {
+  const resolvedParams = await params;
+  const serviceName = resolvedParams.service
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+
+  return {
+    title: `${serviceName} | batyspestcontrol`,
+    description: `Professional ${serviceName} across the USA. Fast, reliable, and guaranteed results.`,
+    alternates: {
+      canonical: `https://www.batyspestcontrol.com/${resolvedParams.service}`,
+    },
+    openGraph: {
+      title: `${serviceName} | batyspestcontrol`,
+      description: `Professional ${serviceName} across the USA. Fast, reliable, and guaranteed results.`,
+      url: `https://www.batyspestcontrol.com/${resolvedParams.service}`,
+    }
+  };
+}
 
 export default async function GenericServicePage({ params }: { params: Promise<{ service: string }> }) {
   // Convert slug to readable name
@@ -25,7 +47,7 @@ export default async function GenericServicePage({ params }: { params: Promise<{
             Find Your Local Expert
           </Link>
           <a href="tel:614-926-0787" className="bg-surface-50 border border-gray-200 text-surface-900 px-8 py-4 rounded-xl font-bold hover:border-brand-500 hover:bg-brand-50 transition-all shadow-sm">
-            Call (614) 926-0787
+            Call 614-926-0787
           </a>
         </div>
       </div>

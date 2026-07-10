@@ -1,14 +1,40 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export const metadata = {
-  title: "Blog & Articles | Baty's Pest Control",
+  title: "Blog & Articles | batyspestcontrol",
   description: 'Tips, guides, and insights about pest control and home improvement.',
+  alternates: {
+    canonical: '/blog',
+  },
+  openGraph: {
+    title: "Blog & Articles | batyspestcontrol",
+    description: 'Tips, guides, and insights about pest control and home improvement.',
+    url: 'https://www.batyspestcontrol.com/blog',
+  }
 };
 
-import blogPosts from '../../data/blog_posts.json';
-
 export default function BlogPage() {
-  const posts = blogPosts;
+  const dummyPosts = [
+    { 
+      slug: "pest-control-services-complete-guide",
+      title: "Pest Control Services: Complete Guide to Protecting Your Home and Business", 
+      date: "February 2, 2026", 
+      excerpt: "Professional pest control services help eliminate existing infestations while preventing future pest problems. Whether you're dealing with termites, rodents, bed bugs, cockroaches, ants, or mosquitoes..." 
+    },
+    { 
+      slug: "termite-control-services-protect-your-home",
+      title: "Termite Control Services: Protect Your Home from Costly Termite Damage", 
+      date: "February 2, 2026", 
+      excerpt: "Termites are among the most destructive structural pests. They feed on wood and other cellulose-based materials, often causing extensive damage before homeowners notice any signs of an infestation..." 
+    },
+    { slug: "best-ways-to-handle-termites-in-texas-homes", title: "Best Ways to Handle Termites in Texas Homes", date: "February 2, 2026", excerpt: "Imagine coming home to a weakened structure. Avoiding termites means checking..." },
+    { slug: "quick-rodent-solutions-for-surrounding-areas", title: "Quick Rodent Solutions for Surrounding Areas", date: "February 2, 2026", excerpt: "A sudden scurry in the attic can give anyone a nightmare. But ignoring..." },
+    { slug: "the-hidden-costs-of-ignoring-pest-infestations", title: "The Hidden Costs of Ignoring Pest Infestations", date: "February 2, 2026", excerpt: "A small ant trail might seem harmless, but it can quickly escalate into..." },
+    { slug: "mosquitoes-in-summer-prevention-and-fixes", title: "Mosquitoes in Summer: Prevention and Fixes", date: "February 2, 2026", excerpt: "Imagine waking up to a beautiful summer morning only to discover your yard..." },
+    { slug: "top-5-common-pest-emergencies-in-texas", title: "Top 5 Common Pest Emergencies in Texas", date: "February 2, 2026", excerpt: "Living in Texas means dealing with unpredictable weather that can turn..." },
+    { slug: "how-to-keep-roaches-away-diy-tips", title: "How to Keep Roaches Away: DIY Tips", date: "February 2, 2026", excerpt: "A sudden bug in your kitchen sink or bathroom can ruin your morning..." }
+  ];
 
   return (
     <div className="bg-[#fcfafb] text-gray-900 min-h-screen">
@@ -16,10 +42,12 @@ export default function BlogPage() {
       <section className="relative pt-32 pb-24 px-4 bg-[#0d1b2a] overflow-hidden flex flex-col items-center justify-center text-center min-h-[350px]">
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
-          <img 
+          <Image 
             src="/images/media__1783510889843.jpg" 
             alt="Pest Control Blog" 
-            className="w-full h-full object-cover opacity-30"
+            fill
+            sizes="100vw"
+            className="object-cover opacity-30"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-[#0d1b2a]/80 via-[#0d1b2a]/60 to-[#0d1b2a]/90"></div>
         </div>
@@ -50,7 +78,7 @@ export default function BlogPage() {
           {/* Left: Blog Grid */}
           <div className="lg:col-span-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {posts.map((post, i) => (
+              {dummyPosts.map((post, i) => (
                 <article key={i} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md border border-gray-100 flex flex-col transition-shadow">
                   {/* Top Image Placeholder */}
                   <div className="h-48 bg-[#5a626a] flex items-center justify-center">
@@ -69,7 +97,7 @@ export default function BlogPage() {
                     <p className="text-gray-600 mb-6 text-sm line-clamp-3 leading-relaxed flex-1">
                       {post.excerpt}
                     </p>
-                    <Link href={`/blog/${post.slug}`} className="text-[#b18c95] font-bold text-sm flex items-center gap-1 hover:text-[#0d1b2a] transition-colors">
+                    <Link href={`/blog/${post.slug || 'pest-control-services-complete-guide'}`} className="text-[#b18c95] font-bold text-sm flex items-center gap-1 hover:text-[#0d1b2a] transition-colors">
                       Read more <span className="text-lg leading-none">→</span>
                     </Link>
                   </div>
@@ -117,7 +145,7 @@ export default function BlogPage() {
               <h3 className="font-bold text-gray-900 mb-4 tracking-wide text-sm uppercase">Categories</h3>
               <ul className="space-y-3">
                 <li>
-                  <a href="#" className="flex items-center text-gray-600 hover:text-[#ff7340] transition-colors text-sm font-medium">
+                  <Link href="/blog" className="flex items-center text-gray-600 hover:text-[#ff7340] transition-colors text-sm font-medium">
                     <span className="flex-1">Uncategorized</span>
                     <span className="text-gray-400">(47)</span>
                   </a>
@@ -137,7 +165,7 @@ export default function BlogPage() {
                   className="flex items-center gap-3 text-lg font-bold text-white hover:text-[#ff7340] transition-colors group"
                 >
                   <svg className="w-6 h-6 text-[#b18c95] group-hover:text-[#ff7340] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
-                  (614) 926-0787
+                  614-926-0787
                 </a>
               </div>
               <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-white/5 rounded-full blur-2xl pointer-events-none"></div>
@@ -163,7 +191,7 @@ export default function BlogPage() {
               className="bg-[#0d1b2a] hover:bg-[#1a2b3c] text-white px-8 py-4 rounded-xl font-bold text-lg transition-all shadow-lg flex items-center justify-center gap-3 hover:-translate-y-1 whitespace-nowrap"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
-              (614) 926-0787
+              614-926-0787
             </a>
             <Link 
               href="/#contact" 

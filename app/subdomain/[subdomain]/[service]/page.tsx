@@ -2,6 +2,8 @@ import { notFound } from "next/navigation";
 import fs from "fs";
 import path from "path";
 import Link from "next/link";
+import type { Metadata } from 'next';
+import database from "../../../../data/usa_database.json";
 import servicesData from "../../../../data/services.json";
 import aiContentData from "../../../../data/ai_services_content.json";
 
@@ -15,6 +17,51 @@ interface StateData {
   name: string;
   code: string;
   cities: CityData[];
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ subdomain: string, service: string }> }): Promise<Metadata> {
+  const resolvedParams = await params;
+  const subdomain = resolvedParams.subdomain.toLowerCase();
+  
+  const serviceData = servicesData.find(s => s.slug === resolvedParams.service);
+  const serviceName = serviceData ? serviceData.name : resolvedParams.service.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+
+  // State Subdomain (e.g. 'ca')
+  const stateData = database.states.find(s => s.code === subdomain);
+  if (stateData) {
+    return {
+      title: `${serviceName} in ${stateData.name} | Top Rated Exterminators`,
+      description: `Expert ${serviceName} across ${stateData.name}. Get a free quote today and protect your home.`,
+      alternates: { canonical: `https://${stateData.code}.batyspestcontrol.com/${resolvedParams.service}` },
+      openGraph: {
+        title: `${serviceName} in ${stateData.name} | Top Rated Exterminators`,
+        description: `Expert ${serviceName} across ${stateData.name}. Get a free quote today and protect your home.`,
+        url: `https://${stateData.code}.batyspestcontrol.com/${resolvedParams.service}`,
+      }
+    };
+  }
+
+  // City Subdomain (e.g. 'los-angeles-ca')
+  const lastDashIndex = subdomain.lastIndexOf('-');
+  if (lastDashIndex === -1) return {};
+  const stateCode = subdomain.slice(lastDashIndex + 1);
+  const citySlug = subdomain.slice(0, lastDashIndex);
+  
+  const parentState = database.states.find(s => s.code === stateCode);
+  if (!parentState) return {};
+  const cityData = parentState.cities.find(c => c.slug === citySlug);
+  if (!cityData) return {};
+
+  return {
+    title: `${serviceName} in ${cityData.name}, ${stateCode.toUpperCase()} | Top Rated Exterminators`,
+    description: `Expert ${serviceName} in ${cityData.name}, ${stateCode.toUpperCase()}. Get a free quote today and protect your home.`,
+    alternates: { canonical: `https://${cityData.slug}-${stateCode}.batyspestcontrol.com/${resolvedParams.service}` },
+    openGraph: {
+      title: `${serviceName} in ${cityData.name}, ${stateCode.toUpperCase()} | Top Rated Exterminators`,
+      description: `Expert ${serviceName} in ${cityData.name}, ${stateCode.toUpperCase()}. Get a free quote today and protect your home.`,
+      url: `https://${cityData.slug}-${stateCode}.batyspestcontrol.com/${resolvedParams.service}`,
+    }
+  };
 }
 
 export default async function ServicePage({

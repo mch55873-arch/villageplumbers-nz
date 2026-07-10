@@ -1,17 +1,52 @@
 import { MetadataRoute } from 'next';
 import database from '../data/usa_database.json';
 
-const DOMAIN = 'batyspestcontrol.com'; // Replace this with your actual domain when live
+const DOMAIN = 'pestdefense.com'; // Replace this with your actual domain when live
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const sitemapEntries: MetadataRoute.Sitemap = [];
 
-  // 1. Add Homepage
-  sitemapEntries.push({
-    url: `https://www.${DOMAIN}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly',
-    priority: 1.0,
+  // 1. Add Homepage and Static Pages
+  sitemapEntries.push(
+    {
+      url: `https://www.${DOMAIN}`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 1.0,
+    },
+    {
+      url: `https://www.${DOMAIN}/about`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `https://www.${DOMAIN}/blog`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    }
+  );
+
+  // Add Blog Posts
+  const blogPosts = [
+    'pest-control-services-complete-guide',
+    'termite-control-services-protect-your-home',
+    'best-ways-to-handle-termites-in-texas-homes',
+    'quick-rodent-solutions-for-surrounding-areas',
+    'the-hidden-costs-of-ignoring-pest-infestations',
+    'mosquitoes-in-summer-prevention-and-fixes',
+    'top-5-common-pest-emergencies-in-texas',
+    'how-to-keep-roaches-away-diy-tips'
+  ];
+
+  blogPosts.forEach((slug) => {
+    sitemapEntries.push({
+      url: `https://www.${DOMAIN}/blog/${slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    });
   });
 
   // 2. Add State Pages and City Pages
