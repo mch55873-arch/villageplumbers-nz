@@ -500,7 +500,7 @@ export default function HomePage() {
             {regions.map((reg: any) => (
               <Link 
                 key={reg.code}
-                href={`/subdomain/${reg.code}`}
+                href={`https://${reg.code}.villageplumbers.co.nz/`}
                 className="bg-slate-900 hover:bg-emerald-400 hover:text-slate-950 border border-slate-800 p-4 rounded-xl font-bold text-sm transition-all text-center"
               >
                 📍 {reg.name}

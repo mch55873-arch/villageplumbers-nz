@@ -267,7 +267,7 @@ export default async function SubdomainPage({ params }: { params: Promise<{ subd
               key={service.slug} 
               className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group border border-slate-200 flex flex-col justify-between"
             >
-              <Link href={`/subdomain/${resolvedParams.subdomain}/${service.slug}`} className="block">
+              <Link href={`https://${resolvedParams.subdomain}.villageplumbers.co.nz/${service.slug}`} className="block">
                 <div className="relative h-56 overflow-hidden bg-slate-900">
                   <Image 
                     src="/images/media__1784480302620.jpg" 
@@ -324,7 +324,7 @@ export default async function SubdomainPage({ params }: { params: Promise<{ subd
                 return (
                   <Link 
                     key={subSlug}
-                    href={`/subdomain/${subSlug}`}
+                    href={`https://${subSlug}.villageplumbers.co.nz/`}
                     className="bg-slate-800 hover:bg-emerald-400 hover:text-slate-950 border border-slate-700 px-4 py-2 rounded-xl text-xs font-bold transition-all"
                   >
                     📍 {sub.name}

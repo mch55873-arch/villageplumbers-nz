@@ -65,7 +65,7 @@ export default function AreasWeServePage() {
             return (
               <div key={regSlug} className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-md transition-all">
                 <h2 className="text-2xl font-black text-slate-900 mb-2">
-                  <Link href={`/subdomain/${regSlug}`} className="hover:text-emerald-600 transition-colors">
+                  <Link href={`https://${regSlug}.villageplumbers.co.nz/`} className="hover:text-emerald-600 transition-colors">
                     📍 {reg.name}
                   </Link>
                 </h2>
@@ -79,7 +79,7 @@ export default function AreasWeServePage() {
                     return (
                       <Link 
                         key={citySlug} 
-                        href={`/subdomain/${citySlug}`}
+                        href={`https://${citySlug}.villageplumbers.co.nz/`}
                         className="text-xs bg-slate-100 hover:bg-emerald-100 hover:text-emerald-900 text-slate-700 px-3 py-1 rounded-lg transition-all font-medium"
                       >
                         {city.name}
@@ -89,7 +89,7 @@ export default function AreasWeServePage() {
                 </div>
 
                 <Link 
-                  href={`/subdomain/${regSlug}`}
+                  href={`https://${regSlug}.villageplumbers.co.nz/`}
                   className="inline-flex items-center gap-1 text-emerald-600 font-bold text-xs hover:gap-2 transition-all"
                 >
                   View {reg.name} Region Hub →

@@ -106,7 +106,7 @@ export default async function SubdomainServicePage({ params }: { params: Promise
               <nav className="text-xs font-semibold text-slate-400 mb-6 flex items-center gap-2 flex-wrap">
                 <Link href="/" className="hover:text-emerald-400">Home</Link>
                 <span className="text-slate-600">/</span>
-                <Link href={`/subdomain/${resolvedParams.subdomain}`} className="hover:text-emerald-400">{locName}</Link>
+                <Link href={`https://${resolvedParams.subdomain}.villageplumbers.co.nz/`} className="hover:text-emerald-400">{locName}</Link>
                 <span className="text-slate-600">/</span>
                 <span className="text-emerald-400 font-bold">{serviceName}</span>
               </nav>
@@ -226,7 +226,7 @@ export default async function SubdomainServicePage({ params }: { params: Promise
                 return (
                   <Link 
                     key={subSlug}
-                    href={`/subdomain/${subSlug}/${resolvedParams.service}`}
+                    href={`https://${subSlug}.villageplumbers.co.nz/${resolvedParams.service}`}
                     className="bg-slate-800 hover:bg-emerald-400 hover:text-slate-950 border border-slate-700 px-4 py-2 rounded-xl text-xs font-bold transition-all"
                   >
                     📍 {sub.name} {serviceName}

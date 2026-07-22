@@ -99,7 +99,7 @@ export default async function ServicePage({ params }: { params: Promise<{ servic
               return (
                 <Link 
                   key={regSlug}
-                  href={`/subdomain/${regSlug}/${resolvedParams.service}`}
+                  href={`https://${regSlug}.villageplumbers.co.nz/${resolvedParams.service}`}
                   className="bg-slate-50 hover:bg-emerald-100 hover:text-emerald-900 p-4 rounded-xl font-bold text-xs transition-all text-center border border-slate-200"
                 >
                   📍 {reg.name} {serviceName}
