@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import QuoteForm from '@/components/QuoteForm';
 import Image from 'next/image';
 import servicesData from '../data/services.json';
 import nzDatabase from '../data/nz_database.json';
@@ -91,77 +92,9 @@ export default function HomePage() {
 
             </div>
 
-            {/* Right Lead Capture Form */}
-            <div id="contact-form" className="lg:col-span-5">
-              <div className="bg-white rounded-3xl p-8 shadow-2xl border border-slate-200">
-                <h2 className="text-2xl font-black text-slate-900 mb-1">Get Free Quote</h2>
-                <p className="text-slate-500 text-sm mb-6">Fill out the form below to connect with local trade specialists.</p>
-
-                <form className="space-y-4">
-                  <div>
-                    <input 
-                      type="text" 
-                      placeholder="Your Full Name *" 
-                      required 
-                      className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-500 focus:bg-white transition-all text-sm"
-                    />
-                  </div>
-
-                  <div>
-                    <input 
-                      type="email" 
-                      placeholder="Email Address *" 
-                      required 
-                      className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-500 focus:bg-white transition-all text-sm"
-                    />
-                  </div>
-
-                  <div>
-                    <input 
-                      type="tel" 
-                      placeholder="Phone Number *" 
-                      required 
-                      className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-500 focus:bg-white transition-all text-sm"
-                    />
-                  </div>
-
-                  <div>
-                    <textarea 
-                      rows={3} 
-                      placeholder="How can we help you? (e.g. Burst Pipe, Blocked Drain) *" 
-                      required 
-                      className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-500 focus:bg-white transition-all text-sm resize-none"
-                    ></textarea>
-                  </div>
-
-                  <div className="flex items-start gap-3 pt-1">
-                    <input 
-                      type="checkbox" 
-                      id="terms" 
-                      required 
-                      className="mt-1 w-4 h-4 text-emerald-600 rounded border-slate-300 focus:ring-emerald-500 cursor-pointer"
-                    />
-                    <label htmlFor="terms" className="text-xs text-slate-500 leading-relaxed cursor-pointer">
-                      I acknowledge and agree to be connected with available independent certificated plumbing professionals serving my area under PGDB rules.
-                    </label>
-                  </div>
-
-                  <button 
-                    type="submit" 
-                    className="w-full bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-black py-4 rounded-xl text-base transition-all shadow-md flex items-center justify-center gap-2"
-                  >
-                    Get Free Quote →
-                  </button>
-                </form>
-
-                {/* Trust Indicators */}
-                <div className="mt-6 pt-6 border-t border-slate-100 flex items-center justify-around text-xs text-slate-600 font-bold">
-                  <span className="flex items-center gap-1 text-emerald-600">🛡️ Licensed</span>
-                  <span className="flex items-center gap-1 text-emerald-600">🔒 Insured</span>
-                  <span className="flex items-center gap-1 text-emerald-600">⚡ 24/7 Emergency Service</span>
-                </div>
-
-              </div>
+            {/* Right Lead Capture */}
+            <div className="lg:col-span-5">
+              <QuoteForm buttonText="Get Free Quote →" />
             </div>
 
           </div>

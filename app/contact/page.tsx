@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import QuoteForm from '@/components/QuoteForm';
 import Image from 'next/image';
 
 export const metadata = {
@@ -102,52 +103,7 @@ export default function ContactPage() {
 
           {/* Right Form */}
           <div className="lg:col-span-7">
-            <div className="bg-white p-8 md:p-10 rounded-3xl border border-slate-200 shadow-sm">
-              <h2 className="text-2xl font-black text-slate-900 mb-2">Send Us A Message</h2>
-              <p className="text-slate-500 text-sm mb-6">Fill out the form below for a free estimate or trade consultation.</p>
-
-              <form className="space-y-4">
-                <div>
-                  <input 
-                    type="text" 
-                    placeholder="Your Full Name *" 
-                    required 
-                    className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-500 focus:bg-white transition-all text-sm"
-                  />
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <input 
-                    type="email" 
-                    placeholder="Email Address *" 
-                    required 
-                    className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-500 focus:bg-white transition-all text-sm"
-                  />
-                  <input 
-                    type="tel" 
-                    placeholder="Phone Number *" 
-                    required 
-                    className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-500 focus:bg-white transition-all text-sm"
-                  />
-                </div>
-
-                <div>
-                  <textarea 
-                    rows={4} 
-                    placeholder="Describe your plumbing or drainage issue *" 
-                    required 
-                    className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-500 focus:bg-white transition-all text-sm resize-none"
-                  ></textarea>
-                </div>
-
-                <button 
-                  type="submit" 
-                  className="w-full bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-black py-4 rounded-xl text-base transition-all shadow-md flex items-center justify-center gap-2"
-                >
-                  Send Inquiry →
-                </button>
-              </form>
-            </div>
+            <QuoteForm buttonText="Send Inquiry →" />
           </div>
 
         </div>

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import QuoteForm from '@/components/QuoteForm';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import nzDatabase from '../../../../data/nz_database.json';
@@ -152,57 +153,8 @@ export default async function SubdomainServicePage({ params }: { params: Promise
             </div>
 
             {/* Right Quote Form */}
-            <div id="quote-form" className="lg:col-span-5">
-              <div className="bg-white rounded-3xl p-8 shadow-2xl border border-slate-200 text-slate-900">
-                <h2 className="text-2xl font-black mb-1">Get Free Quote for {serviceName}</h2>
-                <p className="text-slate-500 text-sm mb-6">Serving {locName} and nearby suburbs.</p>
-
-                <form className="space-y-4">
-                  <input 
-                    type="text" 
-                    placeholder="Your Full Name *" 
-                    required 
-                    className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-500 transition-all text-sm"
-                  />
-                  <input 
-                    type="email" 
-                    placeholder="Email Address *" 
-                    required 
-                    className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-500 transition-all text-sm"
-                  />
-                  <input 
-                    type="tel" 
-                    placeholder="Phone Number *" 
-                    required 
-                    className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-500 transition-all text-sm"
-                  />
-                  <textarea 
-                    rows={3} 
-                    placeholder={`Describe your ${serviceName} job in ${locName}... *`}
-                    required 
-                    className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-500 transition-all text-sm resize-none"
-                  ></textarea>
-
-                  <div className="flex items-start gap-3">
-                    <input 
-                      type="checkbox" 
-                      id="terms-sub-serv" 
-                      required 
-                      className="mt-1 w-4 h-4 text-emerald-600 rounded border-slate-300 focus:ring-emerald-500 cursor-pointer"
-                    />
-                    <label htmlFor="terms-sub-serv" className="text-xs text-slate-500 leading-relaxed cursor-pointer">
-                      I agree to be connected with available independent certificated plumbing professionals in {locName} under PGDB rules.
-                    </label>
-                  </div>
-
-                  <button 
-                    type="submit" 
-                    className="w-full bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-black py-4 rounded-xl text-base transition-all shadow-md"
-                  >
-                    Request {serviceName} Quote →
-                  </button>
-                </form>
-              </div>
+            <div className="lg:col-span-5">
+              <QuoteForm defaultLocation={locName} defaultService={serviceName} buttonText={`Request ${serviceName} Quote →`} />
             </div>
 
           </div>
