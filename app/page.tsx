@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import QuoteForm from '@/components/QuoteForm';
+import QuoteForm from '../components/QuoteForm';
 import Image from 'next/image';
 import servicesData from '../data/services.json';
 import nzDatabase from '../data/nz_database.json';

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import QuoteForm from '@/components/QuoteForm';
+import QuoteForm from '../../../../components/QuoteForm';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import nzDatabase from '../../../../data/nz_database.json';
