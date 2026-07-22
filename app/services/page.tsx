@@ -2,8 +2,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import servicesData from '../../data/services.json';
 
-export const runtime = 'edge';
-
 export const metadata = {
   title: "All Plumbing Services New Zealand | Village Plumbers NZ",
   description: "Browse all 25 core plumbing, gasfitting, and drainlaying services available across New Zealand. Available 24/7 for residential & commercial properties.",

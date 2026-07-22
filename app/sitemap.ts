@@ -2,6 +2,8 @@ import { MetadataRoute } from 'next';
 import nzDatabase from '../data/nz_database.json';
 import servicesData from '../data/services.json';
 
+export const dynamic = 'force-static';
+
 const DOMAIN = 'villageplumbers.co.nz';
 
 function isServiceApplicableForRegion(service: any, region: any): boolean {

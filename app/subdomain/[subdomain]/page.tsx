@@ -5,6 +5,12 @@ import type { Metadata } from 'next';
 import nzDatabase from '../../../data/nz_database.json';
 import servicesData from '../../../data/services.json';
 
+export async function generateStaticParams() {
+  return nzDatabase.regions.map((reg: any) => ({
+    subdomain: reg.slug,
+  }));
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ subdomain: string }> }): Promise<Metadata> {
   const resolvedParams = await params;
   let locName = resolvedParams.subdomain

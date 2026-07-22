@@ -3,6 +3,12 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import articlesData from '../../../data/articles.json';
 
+export async function generateStaticParams() {
+  return (articlesData || []).map((art: any) => ({
+    slug: art.slug,
+  }));
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const resolvedParams = await params;
   const foundArticle = (articlesData || []).find((a: any) => a.slug === resolvedParams.slug);

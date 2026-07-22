@@ -1,8 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-export const runtime = 'edge';
-
 export const metadata = {
   title: "About Us | Village Plumbers NZ",
   description: "Learn more about Village Plumbers NZ, connecting customers with independent, certificated local plumbing professionals across 16 New Zealand regions.",

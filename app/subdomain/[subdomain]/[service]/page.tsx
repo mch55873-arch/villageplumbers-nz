@@ -5,6 +5,19 @@ import type { Metadata } from 'next';
 import nzDatabase from '../../../../data/nz_database.json';
 import servicesData from '../../../../data/services.json';
 
+export async function generateStaticParams() {
+  const params: Array<{ subdomain: string; service: string }> = [];
+  nzDatabase.regions.forEach((reg: any) => {
+    servicesData.forEach((serv: any) => {
+      params.push({
+        subdomain: reg.slug,
+        service: serv.slug,
+      });
+    });
+  });
+  return params;
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ subdomain: string, service: string }> }): Promise<Metadata> {
   const resolvedParams = await params;
   

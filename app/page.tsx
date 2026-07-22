@@ -4,8 +4,6 @@ import servicesData from '../data/services.json';
 import nzDatabase from '../data/nz_database.json';
 import articlesData from '../data/articles.json';
 
-export const runtime = 'edge';
-
 export const metadata = {
   title: "Village Plumbers NZ | Emergency Plumbing, Gasfitting & Drainlaying New Zealand",
   description: "Connect with available, independent, certificated local plumbing, gasfitting, and drainlaying professionals across New Zealand. Available 24/7 for burst pipes, blocked drains, and hot water repairs.",
