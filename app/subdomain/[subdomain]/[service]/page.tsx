@@ -1,301 +1,254 @@
-import { notFound } from "next/navigation";
-import Link from "next/link";
+import Link from 'next/link';
+import Image from 'next/image';
+import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import nzDatabase from "../../../../data/nz_database.json";
-import servicesData from "../../../../data/services.json";
-
-function isServiceApplicableForRegion(service: any, region: any): boolean {
-  if (service.isCore) return true;
-  if (!service.targetTag || service.targetTag === 'all') return true;
-  if (service.targetTag === 'cold_only' && region.isColdRegion) return true;
-  if (service.targetTag === 'rural_only' && region.isRural) return true;
-  if (service.targetTag === 'industrial_only' && region.isIndustrial) return true;
-  return false;
-}
+import nzDatabase from '../../../../data/nz_database.json';
+import servicesData from '../../../../data/services.json';
 
 export async function generateMetadata({ params }: { params: Promise<{ subdomain: string, service: string }> }): Promise<Metadata> {
   const resolvedParams = await params;
-  const subdomain = resolvedParams.subdomain.toLowerCase();
   
-  const serviceData = servicesData.find(s => s.slug === resolvedParams.service);
-  const serviceName = serviceData ? serviceData.name : resolvedParams.service.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+  let locName = resolvedParams.subdomain
+    .split('-')
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ');
+  const region = nzDatabase.regions.find(r => r.slug === resolvedParams.subdomain);
+  if (region) locName = region.name;
 
-  // Region Subdomain
-  const regionData = nzDatabase.regions.find(r => r.code === subdomain);
-  if (regionData && serviceData && isServiceApplicableForRegion(serviceData, regionData)) {
-    return {
-      title: `${serviceName} in ${regionData.name} Region | Village Plumbers NZ`,
-      description: `Connect with local plumbing specialists for ${serviceName} in ${regionData.name}. 24/7 connection line: 0800 845 524.`,
-      alternates: { canonical: `https://${regionData.code}.villageplumbers.co.nz/${resolvedParams.service}` },
-      openGraph: {
-        title: `${serviceName} in ${regionData.name} Region | Village Plumbers NZ`,
-        description: `Connect with local plumbing specialists for ${serviceName} in ${regionData.name}.`,
-        url: `https://${regionData.code}.villageplumbers.co.nz/${resolvedParams.service}`,
-      }
-    };
-  }
-
-  // Suburb Subdomain
-  for (const reg of nzDatabase.regions) {
-    const cityData = reg.cities.find(c => c.subdomain === subdomain || c.slug === subdomain);
-    if (cityData && serviceData && isServiceApplicableForRegion(serviceData, reg)) {
-      return {
-        title: `${serviceName} in ${cityData.name}, ${reg.name} (${cityData.zip}) | Village Plumbers`,
-        description: `Connect with available independent trade professionals for ${serviceName} in ${cityData.name}, ${reg.name} (${cityData.zip}). Call 0800 845 524.`,
-        alternates: { canonical: `https://${cityData.subdomain}.villageplumbers.co.nz/${resolvedParams.service}` },
-        openGraph: {
-          title: `${serviceName} in ${cityData.name}, ${reg.name} (${cityData.zip}) | Village Plumbers`,
-          description: `Connect with available independent trade professionals for ${serviceName} in ${cityData.name}, ${reg.name} (${cityData.zip}).`,
-          url: `https://${cityData.subdomain}.villageplumbers.co.nz/${resolvedParams.service}`,
-        }
-      };
-    }
-  }
+  const foundService = servicesData.find(s => s.slug === resolvedParams.service);
+  const serviceName = foundService ? foundService.name : resolvedParams.service
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
 
   return {
-    title: `${serviceName} in ${subdomain} | Village Plumbers NZ`,
-    description: `Connect with local trade professionals for ${serviceName} in ${subdomain}, NZ.`
+    title: `${serviceName} in ${locName} | Village Plumbers NZ`,
+    description: `Connect with available independent certificated local trade specialists for ${serviceName} in ${locName}. 24/7 emergency dispatch. Call 0800 845 524.`,
+    alternates: {
+      canonical: `https://${resolvedParams.subdomain}.villageplumbers.co.nz/${resolvedParams.service}`,
+    },
+    openGraph: {
+      title: `${serviceName} in ${locName} | Village Plumbers NZ`,
+      description: `Connect with available independent certificated local trade specialists for ${serviceName} in ${locName}.`,
+      url: `https://${resolvedParams.subdomain}.villageplumbers.co.nz/${resolvedParams.service}`,
+    }
   };
 }
 
 export default async function SubdomainServicePage({ params }: { params: Promise<{ subdomain: string, service: string }> }) {
   const resolvedParams = await params;
-  const subdomain = resolvedParams.subdomain.toLowerCase();
 
-  const serviceData = servicesData.find(s => s.slug === resolvedParams.service);
-  if (!serviceData) return notFound();
+  let locName = '';
+  let nearbySuburbs: any[] = [];
+  const region = nzDatabase.regions.find(r => r.slug === resolvedParams.subdomain);
 
-  const serviceName = serviceData.name;
-  const serviceIcon = serviceData.icon || '💧';
-  const serviceDesc = serviceData.description || `Connect with local trade professionals serving your area for ${serviceName}.`;
+  if (region) {
+    locName = region.name;
+    nearbySuburbs = region.suburbs || [];
+  } else {
+    let foundSub: any = null;
+    let foundParentReg: any = null;
 
-  // 1. Is it a Region Subdomain? (e.g. 'auckland')
-  const regionData = nzDatabase.regions.find(r => r.code === subdomain);
-  if (regionData) {
-    if (!isServiceApplicableForRegion(serviceData, regionData)) return notFound();
+    for (const r of nzDatabase.regions) {
+      const sub = r.suburbs?.find((s: any) => s.slug === resolvedParams.subdomain);
+      if (sub) {
+        foundSub = sub;
+        foundParentReg = r;
+        break;
+      }
+    }
 
-    const coreServices = servicesData.filter(s => s.isCore && s.slug !== serviceData.slug);
-    const specialistServices = servicesData.filter(s => !s.isCore && s.slug !== serviceData.slug && isServiceApplicableForRegion(s, regionData));
-
-    return (
-      <div className="min-h-screen bg-slate-50 py-16 px-4">
-        <div className="max-w-5xl mx-auto">
-          
-          <nav className="text-xs text-slate-500 mb-8 flex items-center gap-2">
-            <Link href="/" className="hover:text-sky-600">NZ Plumbing</Link>
-            <span>/</span>
-            <Link href={`/subdomain/${regionData.code}`} className="hover:text-sky-600">{regionData.name} Region Hub</Link>
-            <span>/</span>
-            <span className="text-slate-900 font-semibold">{serviceName}</span>
-          </nav>
-
-          {/* Hero Header */}
-          <div className="bg-slate-900 text-white rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden mb-12">
-            <div className="relative z-10 max-w-3xl">
-              <div className="inline-flex items-center gap-2 bg-sky-500/20 border border-sky-400/30 text-sky-300 px-4 py-1.5 rounded-full text-xs font-bold mb-6">
-                <span>{serviceIcon}</span>
-                <span>{regionData.name.toUpperCase()} REGIONAL HUB</span>
-              </div>
-              
-              <h1 className="text-3xl md:text-5xl font-black text-white leading-tight mb-6">
-                {serviceName} in <span className="text-sky-400">{regionData.name} Region</span>
-              </h1>
-              
-              <p className="text-slate-300 text-lg leading-relaxed mb-8">
-                {serviceDesc} Connect with available independent trade professionals serving all {regionData.cities.length} suburbs in {regionData.name}.
-              </p>
-
-              <a href="tel:0800845524" className="bg-sky-600 hover:bg-sky-500 text-white font-extrabold text-lg px-8 py-4 rounded-xl shadow-lg inline-block">
-                📞 Call Connection Line: 0800 845 524
-              </a>
-            </div>
-          </div>
-
-          {/* Core Services Section */}
-          <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm mb-8">
-            <h2 className="text-xl font-bold text-slate-900 mb-4">
-              Core Service Pages in {regionData.name}
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-              {coreServices.map((srv) => (
-                <Link
-                  key={srv.slug}
-                  href={`/subdomain/${regionData.code}/${srv.slug}`}
-                  className="bg-slate-50 p-4 rounded-xl border border-slate-200 hover:border-sky-500 flex items-center gap-3 text-slate-900 hover:text-sky-600 font-bold text-sm"
-                >
-                  <span className="text-xl">{srv.icon}</span>
-                  <span>{srv.name}</span>
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          {/* Relevant Specialist Pages */}
-          {specialistServices.length > 0 && (
-            <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm mb-8">
-              <h2 className="text-xl font-bold text-slate-900 mb-4">
-                Relevant Specialist Pages in {regionData.name}
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                {specialistServices.map((srv) => (
-                  <Link
-                    key={srv.slug}
-                    href={`/subdomain/${regionData.code}/${srv.slug}`}
-                    className="bg-slate-50 p-4 rounded-xl border border-slate-200 hover:border-sky-500 flex items-center gap-3 text-slate-900 hover:text-sky-600 font-bold text-sm"
-                  >
-                    <span className="text-xl">{srv.icon}</span>
-                    <span>{srv.name}</span>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Nearby Locations / Suburbs */}
-          <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
-            <h2 className="text-xl font-bold text-slate-900 mb-4">
-              Nearby Suburbs & Locations in {regionData.name}
-            </h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-              {regionData.cities.map((city) => (
-                <Link
-                  key={city.slug}
-                  href={`/subdomain/${city.subdomain}/${resolvedParams.service}`}
-                  className="bg-slate-50 p-3 rounded-xl border border-slate-200 hover:border-sky-500 text-slate-900 font-bold text-sm block hover:text-sky-600"
-                >
-                  {city.name} {serviceName}
-                </Link>
-              ))}
-            </div>
-          </div>
-
-        </div>
-      </div>
-    );
-  }
-
-  // 2. Is it a Suburb Subdomain? (e.g. 'ponsonby-auckland')
-  let foundCity = null;
-  let parentRegion = null;
-
-  for (const reg of nzDatabase.regions) {
-    const city = reg.cities.find(c => c.subdomain === subdomain || c.slug === subdomain);
-    if (city) {
-      foundCity = city;
-      parentRegion = reg;
-      break;
+    if (foundSub) {
+      locName = `${foundSub.name}, ${foundParentReg.name}`;
+      nearbySuburbs = foundParentReg.suburbs?.filter((s: any) => s.slug !== foundSub.slug) || [];
+    } else {
+      locName = resolvedParams.subdomain
+        .split('-')
+        .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(' ');
     }
   }
 
-  if (foundCity && parentRegion) {
-    if (!isServiceApplicableForRegion(serviceData, parentRegion)) return notFound();
+  const foundService = servicesData.find(s => s.slug === resolvedParams.service);
+  const serviceName = foundService ? foundService.name : resolvedParams.service
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+  const serviceDesc = foundService?.description || `Professional ${serviceName} services available in ${locName}.`;
 
-    const coreServices = servicesData.filter(s => s.isCore && s.slug !== serviceData.slug);
-    const specialistServices = servicesData.filter(s => !s.isCore && s.slug !== serviceData.slug && isServiceApplicableForRegion(s, parentRegion));
-    const nearbyLocations = parentRegion.cities.filter(c => c.subdomain !== foundCity?.subdomain);
+  return (
+    <div className="bg-slate-50 text-slate-900 min-h-screen">
+      
+      {/* 1. HERO SECTION */}
+      <section className="relative bg-slate-950 text-white min-h-[600px] flex items-center py-16 px-4 overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <Image 
+            src="/images/media__1783510889843.jpg" 
+            alt={`${serviceName} in ${locName}`}
+            fill
+            sizes="100vw"
+            priority
+            className="object-cover opacity-25"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/85 to-slate-950/65"></div>
+        </div>
 
-    return (
-      <div className="min-h-screen bg-slate-50 py-16 px-4">
-        <div className="max-w-5xl mx-auto">
-          
-          {/* Exact Architecture Breadcrumb */}
-          <nav className="text-xs text-slate-500 mb-8 flex items-center gap-2">
-            <Link href="/" className="hover:text-sky-600">NZ Plumbing</Link>
-            <span>/</span>
-            <Link href={`/subdomain/${parentRegion.code}`} className="hover:text-sky-600">{parentRegion.name} Regional Hub</Link>
-            <span>/</span>
-            <Link href={`/subdomain/${foundCity.subdomain}`} className="hover:text-sky-600">{foundCity.name} Page</Link>
-            <span>/</span>
-            <span className="text-slate-900 font-semibold">{serviceName}</span>
-          </nav>
+        <div className="max-w-7xl mx-auto relative z-10 w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            {/* Left Content */}
+            <div className="lg:col-span-7">
+              {/* Breadcrumb */}
+              <nav className="text-xs font-semibold text-slate-400 mb-6 flex items-center gap-2 flex-wrap">
+                <Link href="/" className="hover:text-emerald-400">Home</Link>
+                <span className="text-slate-600">/</span>
+                <Link href={`/subdomain/${resolvedParams.subdomain}`} className="hover:text-emerald-400">{locName}</Link>
+                <span className="text-slate-600">/</span>
+                <span className="text-emerald-400 font-bold">{serviceName}</span>
+              </nav>
 
-          {/* Hero Header */}
-          <div className="bg-slate-900 text-white rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden mb-12">
-            <div className="relative z-10 max-w-3xl">
-              <div className="inline-flex items-center gap-2 bg-sky-500/20 border border-sky-400/30 text-sky-300 px-4 py-1.5 rounded-full text-xs font-bold mb-6">
-                <span>{serviceIcon}</span>
-                <span>CITY / TOWN PAGE - {foundCity.name.toUpperCase()} ({foundCity.zip})</span>
+              {/* Trust Badges */}
+              <div className="flex flex-wrap gap-2.5 mb-6">
+                <span className="inline-flex items-center bg-emerald-500 text-slate-950 text-xs font-black px-3.5 py-1.5 rounded-full shadow-md">
+                  ⚡ 24/7 Local Service
+                </span>
+                <span className="inline-flex items-center bg-slate-800 text-white text-xs font-bold px-3.5 py-1.5 rounded-full border border-slate-700">
+                  📍 {locName} Area
+                </span>
               </div>
-              
-              <h1 className="text-3xl md:text-5xl font-black text-white leading-tight mb-6">
-                {serviceName} in <span className="text-sky-400">{foundCity.name}</span>, {parentRegion.name}
+
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight mb-6">
+                {serviceName} <span className="text-emerald-400">in {locName}</span>
               </h1>
-              
-              <p className="text-slate-300 text-lg leading-relaxed mb-8">
-                {serviceDesc} Connect with available independent plumbing & drainlaying professionals serving {foundCity.name}, {parentRegion.name} ({foundCity.zip}).
+
+              <p className="text-lg text-slate-300 mb-8 max-w-2xl leading-relaxed">
+                {serviceDesc} Connect with available independent certificated local trade specialists serving {locName} 24/7.
               </p>
 
-              <a href="tel:0800845524" className="bg-sky-600 hover:bg-sky-500 text-white font-extrabold text-lg px-8 py-4 rounded-xl shadow-lg inline-block">
-                📞 Connect Line: 0800 845 524
-              </a>
-            </div>
-          </div>
-
-          {/* Core Service Pages */}
-          <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm mb-8">
-            <h2 className="text-xl font-bold text-slate-900 mb-4">
-              Core Service Pages in {foundCity.name}
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-              {coreServices.map((srv) => (
-                <Link
-                  key={srv.slug}
-                  href={`/subdomain/${foundCity?.subdomain}/${srv.slug}`}
-                  className="bg-slate-50 p-4 rounded-xl border border-slate-200 hover:border-sky-500 flex items-center gap-3 text-slate-900 hover:text-sky-600 font-bold text-sm"
+              {/* CTAs */}
+              <div className="flex flex-wrap gap-4 mb-8">
+                <a 
+                  href="tel:0800845524" 
+                  className="inline-flex items-center gap-3 bg-emerald-400 hover:bg-emerald-300 text-slate-950 px-8 py-4 rounded-xl font-black text-lg transition-all shadow-lg"
                 >
-                  <span className="text-xl">{srv.icon}</span>
-                  <span>{srv.name} in {foundCity?.name}</span>
-                </Link>
-              ))}
-            </div>
-          </div>
+                  📞 0800 845 524
+                </a>
+                <a 
+                  href="#quote-form" 
+                  className="inline-flex items-center bg-slate-800/90 hover:bg-slate-800 text-white border border-slate-700 px-8 py-4 rounded-xl font-bold text-lg transition-all"
+                >
+                  Get Free Quote
+                </a>
+              </div>
 
-          {/* Relevant Specialist Pages */}
-          {specialistServices.length > 0 && (
-            <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm mb-8">
-              <h2 className="text-xl font-bold text-slate-900 mb-4">
-                Relevant Specialist Pages in {foundCity.name}
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                {specialistServices.map((srv) => (
-                  <Link
-                    key={srv.slug}
-                    href={`/subdomain/${foundCity?.subdomain}/${srv.slug}`}
-                    className="bg-slate-50 p-4 rounded-xl border border-slate-200 hover:border-sky-500 flex items-center gap-3 text-slate-900 hover:text-sky-600 font-bold text-sm"
-                  >
-                    <span className="text-xl">{srv.icon}</span>
-                    <span>{srv.name} in {foundCity?.name}</span>
-                  </Link>
-                ))}
+              <div className="flex items-center gap-6 text-xs text-slate-400 font-semibold">
+                <span>🛡️ PGDB Licensed Practitioners</span>
+                <span>⚡ Upfront Quotes</span>
               </div>
             </div>
-          )}
 
-          {/* Nearby Locations (Matching Architecture Diagram!) */}
-          <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
-            <h2 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
-              <span>📍</span> Nearby Locations in {parentRegion.name}
+            {/* Right Quote Form */}
+            <div id="quote-form" className="lg:col-span-5">
+              <div className="bg-white rounded-3xl p-8 shadow-2xl border border-slate-200 text-slate-900">
+                <h2 className="text-2xl font-black mb-1">Get Free Quote for {serviceName}</h2>
+                <p className="text-slate-500 text-sm mb-6">Serving {locName} and nearby suburbs.</p>
+
+                <form className="space-y-4">
+                  <input 
+                    type="text" 
+                    placeholder="Your Full Name *" 
+                    required 
+                    className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-500 transition-all text-sm"
+                  />
+                  <input 
+                    type="email" 
+                    placeholder="Email Address *" 
+                    required 
+                    className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-500 transition-all text-sm"
+                  />
+                  <input 
+                    type="tel" 
+                    placeholder="Phone Number *" 
+                    required 
+                    className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-500 transition-all text-sm"
+                  />
+                  <textarea 
+                    rows={3} 
+                    placeholder={`Describe your ${serviceName} job in ${locName}... *`}
+                    required 
+                    className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-500 transition-all text-sm resize-none"
+                  ></textarea>
+
+                  <div className="flex items-start gap-3">
+                    <input 
+                      type="checkbox" 
+                      id="terms-sub-serv" 
+                      required 
+                      className="mt-1 w-4 h-4 text-emerald-600 rounded border-slate-300 focus:ring-emerald-500 cursor-pointer"
+                    />
+                    <label htmlFor="terms-sub-serv" className="text-xs text-slate-500 leading-relaxed cursor-pointer">
+                      I agree to be connected with available independent certificated plumbing professionals in {locName} under PGDB rules.
+                    </label>
+                  </div>
+
+                  <button 
+                    type="submit" 
+                    className="w-full bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-black py-4 rounded-xl text-base transition-all shadow-md"
+                  >
+                    Request {serviceName} Quote →
+                  </button>
+                </form>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* 2. NEARBY LOCATIONS LINKS */}
+      {nearbySuburbs.length > 0 && (
+        <section className="bg-slate-900 text-white py-16 px-4">
+          <div className="max-w-7xl mx-auto text-center">
+            <h2 className="text-2xl md:text-3xl font-extrabold mb-4">
+              {serviceName} in Nearby Suburbs
             </h2>
-            <p className="text-slate-600 text-sm mb-6">
-              Also connecting {serviceName.toLowerCase()} professionals in neighboring suburbs:
+            <p className="text-slate-400 text-sm mb-8">
+              Select an adjacent location to request {serviceName} nearby.
             </p>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-              {nearbyLocations.map((loc) => (
-                <Link
-                  key={loc.slug}
-                  href={`/subdomain/${loc.subdomain}/${resolvedParams.service}`}
-                  className="bg-slate-50 p-3 rounded-xl border border-slate-200 hover:border-sky-500 text-slate-900 font-bold text-sm block hover:text-sky-600"
+
+            <div className="flex flex-wrap gap-2.5 justify-center">
+              {nearbySuburbs.map((sub: any) => (
+                <Link 
+                  key={sub.slug}
+                  href={`/subdomain/${sub.slug}/${resolvedParams.service}`}
+                  className="bg-slate-800 hover:bg-emerald-400 hover:text-slate-950 border border-slate-700 px-4 py-2 rounded-xl text-xs font-bold transition-all"
                 >
-                  {loc.name} {serviceName}
+                  📍 {sub.name} {serviceName}
                 </Link>
               ))}
             </div>
           </div>
+        </section>
+      )}
 
+      {/* 3. BOTTOM CTA BANNER */}
+      <section className="bg-emerald-400 text-slate-950 py-12 px-4">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+          <div>
+            <h2 className="text-2xl md:text-3xl font-black mb-1">Need {serviceName} in {locName}?</h2>
+            <p className="text-slate-900 font-medium text-sm">Call 0800 845 524 for immediate local trade dispatch.</p>
+          </div>
+          <div className="flex gap-4 shrink-0">
+            <a href="tel:0800845524" className="bg-slate-950 hover:bg-slate-900 text-white font-black px-8 py-4 rounded-xl text-base transition-all shadow-lg">
+              📞 Call 0800 845 524
+            </a>
+            <a href="#quote-form" className="bg-white hover:bg-slate-100 text-slate-950 font-bold px-8 py-4 rounded-xl text-base transition-all">
+              Get Free Quote
+            </a>
+          </div>
         </div>
-      </div>
-    );
-  }
+      </section>
 
-  return notFound();
+    </div>
+  );
 }
