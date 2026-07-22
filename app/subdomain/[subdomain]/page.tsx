@@ -5,11 +5,16 @@ import nzDatabase from '../../../data/nz_database.json';
 import servicesData from '../../../data/services.json';
 
 function isServiceApplicableForRegion(service: any, region: any): boolean {
-  if (service.isCore) return true;
-  if (!service.targetTag || service.targetTag === 'all') return true;
-  if (service.targetTag === 'cold_only' && region.isColdRegion) return true;
-  if (service.targetTag === 'rural_only' && region.isRural) return true;
-  if (service.targetTag === 'industrial_only' && region.isIndustrial) return true;
+  if (service.tier === 'core' || service.isCore) return true;
+  if (service.tier === 'secondary' || service.targetTag === 'major_cities_only') {
+    return !!region.isMajorCity;
+  }
+  if (service.tier === 'regional') {
+    if (service.targetTag === 'cold_only') return !!region.isColdRegion;
+    if (service.targetTag === 'rural_only') return !!region.isRural;
+    if (service.targetTag === 'industrial_only') return !!region.isIndustrial;
+    if (service.targetTag === 'specialist_only') return false; // No automatic nationwide pages
+  }
   return false;
 }
 
@@ -59,12 +64,13 @@ export default async function SubdomainPage({ params }: { params: Promise<{ subd
   const resolvedParams = await params;
   const subdomain = resolvedParams.subdomain.toLowerCase();
 
-  // 1. Region Subdomain (e.g. 'auckland')
+  // 1. Region Subdomain
   const regionData = nzDatabase.regions.find(r => r.code === subdomain);
 
   if (regionData) {
-    const coreServices = servicesData.filter(s => s.isCore);
-    const specialistServices = servicesData.filter(s => !s.isCore && isServiceApplicableForRegion(s, regionData));
+    const coreServices = servicesData.filter(s => s.tier === 'core');
+    const secondaryServices = servicesData.filter(s => s.tier === 'secondary' && isServiceApplicableForRegion(s, regionData));
+    const regionalServices = servicesData.filter(s => s.tier === 'regional' && isServiceApplicableForRegion(s, regionData));
 
     return (
       <div className="min-h-screen bg-slate-50">
@@ -116,7 +122,7 @@ export default async function SubdomainPage({ params }: { params: Promise<{ subd
           </div>
         </section>
 
-        {/* Core Services Section */}
+        {/* 25 Core Services Section */}
         <section className="max-w-7xl mx-auto px-4 pb-12">
           <h2 className="text-2xl font-black text-slate-900 mb-8 text-center">
             25 Core Service Pages in {regionData.name}
@@ -138,14 +144,38 @@ export default async function SubdomainPage({ params }: { params: Promise<{ subd
           </div>
         </section>
 
-        {/* Relevant Specialist Pages */}
-        {specialistServices.length > 0 && (
-          <section className="max-w-7xl mx-auto px-4 pb-20">
+        {/* Secondary Services (Major Cities) */}
+        {secondaryServices.length > 0 && (
+          <section className="max-w-7xl mx-auto px-4 pb-12">
             <h2 className="text-2xl font-black text-slate-900 mb-8 text-center">
-              Relevant Specialist Pages in {regionData.name}
+              Major City Secondary Services in {regionData.name}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {specialistServices.map((service) => (
+              {secondaryServices.map((service) => (
+                <Link
+                  key={service.slug}
+                  href={`/subdomain/${regionData.code}/${service.slug}`}
+                  className="bg-white p-6 rounded-2xl border border-slate-200 hover:shadow-md transition-all flex items-start gap-4"
+                >
+                  <span className="text-3xl">{service.icon}</span>
+                  <div>
+                    <h3 className="font-bold text-slate-900 hover:text-sky-600 text-base">{service.name}</h3>
+                    <p className="text-xs text-slate-500 mt-1">{service.description}</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Regional Services */}
+        {regionalServices.length > 0 && (
+          <section className="max-w-7xl mx-auto px-4 pb-20">
+            <h2 className="text-2xl font-black text-slate-900 mb-8 text-center">
+              Regional Specialist Services in {regionData.name}
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {regionalServices.map((service) => (
                 <Link
                   key={service.slug}
                   href={`/subdomain/${regionData.code}/${service.slug}`}
@@ -165,7 +195,7 @@ export default async function SubdomainPage({ params }: { params: Promise<{ subd
     );
   }
 
-  // 2. Suburb / City / Town Subdomain (e.g. 'ponsonby-auckland')
+  // 2. Suburb / City Subdomain
   let foundCity = null;
   let parentRegion = null;
 
@@ -179,8 +209,9 @@ export default async function SubdomainPage({ params }: { params: Promise<{ subd
   }
 
   if (foundCity && parentRegion) {
-    const coreServices = servicesData.filter(s => s.isCore);
-    const specialistServices = servicesData.filter(s => !s.isCore && isServiceApplicableForRegion(s, parentRegion));
+    const coreServices = servicesData.filter(s => s.tier === 'core');
+    const secondaryServices = servicesData.filter(s => s.tier === 'secondary' && isServiceApplicableForRegion(s, parentRegion));
+    const regionalServices = servicesData.filter(s => s.tier === 'regional' && isServiceApplicableForRegion(s, parentRegion));
     const nearbyLocations = parentRegion.cities.filter(c => c.subdomain !== foundCity?.subdomain);
 
     return (
@@ -215,10 +246,10 @@ export default async function SubdomainPage({ params }: { params: Promise<{ subd
           </div>
         </section>
 
-        {/* Core Service Pages */}
+        {/* 25 Core Service Pages */}
         <section className="max-w-7xl mx-auto px-4 py-12">
           <h2 className="text-2xl font-black text-slate-900 mb-8 text-center">
-            Core Service Pages in {foundCity.name}
+            25 Core Service Pages in {foundCity.name}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {coreServices.map((service) => (
@@ -237,14 +268,14 @@ export default async function SubdomainPage({ params }: { params: Promise<{ subd
           </div>
         </section>
 
-        {/* Relevant Specialist Pages */}
-        {specialistServices.length > 0 && (
+        {/* Secondary Services */}
+        {secondaryServices.length > 0 && (
           <section className="max-w-7xl mx-auto px-4 pb-12">
             <h2 className="text-2xl font-black text-slate-900 mb-8 text-center">
-              Relevant Specialist Pages in {foundCity.name}
+              Major City Secondary Services in {foundCity.name}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {specialistServices.map((service) => (
+              {secondaryServices.map((service) => (
                 <Link
                   key={service.slug}
                   href={`/subdomain/${foundCity?.subdomain}/${service.slug}`}
@@ -261,7 +292,31 @@ export default async function SubdomainPage({ params }: { params: Promise<{ subd
           </section>
         )}
 
-        {/* Nearby Locations (Matching Site Architecture Diagram!) */}
+        {/* Regional Services */}
+        {regionalServices.length > 0 && (
+          <section className="max-w-7xl mx-auto px-4 pb-12">
+            <h2 className="text-2xl font-black text-slate-900 mb-8 text-center">
+              Regional Specialist Services in {foundCity.name}
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {regionalServices.map((service) => (
+                <Link
+                  key={service.slug}
+                  href={`/subdomain/${foundCity?.subdomain}/${service.slug}`}
+                  className="bg-white p-6 rounded-2xl border border-slate-200 hover:shadow-md transition-all flex items-start gap-4"
+                >
+                  <span className="text-3xl">{service.icon}</span>
+                  <div>
+                    <h3 className="font-bold text-slate-900 hover:text-sky-600">{service.name} in {foundCity?.name}</h3>
+                    <p className="text-xs text-slate-500 mt-1">{service.description}</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Nearby Locations */}
         <section className="max-w-7xl mx-auto px-4 pb-20">
           <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
             <h2 className="text-2xl font-black text-slate-900 mb-4 flex items-center gap-2">

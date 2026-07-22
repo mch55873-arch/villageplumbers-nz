@@ -4,14 +4,25 @@
     "name": "Emergency Plumber",
     "icon": "🚨",
     "category": "Emergency",
+    "tier": "core",
     "isCore": true,
     "description": "Connect with 24/7 available plumbing professionals serving your area for rapid emergency response."
+  },
+  {
+    "slug": "24-hour-plumber",
+    "name": "24-Hour Plumber",
+    "icon": "⏰",
+    "category": "Emergency",
+    "tier": "core",
+    "isCore": true,
+    "description": "Round-the-clock emergency plumbing referral connections for after-hours plumbing emergencies."
   },
   {
     "slug": "burst-pipe-repair",
     "name": "Burst Pipe Repair",
     "icon": "💦",
     "category": "Emergency",
+    "tier": "core",
     "isCore": true,
     "description": "Fast leak isolation and burst pipe repairs for underground, in-wall, and ceiling pipework."
   },
@@ -20,6 +31,7 @@
     "name": "Blocked Drain Unblocking",
     "icon": "💧",
     "category": "Drainage",
+    "tier": "core",
     "isCore": true,
     "description": "Professional drain clearing services to unblock sinks, toilets, and main sewer drains."
   },
@@ -28,6 +40,7 @@
     "name": "Blocked Toilet Repair",
     "icon": "🚽",
     "category": "Drainage",
+    "tier": "core",
     "isCore": true,
     "description": "Fast assistance to unblock stubborn toilet blockages, overflow issues, and cistern repairs."
   },
@@ -36,6 +49,7 @@
     "name": "Drain Repairs",
     "icon": "🛠️",
     "category": "Drainage",
+    "tier": "core",
     "isCore": true,
     "description": "Structural drain laying and drain repairs for broken or damaged underground wastewater pipes."
   },
@@ -44,22 +58,34 @@
     "name": "CCTV Drain Inspection",
     "icon": "📷",
     "category": "Drainage",
+    "tier": "core",
     "isCore": true,
     "description": "High-definition camera inspections to locate root intrusions, pipe collapses, and hidden drainage defects."
   },
   {
     "slug": "hydro-jetting",
-    "name": "Hydro Jetting & High-Pressure Drain Cleaning",
+    "name": "Hydro Jetting",
     "icon": "🌊",
     "category": "Drainage",
+    "tier": "core",
     "isCore": true,
     "description": "High-pressure water jetting to scour grease, tree roots, and heavy debris from blocked sewer lines."
+  },
+  {
+    "slug": "pipe-relining",
+    "name": "Pipe Relining",
+    "icon": "🛠️",
+    "category": "Drainage",
+    "tier": "core",
+    "isCore": true,
+    "description": "No-dig trenchless pipe repair solution to restore damaged underground pipes without excavating lawns or driveways."
   },
   {
     "slug": "sewer-line-repair",
     "name": "Sewer Line Repair",
     "icon": "⚙️",
     "category": "Drainage",
+    "tier": "core",
     "isCore": true,
     "description": "Repair broken sewer mains, eliminate root blockages, and restore council-compliant wastewater connections."
   },
@@ -68,22 +94,16 @@
     "name": "Stormwater Drain Repair",
     "icon": "🌧️",
     "category": "Drainage",
+    "tier": "core",
     "isCore": true,
     "description": "Prevent surface flooding with custom stormwater drainage repairs, cesspits, and soakhole maintenance."
   },
   {
-    "slug": "pipe-relining",
-    "name": "Pipe Relining",
-    "icon": "🛠️",
-    "category": "Drainage",
-    "isCore": true,
-    "description": "No-dig trenchless pipe repair solution to restore damaged underground pipes without excavating lawns or driveways."
-  },
-  {
     "slug": "hot-water-cylinder-installation",
-    "name": "Hot Water Cylinder Installation and Replacement",
+    "name": "Hot Water Cylinder Installation & Replacement",
     "icon": "🔥",
     "category": "Hot Water",
+    "tier": "core",
     "isCore": true,
     "description": "Connect with local specialists for electric and gas hot water cylinder installations and replacements."
   },
@@ -92,6 +112,7 @@
     "name": "Hot Water Cylinder Repair",
     "icon": "🔧",
     "category": "Hot Water",
+    "tier": "core",
     "isCore": true,
     "description": "Repairs for leaking cylinders, thermostat failures, element replacements, and low hot water pressure."
   },
@@ -100,14 +121,16 @@
     "name": "No Hot Water Repair",
     "icon": "⚡",
     "category": "Hot Water",
+    "tier": "core",
     "isCore": true,
     "description": "Urgent troubleshooting for hot water outages, tripped breakers, valve failures, and cold showers."
   },
   {
     "slug": "gasfitting-repairs",
-    "name": "Gasfitting and Gas Repairs",
+    "name": "Gasfitting & Gas Repairs",
     "icon": "🔥",
     "category": "Gasfitting",
+    "tier": "core",
     "isCore": true,
     "description": "Connect with certificated local gasfitters for gas appliance connections, gas lines, and safety repairs."
   },
@@ -116,22 +139,16 @@
     "name": "Gas Leak Detection",
     "icon": "⚠️",
     "category": "Gasfitting",
+    "tier": "core",
     "isCore": true,
     "description": "Urgent gas leak tracing, line isolation, pressure testing, and emergency gas safety repairs."
-  },
-  {
-    "slug": "gas-water-heater-repair",
-    "name": "Gas Water Heater Repair",
-    "icon": "♨️",
-    "category": "Gasfitting",
-    "isCore": true,
-    "description": "Continuous flow gas hot water repairs (Calorifiers, Rinnai, Rheem) and gas line troubleshooting."
   },
   {
     "slug": "leaking-tap-repair",
     "name": "Leaking Tap Repair",
     "icon": "🚰",
     "category": "General Plumbing",
+    "tier": "core",
     "isCore": true,
     "description": "Fix dripping taps, washer replacements, mixer tap repairs, and new tapware installations."
   },
@@ -140,14 +157,16 @@
     "name": "Leaking Pipe Repair",
     "icon": "🔍",
     "category": "General Plumbing",
+    "tier": "core",
     "isCore": true,
     "description": "Trace and repair concealed water pipe leaks behind walls, under floors, and in ceilings."
   },
   {
     "slug": "toilet-installation-repair",
-    "name": "Toilet Installation and Repair",
+    "name": "Toilet Installation & Repair",
     "icon": "🚽",
     "category": "General Plumbing",
+    "tier": "core",
     "isCore": true,
     "description": "Fix running toilets, unblock cisterns, replace flush valves, and install modern water-saving toilets."
   },
@@ -156,6 +175,7 @@
     "name": "Water Leak Detection",
     "icon": "🔍",
     "category": "General Plumbing",
+    "tier": "core",
     "isCore": true,
     "description": "Acoustic and thermal leak detection to pinpoint hidden water leaks and prevent structural water damage."
   },
@@ -164,14 +184,16 @@
     "name": "Water Pressure Repairs",
     "icon": "📈",
     "category": "General Plumbing",
+    "tier": "core",
     "isCore": true,
     "description": "Troubleshoot low water pressure and upgrade low-pressure cylinders to high mains pressure systems."
   },
   {
-    "slug": "shower-repair-installation",
-    "name": "Shower Repair and Installation",
+    "slug": "shower-repair",
+    "name": "Shower Repair",
     "icon": "🚿",
     "category": "Bathroom",
+    "tier": "core",
     "isCore": true,
     "description": "Leaking shower mixer repairs, shower rose replacements, and complete shower plumbing installations."
   },
@@ -180,6 +202,7 @@
     "name": "Bathroom Plumbing",
     "icon": "🛁",
     "category": "Bathroom",
+    "tier": "core",
     "isCore": true,
     "description": "Plumbing rough-ins, vanity installations, bath fitting, and fixture upgrades for bathroom renovations."
   },
@@ -188,6 +211,7 @@
     "name": "Kitchen Plumbing",
     "icon": "🍽️",
     "category": "Kitchen",
+    "tier": "core",
     "isCore": true,
     "description": "Sink installations, mixer tap fitting, dishwasher connections, and kitchen renovation plumbing."
   },
@@ -196,128 +220,230 @@
     "name": "Commercial Plumbing",
     "icon": "🏢",
     "category": "Commercial",
+    "tier": "core",
     "isCore": true,
     "description": "Scheduled maintenance, commercial drain clearing, and emergency plumbing for local businesses."
   },
 
   {
-    "slug": "underfloor-underground-leak-detection",
-    "name": "Underfloor & Underground Leak Detection",
-    "icon": "🧱",
-    "category": "Emergency",
-    "isCore": false,
-    "targetTag": "all",
-    "description": "Acoustic detection and repair for concealed water leaks underneath concrete foundations and subfloors."
-  },
-  {
-    "slug": "waste-disposal-unit-installation-repair",
-    "name": "Waste Disposal Unit Installation & Repair",
-    "icon": "♻️",
-    "category": "Kitchen",
-    "isCore": false,
-    "targetTag": "all",
-    "description": "InSinkErator and waste disposer unit repairs, jam clearing, and replacement unit installations."
-  },
-  {
-    "slug": "outdoor-tap-installation-repair",
-    "name": "Outdoor Tap Installation & Repair",
-    "icon": "🌿",
-    "category": "General Plumbing",
-    "isCore": false,
-    "targetTag": "all",
-    "description": "Install new outdoor hose taps, frost-resistant brass hose bibs, and garden water supply lines."
-  },
-  {
-    "slug": "pressure-reducing-valve-replacement",
-    "name": "Pressure Reducing Valve & Pressure Limiting Valve Replacement",
-    "icon": "⚙️",
-    "category": "General Plumbing",
-    "isCore": false,
-    "targetTag": "all",
-    "description": "Replace pressure limiting valves (PLV) to safeguard household appliances from high mains pressure."
-  },
-  {
-    "slug": "roof-plumbing-spouting-repairs",
-    "name": "Roof Plumbing & Spouting Repairs",
-    "icon": "🏠",
-    "category": "Roofing",
-    "isCore": false,
-    "targetTag": "all",
-    "description": "Spouting leak repairs, Marley PVC & Colorsteel gutter replacements, flashings, and downpipe maintenance."
-  },
-  {
-    "slug": "drainage-sump-pump-installation-repair",
-    "name": "Drainage & Sump Pump Installation and Repair",
-    "icon": "🌊",
-    "category": "Drainage",
-    "isCore": false,
-    "targetTag": "all",
-    "description": "Basement sump pump testing, float switch repairs, and subsoil groundwater pump installations."
-  },
-
-  {
-    "slug": "pipe-thawing-freeze-protection",
-    "name": "Pipe Thawing & Freeze Protection",
-    "icon": "🧊",
-    "category": "Specialist",
-    "isCore": false,
-    "targetTag": "cold_only",
-    "description": "Safe pipe thawing and frost insulation for frozen water lines in colder South Island & alpine regions."
-  },
-  {
-    "slug": "radiator-underfloor-heating",
-    "name": "Underfloor & Radiator Heating Maintenance",
-    "icon": "🔥",
-    "category": "Heating",
-    "isCore": false,
-    "targetTag": "cold_only",
-    "description": "Hydronic in-slab underfloor heating and radiator central heating boiler repairs and flushing."
-  },
-
-  {
-    "slug": "septic-tank-maintenance",
-    "name": "Septic System Installation & Repairs",
-    "icon": "🚜",
-    "category": "Rural",
-    "isCore": false,
-    "targetTag": "rural_only",
-    "description": "Rural wastewater system plumbing, septic tank repairs, and effluent drainfield maintenance."
-  },
-  {
-    "slug": "farm-rural-plumbing",
-    "name": "Farm & Rural Plumbing Repairs",
-    "icon": "🚜",
-    "category": "Rural",
-    "isCore": false,
-    "targetTag": "rural_only",
-    "description": "Stock trough plumbing, rural water line repairs, trough float valves, and shed pipework."
-  },
-  {
-    "slug": "water-tank-rainwater-harvesting",
-    "name": "Water Tank & Rainwater Harvesting Setup",
-    "icon": "🪣",
-    "category": "Rural",
-    "isCore": false,
-    "targetTag": "rural_only",
-    "description": "Rainwater collection tank plumbing, UV filtration systems, and pressure pump integration."
-  },
-  {
-    "slug": "submersible-pump-repair",
-    "name": "Submersible & Water Tank Pump Repair",
+    "slug": "heat-pump-water-heaters",
+    "name": "Heat Pump Water Heaters",
     "icon": "⚡",
-    "category": "Pumps",
+    "category": "Hot Water",
+    "tier": "secondary",
     "isCore": false,
-    "targetTag": "rural_only",
-    "description": "Bore pumps, water tank pressure pumps, and rural water supply pump repair services."
+    "targetTag": "major_cities_only",
+    "description": "Eco-friendly heat pump water heater installations to cut hot water energy consumption in major urban centers."
+  },
+  {
+    "slug": "continuous-flow-gas-hot-water",
+    "name": "Continuous Flow Gas Hot Water",
+    "icon": "♨️",
+    "category": "Gasfitting",
+    "tier": "secondary",
+    "isCore": false,
+    "targetTag": "major_cities_only",
+    "description": "Convert from cylinder water heating to endless continuous flow gas hot water systems."
+  },
+  {
+    "slug": "gas-hob-installation",
+    "name": "Gas Hob Installation",
+    "icon": "🍳",
+    "category": "Gasfitting",
+    "tier": "secondary",
+    "isCore": false,
+    "targetTag": "major_cities_only",
+    "description": "Certificated connection of gas cooktops, freestanding gas stoves, and bayonet gas points."
+  },
+  {
+    "slug": "gas-fireplace-installation",
+    "name": "Gas Fireplace Installation",
+    "icon": "🪵",
+    "category": "Gasfitting",
+    "tier": "secondary",
+    "isCore": false,
+    "targetTag": "major_cities_only",
+    "description": "Gas log fire servicing, flue repairs, igniter replacements, and safety installations."
+  },
+  {
+    "slug": "backflow-testing",
+    "name": "Backflow Testing",
+    "icon": "🛡️",
+    "category": "Commercial",
+    "tier": "secondary",
+    "isCore": false,
+    "targetTag": "major_cities_only",
+    "description": "Annual commercial backflow prevention testing, IQP certification, and RPZ valve installations."
+  },
+  {
+    "slug": "tmv-servicing",
+    "name": "TMV Servicing",
+    "icon": "🌡️",
+    "category": "Commercial",
+    "tier": "secondary",
+    "isCore": false,
+    "targetTag": "major_cities_only",
+    "description": "Thermostatic Mixing Valve (TMV) testing and maintenance for rest homes, schools, and commercial facilities."
+  },
+  {
+    "slug": "grease-traps",
+    "name": "Grease Traps",
+    "icon": "🍽️",
+    "category": "Commercial",
+    "tier": "secondary",
+    "isCore": false,
+    "targetTag": "major_cities_only",
+    "description": "Commercial kitchen grease trap maintenance, grease converter installations, and sampling point plumbing."
+  },
+  {
+    "slug": "bathroom-renovations",
+    "name": "Bathroom Renovations",
+    "icon": "🛁",
+    "category": "Renovations",
+    "tier": "secondary",
+    "isCore": false,
+    "targetTag": "major_cities_only",
+    "description": "Full plumbing rough-ins, vanity installations, and layout alterations for residential bathroom remodels."
+  },
+  {
+    "slug": "gutter-downpipe-repairs",
+    "name": "Gutter and Downpipe Repairs",
+    "icon": "🌧️",
+    "category": "Roofing",
+    "tier": "secondary",
+    "isCore": false,
+    "targetTag": "major_cities_only",
+    "description": "Marley PVC and Colorsteel gutter repairs, spouting unblocking, and downpipe maintenance."
+  },
+  {
+    "slug": "pre-purchase-plumbing-inspections",
+    "name": "Pre-Purchase Plumbing Inspections",
+    "icon": "📋",
+    "category": "Inspections",
+    "tier": "secondary",
+    "isCore": false,
+    "targetTag": "major_cities_only",
+    "description": "Comprehensive pre-purchase plumbing checks including pipe materials, cylinder condition, and drainage status."
+  },
+  {
+    "slug": "new-build-plumbing",
+    "name": "New Build Plumbing",
+    "icon": "🏗️",
+    "category": "Renovations",
+    "tier": "secondary",
+    "isCore": false,
+    "targetTag": "major_cities_only",
+    "description": "Complete new house build plumbing, drainlaying, and gasfitting infrastructure setups."
   },
 
   {
-    "slug": "industrial-plumbing-maintenance",
-    "name": "Industrial Plumbing Maintenance",
-    "icon": "🏭",
-    "category": "Commercial",
+    "slug": "pipe-thawing",
+    "name": "Pipe Thawing",
+    "icon": "🧊",
+    "category": "Regional",
+    "tier": "regional",
     "isCore": false,
-    "targetTag": "industrial_only",
-    "description": "Industrial process pipework, factory water lines, and commercial backflow testing."
+    "targetTag": "cold_only",
+    "description": "Safe electrical pipe thawing for frozen water lines during South Island alpine winters."
+  },
+  {
+    "slug": "freeze-protection",
+    "name": "Freeze Protection",
+    "icon": "❄️",
+    "category": "Regional",
+    "tier": "regional",
+    "isCore": false,
+    "targetTag": "cold_only",
+    "description": "Pipe lagging and outdoor water pipe insulation for cold inland and mountain locations."
+  },
+  {
+    "slug": "septic-tanks",
+    "name": "Septic Tanks",
+    "icon": "🚜",
+    "category": "Regional",
+    "tier": "regional",
+    "isCore": false,
+    "targetTag": "rural_only",
+    "description": "Rural septic tank plumbing repairs, wastewater system maintenance, and effluent field servicing."
+  },
+  {
+    "slug": "farm-plumbing",
+    "name": "Farm Plumbing",
+    "icon": "🚜",
+    "category": "Regional",
+    "tier": "regional",
+    "isCore": false,
+    "targetTag": "rural_only",
+    "description": "Stock trough water lines, rural farm plumbing repairs, and shed water supply installations."
+  },
+  {
+    "slug": "submersible-pumps",
+    "name": "Submersible Pumps",
+    "icon": "⚡",
+    "category": "Regional",
+    "tier": "regional",
+    "isCore": false,
+    "targetTag": "rural_only",
+    "description": "Bore pumps, water tank submersible pumps, and rural water supply pump repair services."
+  },
+  {
+    "slug": "water-tanks",
+    "name": "Water Tanks",
+    "icon": "🪣",
+    "category": "Regional",
+    "tier": "regional",
+    "isCore": false,
+    "targetTag": "rural_only",
+    "description": "Rainwater harvesting tank connections, UV filtration systems, and household water tank pumps."
+  },
+  {
+    "slug": "water-softeners",
+    "name": "Water Softeners",
+    "icon": "💧",
+    "category": "Regional",
+    "tier": "regional",
+    "isCore": false,
+    "targetTag": "rural_only",
+    "description": "Hard water treatment installations to prevent mineral scale buildup on tapware and cylinders."
+  },
+  {
+    "slug": "underfloor-heating",
+    "name": "Underfloor Heating",
+    "icon": "🔥",
+    "category": "Regional",
+    "tier": "regional",
+    "isCore": false,
+    "targetTag": "cold_only",
+    "description": "Hydronic in-slab underfloor heating pipe installation, manifold balancing, and pump servicing."
+  },
+  {
+    "slug": "radiator-heating",
+    "name": "Radiator Heating",
+    "icon": "🪵",
+    "category": "Regional",
+    "tier": "regional",
+    "isCore": false,
+    "targetTag": "cold_only",
+    "description": "Central heating radiator plumbing, boiler servicing, and system flushing in colder regions."
+  },
+  {
+    "slug": "rv-caravan-plumbing",
+    "name": "RV / Caravan Plumbing",
+    "icon": "🚐",
+    "category": "Regional",
+    "tier": "regional",
+    "isCore": false,
+    "targetTag": "specialist_only",
+    "description": "Freshwater tank plumbing, greywater tank fittings, and gas compliance for motorhomes."
+  },
+  {
+    "slug": "solar-hot-water",
+    "name": "Solar Hot Water",
+    "icon": "☀️",
+    "category": "Regional",
+    "tier": "regional",
+    "isCore": false,
+    "targetTag": "specialist_only",
+    "description": "Solar hot water panel collector maintenance, solar cylinder valve replacements, and controller servicing."
   }
 ]

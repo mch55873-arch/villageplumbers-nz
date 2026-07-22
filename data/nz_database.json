@@ -3,6 +3,7 @@
     {
       "code": "auckland",
       "name": "Auckland",
+      "isMajorCity": true,
       "isColdRegion": false,
       "isRural": false,
       "isIndustrial": true,
@@ -29,6 +30,7 @@
     {
       "code": "wellington",
       "name": "Wellington",
+      "isMajorCity": true,
       "isColdRegion": false,
       "isRural": false,
       "isIndustrial": true,
@@ -55,6 +57,7 @@
     {
       "code": "canterbury",
       "name": "Canterbury",
+      "isMajorCity": true,
       "isColdRegion": true,
       "isRural": true,
       "isIndustrial": true,
@@ -81,6 +84,7 @@
     {
       "code": "waikato",
       "name": "Waikato",
+      "isMajorCity": true,
       "isColdRegion": false,
       "isRural": true,
       "isIndustrial": true,
@@ -107,6 +111,7 @@
     {
       "code": "bay-of-plenty",
       "name": "Bay of Plenty",
+      "isMajorCity": true,
       "isColdRegion": false,
       "isRural": true,
       "isIndustrial": true,
@@ -133,6 +138,7 @@
     {
       "code": "manawatu-whanganui",
       "name": "Manawatu-Whanganui",
+      "isMajorCity": false,
       "isColdRegion": false,
       "isRural": true,
       "isIndustrial": false,
@@ -159,6 +165,7 @@
     {
       "code": "hawkes-bay",
       "name": "Hawke's Bay",
+      "isMajorCity": false,
       "isColdRegion": false,
       "isRural": true,
       "isIndustrial": false,
@@ -185,6 +192,7 @@
     {
       "code": "taranaki",
       "name": "Taranaki",
+      "isMajorCity": false,
       "isColdRegion": false,
       "isRural": true,
       "isIndustrial": false,
@@ -211,6 +219,7 @@
     {
       "code": "northland",
       "name": "Northland",
+      "isMajorCity": false,
       "isColdRegion": false,
       "isRural": true,
       "isIndustrial": false,
@@ -237,6 +246,7 @@
     {
       "code": "southland",
       "name": "Southland",
+      "isMajorCity": false,
       "isColdRegion": true,
       "isRural": true,
       "isIndustrial": false,
@@ -263,6 +273,7 @@
     {
       "code": "nelson",
       "name": "Nelson",
+      "isMajorCity": false,
       "isColdRegion": false,
       "isRural": false,
       "isIndustrial": false,
@@ -289,6 +300,7 @@
     {
       "code": "marlborough",
       "name": "Marlborough",
+      "isMajorCity": false,
       "isColdRegion": false,
       "isRural": true,
       "isIndustrial": false,
@@ -315,6 +327,7 @@
     {
       "code": "tasman",
       "name": "Tasman",
+      "isMajorCity": false,
       "isColdRegion": false,
       "isRural": true,
       "isIndustrial": false,
@@ -341,6 +354,7 @@
     {
       "code": "gisborne",
       "name": "Gisborne",
+      "isMajorCity": false,
       "isColdRegion": false,
       "isRural": true,
       "isIndustrial": false,
@@ -367,6 +381,7 @@
     {
       "code": "west-coast",
       "name": "West Coast",
+      "isMajorCity": false,
       "isColdRegion": true,
       "isRural": true,
       "isIndustrial": false,
@@ -393,6 +408,7 @@
     {
       "code": "otago",
       "name": "Otago",
+      "isMajorCity": false,
       "isColdRegion": true,
       "isRural": true,
       "isIndustrial": false,
