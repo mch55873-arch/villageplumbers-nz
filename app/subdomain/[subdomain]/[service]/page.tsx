@@ -7,32 +7,22 @@ import servicesData from '../../../../data/services.json';
 
 export async function generateStaticParams() {
   const params: Array<{ subdomain: string; service: string }> = [];
-  const subdomainsSet = new Set<string>();
 
-  (nzDatabase.regions || []).forEach((reg: any) => {
-    const regSub = reg.code || reg.slug;
-    if (regSub && typeof regSub === 'string' && regSub.trim().length > 0) {
-      subdomainsSet.add(regSub.trim());
-    }
-    if (Array.isArray(reg.cities)) {
-      reg.cities.forEach((city: any) => {
-        const citySub = city.subdomain || city.slug;
-        if (citySub && typeof citySub === 'string' && citySub.trim().length > 0) {
-          subdomainsSet.add(citySub.trim());
-        }
-      });
-    }
-  });
+  // Pre-render main 16 regions for core services to stay under Cloudflare Pages 20,000 files limit.
+  // All 256 city subdomains and additional services render dynamically on-demand via Next.js ISR/Edge!
+  const mainRegions = (nzDatabase.regions || [])
+    .map((reg: any) => reg.code || reg.slug)
+    .filter((code: any) => typeof code === 'string' && code.trim().length > 0);
 
-  const validServices = (servicesData || []).filter(
-    (s: any) => s && typeof s.slug === 'string' && s.slug.trim().length > 0
-  );
+  const coreServices = (servicesData || [])
+    .filter((s: any) => s && s.isCore && typeof s.slug === 'string')
+    .map((s: any) => s.slug);
 
-  subdomainsSet.forEach((subdomain) => {
-    validServices.forEach((serv: any) => {
+  mainRegions.forEach((subdomain) => {
+    coreServices.forEach((service) => {
       params.push({
         subdomain: String(subdomain),
-        service: String(serv.slug),
+        service: String(service),
       });
     });
   });

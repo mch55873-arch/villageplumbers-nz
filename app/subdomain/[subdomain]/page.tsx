@@ -6,29 +6,11 @@ import nzDatabase from '../../../data/nz_database.json';
 import servicesData from '../../../data/services.json';
 
 export async function generateStaticParams() {
-  const params: Array<{ subdomain: string }> = [];
-  const subdomainsSet = new Set<string>();
-
-  (nzDatabase.regions || []).forEach((reg: any) => {
-    const regSub = reg.code || reg.slug;
-    if (regSub && typeof regSub === 'string' && regSub.trim().length > 0) {
-      subdomainsSet.add(regSub.trim());
-    }
-    if (Array.isArray(reg.cities)) {
-      reg.cities.forEach((city: any) => {
-        const citySub = city.subdomain || city.slug;
-        if (citySub && typeof citySub === 'string' && citySub.trim().length > 0) {
-          subdomainsSet.add(citySub.trim());
-        }
-      });
-    }
-  });
-
-  subdomainsSet.forEach((subdomain) => {
-    params.push({ subdomain: String(subdomain) });
-  });
-
-  return params;
+  // Pre-render main 16 regions. All 256 city subdomains render dynamically on-demand!
+  return (nzDatabase.regions || [])
+    .map((reg: any) => reg.code || reg.slug)
+    .filter((code: any) => typeof code === 'string' && code.trim().length > 0)
+    .map((code: string) => ({ subdomain: code }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ subdomain: string }> }): Promise<Metadata> {
