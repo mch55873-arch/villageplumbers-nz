@@ -8,7 +8,7 @@ export async function generateMetadata({ params }: { params: Promise<{ subdomain
   const resolvedParams = await params;
   const subdomain = resolvedParams.subdomain.toLowerCase();
 
-  // Region Subdomain (e.g. 'auckland', 'wellington')
+  // Region Subdomain (e.g. 'auckland')
   const regionData = nzDatabase.regions.find(r => r.code === subdomain);
   if (regionData) {
     return {
@@ -23,18 +23,18 @@ export async function generateMetadata({ params }: { params: Promise<{ subdomain
     };
   }
 
-  // Suburb search across regions
+  // Suburb Subdomain (e.g. 'ponsonby-auckland' or 'ponsonby')
   for (const reg of nzDatabase.regions) {
-    const cityData = reg.cities.find(c => c.slug === subdomain);
+    const cityData = reg.cities.find(c => c.subdomain === subdomain || c.slug === subdomain);
     if (cityData) {
       return {
         title: `Plumber in ${cityData.name}, ${reg.name} | Village Plumbers NZ`,
-        description: `Need a plumber in ${cityData.name} (${cityData.zip})? Certificated local NZ plumbers available 24/7 for emergency plumbing, blocked drains & hot water.`,
-        alternates: { canonical: `https://${cityData.slug}.villageplumbers.co.nz/` },
+        description: `Need a plumber in ${cityData.name}, ${reg.name} (${cityData.zip})? Certificated local NZ plumbers available 24/7. Call 0800 845 524.`,
+        alternates: { canonical: `https://${cityData.subdomain}.villageplumbers.co.nz/` },
         openGraph: {
           title: `Plumber in ${cityData.name}, ${reg.name} | Village Plumbers NZ`,
-          description: `Need a plumber in ${cityData.name} (${cityData.zip})? Certificated local NZ plumbers available 24/7.`,
-          url: `https://${cityData.slug}.villageplumbers.co.nz/`,
+          description: `Need a plumber in ${cityData.name}, ${reg.name} (${cityData.zip})? Certificated local NZ plumbers available 24/7.`,
+          url: `https://${cityData.subdomain}.villageplumbers.co.nz/`,
         }
       };
     }
@@ -82,11 +82,12 @@ export default async function SubdomainPage({ params }: { params: Promise<{ subd
             {regionData.cities.map((city) => (
               <Link
                 key={city.slug}
-                href={`/subdomain/${city.slug}`}
+                href={`/subdomain/${city.subdomain}`}
                 className="bg-white p-4 rounded-xl border border-slate-200 hover:border-sky-500 shadow-sm transition-all group"
               >
                 <div className="font-bold text-slate-900 group-hover:text-sky-600 text-base">{city.name}</div>
-                <div className="text-xs text-slate-400 mt-1">Postcode: {city.zip}</div>
+                <div className="text-xs text-sky-600 font-mono mt-1">{city.subdomain}.villageplumbers.co.nz</div>
+                <div className="text-xs text-slate-400 mt-0.5">Postcode: {city.zip}</div>
               </Link>
             ))}
           </div>
@@ -117,12 +118,12 @@ export default async function SubdomainPage({ params }: { params: Promise<{ subd
     );
   }
 
-  // 2. Is it a Suburb Subdomain? (e.g. 'ponsonby', 'te-aro')
+  // 2. Is it a Suburb Subdomain? (e.g. 'ponsonby-auckland' or 'ponsonby')
   let foundCity = null;
   let parentRegion = null;
 
   for (const reg of nzDatabase.regions) {
-    const city = reg.cities.find(c => c.slug === subdomain);
+    const city = reg.cities.find(c => c.subdomain === subdomain || c.slug === subdomain);
     if (city) {
       foundCity = city;
       parentRegion = reg;
@@ -136,13 +137,13 @@ export default async function SubdomainPage({ params }: { params: Promise<{ subd
         <section className="relative bg-slate-900 text-white py-20 px-4">
           <div className="max-w-5xl mx-auto text-center">
             <div className="inline-block bg-sky-500/20 text-sky-300 px-4 py-1 rounded-full text-xs font-bold mb-4 border border-sky-400/30">
-              📍 LOCAL {foundCity.name.toUpperCase()} PLUMBING SERVICE ({foundCity.zip})
+              📍 LOCAL {foundCity.name.toUpperCase()} ({parentRegion.name.toUpperCase()}) PLUMBING SERVICE
             </div>
             <h1 className="text-4xl md:text-5xl font-black text-white mb-6">
               Plumbers in <span className="text-sky-400">{foundCity.name}</span>, {parentRegion.name}
             </h1>
             <p className="text-slate-300 text-lg max-w-2xl mx-auto mb-8">
-              Local certified plumbers stationed in {foundCity.name} ({foundCity.zip}). 24/7 rapid dispatch for emergency plumbing, unblocking drains, gasfitting & hot water repairs.
+              Local certified plumbers stationed in {foundCity.name}, {parentRegion.name} ({foundCity.zip}). 24/7 rapid dispatch for emergency plumbing, unblocking drains, gasfitting & hot water repairs.
             </p>
             <a href="tel:0800845524" className="bg-sky-600 hover:bg-sky-500 text-white font-extrabold text-lg px-8 py-4 rounded-xl shadow-lg inline-block">
               📞 Direct {foundCity.name} Line: 0800 845 524
@@ -152,13 +153,13 @@ export default async function SubdomainPage({ params }: { params: Promise<{ subd
 
         <section className="max-w-7xl mx-auto px-4 py-16">
           <h2 className="text-2xl font-black text-slate-900 mb-8 text-center">
-            Services Available in {foundCity.name} ({parentRegion.name})
+            Services Available in {foundCity.name}, {parentRegion.name}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {servicesData.map((service) => (
               <Link
                 key={service.slug}
-                href={`/subdomain/${foundCity?.slug}/${service.slug}`}
+                href={`/subdomain/${foundCity?.subdomain}/${service.slug}`}
                 className="bg-white p-6 rounded-2xl border border-slate-200 hover:shadow-md transition-all flex items-start gap-4"
               >
                 <span className="text-3xl">{service.icon}</span>

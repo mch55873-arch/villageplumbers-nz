@@ -26,18 +26,18 @@ export async function generateMetadata({ params }: { params: Promise<{ subdomain
     };
   }
 
-  // Suburb Subdomain (e.g. 'ponsonby')
+  // Suburb Subdomain (e.g. 'ponsonby-auckland' or 'ponsonby')
   for (const reg of nzDatabase.regions) {
-    const cityData = reg.cities.find(c => c.slug === subdomain);
+    const cityData = reg.cities.find(c => c.subdomain === subdomain || c.slug === subdomain);
     if (cityData) {
       return {
         title: `${serviceName} in ${cityData.name}, ${reg.name} (${cityData.zip}) | Village Plumbers`,
-        description: `24/7 ${serviceName} experts in ${cityData.name} (${cityData.zip}). Fast response local certificated plumbers. Call 0800 845 524.`,
-        alternates: { canonical: `https://${cityData.slug}.villageplumbers.co.nz/${resolvedParams.service}` },
+        description: `24/7 ${serviceName} experts in ${cityData.name}, ${reg.name} (${cityData.zip}). Fast response local certificated plumbers. Call 0800 845 524.`,
+        alternates: { canonical: `https://${cityData.subdomain}.villageplumbers.co.nz/${resolvedParams.service}` },
         openGraph: {
           title: `${serviceName} in ${cityData.name}, ${reg.name} (${cityData.zip}) | Village Plumbers`,
-          description: `24/7 ${serviceName} experts in ${cityData.name} (${cityData.zip}). Fast response local certificated plumbers.`,
-          url: `https://${cityData.slug}.villageplumbers.co.nz/${resolvedParams.service}`,
+          description: `24/7 ${serviceName} experts in ${cityData.name}, ${reg.name} (${cityData.zip}). Fast response local certificated plumbers.`,
+          url: `https://${cityData.subdomain}.villageplumbers.co.nz/${resolvedParams.service}`,
         }
       };
     }
@@ -102,7 +102,7 @@ export default async function SubdomainServicePage({ params }: { params: Promise
               {regionData.cities.map((city) => (
                 <Link
                   key={city.slug}
-                  href={`/subdomain/${city.slug}/${resolvedParams.service}`}
+                  href={`/subdomain/${city.subdomain}/${resolvedParams.service}`}
                   className="bg-slate-50 p-3 rounded-xl border border-slate-200 hover:border-sky-500 text-slate-900 font-bold text-sm block hover:text-sky-600"
                 >
                   {city.name} {serviceName}
@@ -121,7 +121,7 @@ export default async function SubdomainServicePage({ params }: { params: Promise
   let parentRegion = null;
 
   for (const reg of nzDatabase.regions) {
-    const city = reg.cities.find(c => c.slug === subdomain);
+    const city = reg.cities.find(c => c.subdomain === subdomain || c.slug === subdomain);
     if (city) {
       foundCity = city;
       parentRegion = reg;
@@ -137,7 +137,7 @@ export default async function SubdomainServicePage({ params }: { params: Promise
           <nav className="text-xs text-slate-500 mb-8 flex items-center gap-2">
             <Link href="/" className="hover:text-sky-600">Home</Link>
             <span>/</span>
-            <Link href={`/subdomain/${foundCity.slug}`} className="hover:text-sky-600">{foundCity.name}</Link>
+            <Link href={`/subdomain/${foundCity.subdomain}`} className="hover:text-sky-600">{foundCity.name}</Link>
             <span>/</span>
             <span className="text-slate-900 font-semibold">{serviceName}</span>
           </nav>
@@ -150,11 +150,11 @@ export default async function SubdomainServicePage({ params }: { params: Promise
               </div>
               
               <h1 className="text-3xl md:text-5xl font-black text-white leading-tight mb-6">
-                {serviceName} in <span className="text-sky-400">{foundCity.name}</span>
+                {serviceName} in <span className="text-sky-400">{foundCity.name}</span>, {parentRegion.name}
               </h1>
               
               <p className="text-slate-300 text-lg leading-relaxed mb-8">
-                {serviceDesc} Certificated local plumbers stationed in {foundCity.name} ({foundCity.zip}) ready for immediate response.
+                {serviceDesc} Certificated local plumbers stationed in {foundCity.name}, {parentRegion.name} ({foundCity.zip}) ready for immediate response.
               </p>
 
               <a href="tel:0800845524" className="bg-sky-600 hover:bg-sky-500 text-white font-extrabold text-lg px-8 py-4 rounded-xl shadow-lg inline-block">
@@ -171,7 +171,7 @@ export default async function SubdomainServicePage({ params }: { params: Promise
               {servicesData.slice(0, 12).map((srv) => (
                 <Link
                   key={srv.slug}
-                  href={`/subdomain/${foundCity?.slug}/${srv.slug}`}
+                  href={`/subdomain/${foundCity?.subdomain}/${srv.slug}`}
                   className="bg-slate-50 p-4 rounded-xl border border-slate-200 hover:border-sky-500 flex items-center gap-3 text-slate-900 hover:text-sky-600 font-bold text-sm"
                 >
                   <span className="text-xl">{srv.icon}</span>

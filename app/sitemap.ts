@@ -33,7 +33,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     });
   });
 
-  // 3. Regions & Suburbs Subdomain Entries
+  // 3. Regions & Sub-Region Subdomain Entries
   nzDatabase.regions.forEach((region) => {
     sitemapEntries.push({
       url: `https://${region.code}.${DOMAIN}`,
@@ -44,7 +44,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     region.cities.forEach((city) => {
       sitemapEntries.push({
-        url: `https://${city.slug}.${DOMAIN}`,
+        url: `https://${city.subdomain}.${DOMAIN}`,
         lastModified: new Date(),
         changeFrequency: 'weekly',
         priority: 0.8,
