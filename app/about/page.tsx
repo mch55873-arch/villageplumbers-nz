@@ -2,15 +2,15 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 export const metadata = {
-  title: "About Us | batyspestcontrol",
-  description: "Learn more about batyspestcontrol, your trusted partner for professional pest control services.",
+  title: "About Us | Village Plumbers NZ",
+  description: "Learn more about Village Plumbers NZ, connecting customers with licensed local plumbing professionals across New Zealand.",
   alternates: {
     canonical: '/about',
   },
   openGraph: {
-    title: "About Us | batyspestcontrol",
-    description: "Learn more about batyspestcontrol, your trusted partner for professional pest control services.",
-    url: 'https://www.batyspestcontrol.com/about',
+    title: "About Us | Village Plumbers NZ",
+    description: "Learn more about Village Plumbers NZ, connecting customers with licensed local plumbing professionals across New Zealand.",
+    url: 'https://villageplumbers.co.nz/about',
   }
 };
 

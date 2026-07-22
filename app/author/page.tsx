@@ -2,15 +2,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export const metadata = {
-  title: "Meet Our Experts & Authors | batyspestcontrol",
-  description: "Get to know the certified entomologists, experienced technicians, and expert authors behind batyspestcontrol.",
+  title: "Meet Our Plumbing Specialists | Village Plumbers NZ",
+  description: "Get to know the experienced trade professionals and industry authors behind Village Plumbers NZ.",
   alternates: {
     canonical: '/author',
   },
   openGraph: {
-    title: "Meet Our Experts & Authors | batyspestcontrol",
-    description: "Get to know the certified entomologists, experienced technicians, and expert authors behind batyspestcontrol.",
-    url: 'https://www.batyspestcontrol.com/author',
+    title: "Meet Our Plumbing Specialists | Village Plumbers NZ",
+    description: "Get to know the experienced trade professionals and industry authors behind Village Plumbers NZ.",
+    url: 'https://villageplumbers.co.nz/author',
   }
 };
 
