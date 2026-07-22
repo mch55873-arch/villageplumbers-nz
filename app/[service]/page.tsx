@@ -94,15 +94,18 @@ export default async function ServicePage({ params }: { params: Promise<{ servic
             Available Regions for {serviceName}
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {nzDatabase.regions.map((reg: any) => (
-              <Link 
-                key={reg.slug}
-                href={`/subdomain/${reg.slug}/${resolvedParams.service}`}
-                className="bg-slate-50 hover:bg-emerald-100 hover:text-emerald-900 p-4 rounded-xl font-bold text-xs transition-all text-center border border-slate-200"
-              >
-                📍 {reg.name} {serviceName}
-              </Link>
-            ))}
+            {nzDatabase.regions.map((reg: any) => {
+              const regSlug = reg.code || reg.slug;
+              return (
+                <Link 
+                  key={regSlug}
+                  href={`/subdomain/${regSlug}/${resolvedParams.service}`}
+                  className="bg-slate-50 hover:bg-emerald-100 hover:text-emerald-900 p-4 rounded-xl font-bold text-xs transition-all text-center border border-slate-200"
+                >
+                  📍 {reg.name} {serviceName}
+                </Link>
+              );
+            })}
           </div>
         </div>
 

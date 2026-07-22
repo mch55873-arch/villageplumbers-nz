@@ -6,9 +6,29 @@ import nzDatabase from '../../../data/nz_database.json';
 import servicesData from '../../../data/services.json';
 
 export async function generateStaticParams() {
-  return nzDatabase.regions.map((reg: any) => ({
-    subdomain: reg.slug,
-  }));
+  const params: Array<{ subdomain: string }> = [];
+  const subdomainsSet = new Set<string>();
+
+  (nzDatabase.regions || []).forEach((reg: any) => {
+    const regSub = reg.code || reg.slug;
+    if (regSub && typeof regSub === 'string' && regSub.trim().length > 0) {
+      subdomainsSet.add(regSub.trim());
+    }
+    if (Array.isArray(reg.cities)) {
+      reg.cities.forEach((city: any) => {
+        const citySub = city.subdomain || city.slug;
+        if (citySub && typeof citySub === 'string' && citySub.trim().length > 0) {
+          subdomainsSet.add(citySub.trim());
+        }
+      });
+    }
+  });
+
+  subdomainsSet.forEach((subdomain) => {
+    params.push({ subdomain: String(subdomain) });
+  });
+
+  return params;
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ subdomain: string }> }): Promise<Metadata> {
@@ -18,7 +38,7 @@ export async function generateMetadata({ params }: { params: Promise<{ subdomain
     .map(w => w.charAt(0).toUpperCase() + w.slice(1))
     .join(' ');
 
-  const region = nzDatabase.regions.find(r => r.slug === resolvedParams.subdomain);
+  const region = nzDatabase.regions.find((r: any) => r.code === resolvedParams.subdomain || r.slug === resolvedParams.subdomain);
   if (region) locName = region.name;
 
   return {
@@ -47,7 +67,7 @@ export default async function SubdomainPage({ params }: { params: Promise<{ subd
   let isIndustrial = false;
   let nearbySuburbs: any[] = [];
 
-  const region = nzDatabase.regions.find(r => r.slug === resolvedParams.subdomain);
+  const region = nzDatabase.regions.find((r: any) => r.code === resolvedParams.subdomain || r.slug === resolvedParams.subdomain);
 
   if (region) {
     locName = region.name;

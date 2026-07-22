@@ -7,14 +7,36 @@ import servicesData from '../../../../data/services.json';
 
 export async function generateStaticParams() {
   const params: Array<{ subdomain: string; service: string }> = [];
-  nzDatabase.regions.forEach((reg: any) => {
-    servicesData.forEach((serv: any) => {
+  const subdomainsSet = new Set<string>();
+
+  (nzDatabase.regions || []).forEach((reg: any) => {
+    const regSub = reg.code || reg.slug;
+    if (regSub && typeof regSub === 'string' && regSub.trim().length > 0) {
+      subdomainsSet.add(regSub.trim());
+    }
+    if (Array.isArray(reg.cities)) {
+      reg.cities.forEach((city: any) => {
+        const citySub = city.subdomain || city.slug;
+        if (citySub && typeof citySub === 'string' && citySub.trim().length > 0) {
+          subdomainsSet.add(citySub.trim());
+        }
+      });
+    }
+  });
+
+  const validServices = (servicesData || []).filter(
+    (s: any) => s && typeof s.slug === 'string' && s.slug.trim().length > 0
+  );
+
+  subdomainsSet.forEach((subdomain) => {
+    validServices.forEach((serv: any) => {
       params.push({
-        subdomain: reg.slug,
-        service: serv.slug,
+        subdomain: String(subdomain),
+        service: String(serv.slug),
       });
     });
   });
+
   return params;
 }
 
@@ -25,7 +47,7 @@ export async function generateMetadata({ params }: { params: Promise<{ subdomain
     .split('-')
     .map(w => w.charAt(0).toUpperCase() + w.slice(1))
     .join(' ');
-  const region = nzDatabase.regions.find(r => r.slug === resolvedParams.subdomain);
+  const region = nzDatabase.regions.find((r: any) => r.code === resolvedParams.subdomain || r.slug === resolvedParams.subdomain);
   if (region) locName = region.name;
 
   const foundService = servicesData.find(s => s.slug === resolvedParams.service);
@@ -53,7 +75,7 @@ export default async function SubdomainServicePage({ params }: { params: Promise
 
   let locName = '';
   let nearbySuburbs: any[] = [];
-  const region = nzDatabase.regions.find(r => r.slug === resolvedParams.subdomain);
+  const region = nzDatabase.regions.find((r: any) => r.code === resolvedParams.subdomain || r.slug === resolvedParams.subdomain);
 
   if (region) {
     locName = region.name;

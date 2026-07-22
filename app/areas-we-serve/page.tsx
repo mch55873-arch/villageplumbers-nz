@@ -59,37 +59,44 @@ export default function AreasWeServePage() {
       {/* Regions Grid */}
       <section className="max-w-7xl mx-auto px-4 py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {regions.map((reg: any) => (
-            <div key={reg.slug} className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-md transition-all">
-              <h2 className="text-2xl font-black text-slate-900 mb-2">
-                <Link href={`/subdomain/${reg.slug}`} className="hover:text-emerald-600 transition-colors">
-                  📍 {reg.name}
-                </Link>
-              </h2>
-              <p className="text-slate-500 text-xs mb-6 font-semibold">
-                {reg.suburbs?.length || 0} Suburbs & Local Towns Covered
-              </p>
-
-              <div className="flex flex-wrap gap-2 mb-6">
-                {reg.suburbs?.map((sub: any) => (
-                  <Link 
-                    key={sub.slug} 
-                    href={`/subdomain/${sub.slug}`}
-                    className="text-xs bg-slate-100 hover:bg-emerald-100 hover:text-emerald-900 text-slate-700 px-3 py-1 rounded-lg transition-all font-medium"
-                  >
-                    {sub.name}
+          {regions.map((reg: any) => {
+            const regSlug = reg.code || reg.slug;
+            const cities = reg.cities || reg.suburbs || [];
+            return (
+              <div key={regSlug} className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-md transition-all">
+                <h2 className="text-2xl font-black text-slate-900 mb-2">
+                  <Link href={`/subdomain/${regSlug}`} className="hover:text-emerald-600 transition-colors">
+                    📍 {reg.name}
                   </Link>
-                ))}
-              </div>
+                </h2>
+                <p className="text-slate-500 text-xs mb-6 font-semibold">
+                  {cities.length} Suburbs & Local Towns Covered
+                </p>
 
-              <Link 
-                href={`/subdomain/${reg.slug}`}
-                className="inline-flex items-center gap-1 text-emerald-600 font-bold text-xs hover:gap-2 transition-all"
-              >
-                View {reg.name} Region Hub →
-              </Link>
-            </div>
-          ))}
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {cities.map((city: any) => {
+                    const citySlug = city.subdomain || city.slug;
+                    return (
+                      <Link 
+                        key={citySlug} 
+                        href={`/subdomain/${citySlug}`}
+                        className="text-xs bg-slate-100 hover:bg-emerald-100 hover:text-emerald-900 text-slate-700 px-3 py-1 rounded-lg transition-all font-medium"
+                      >
+                        {city.name}
+                      </Link>
+                    );
+                  })}
+                </div>
+
+                <Link 
+                  href={`/subdomain/${regSlug}`}
+                  className="inline-flex items-center gap-1 text-emerald-600 font-bold text-xs hover:gap-2 transition-all"
+                >
+                  View {reg.name} Region Hub →
+                </Link>
+              </div>
+            );
+          })}
         </div>
       </section>
 
