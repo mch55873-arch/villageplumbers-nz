@@ -46,7 +46,7 @@ export default async function SubdomainServicePage({ params }: { params: Promise
 
   if (region) {
     locName = region.name;
-    nearbySuburbs = region.suburbs || [];
+    nearbySuburbs = region.cities || region.suburbs || [];
   } else {
     let foundSub: any = null;
     let foundParentReg: any = null;
@@ -221,15 +221,18 @@ export default async function SubdomainServicePage({ params }: { params: Promise
             </p>
 
             <div className="flex flex-wrap gap-2.5 justify-center">
-              {nearbySuburbs.map((sub: any) => (
-                <Link 
-                  key={sub.slug}
-                  href={`/subdomain/${sub.slug}/${resolvedParams.service}`}
-                  className="bg-slate-800 hover:bg-emerald-400 hover:text-slate-950 border border-slate-700 px-4 py-2 rounded-xl text-xs font-bold transition-all"
-                >
-                  📍 {sub.name} {serviceName}
-                </Link>
-              ))}
+              {nearbySuburbs.map((sub: any) => {
+                const subSlug = sub.subdomain || sub.slug;
+                return (
+                  <Link 
+                    key={subSlug}
+                    href={`/subdomain/${subSlug}/${resolvedParams.service}`}
+                    className="bg-slate-800 hover:bg-emerald-400 hover:text-slate-950 border border-slate-700 px-4 py-2 rounded-xl text-xs font-bold transition-all"
+                  >
+                    📍 {sub.name} {serviceName}
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </section>
