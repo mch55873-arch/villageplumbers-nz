@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-// Markdown parser helper for H1, H2, H3, H4, Lists, Links and Paragraphs
+// Markdown parser helper for H1, H2, H3, H4, Tables, Ordered/Unordered Lists, Links and Paragraphs
 function renderMarkdownContent(content: string) {
   const blocks = content.split(/\n\n+/);
 
@@ -71,6 +71,72 @@ function renderMarkdownContent(content: string) {
           {trimmed.replace(/^####\s+/, '')}
         </h4>
       );
+    }
+
+    // Table Parser (| header | header |)
+    if (trimmed.includes('|') && trimmed.includes('\n')) {
+      const lines = trimmed.split('\n').map(l => l.trim()).filter(Boolean);
+      if (lines.length >= 2 && lines[0].startsWith('|') && lines[1].includes('---')) {
+        const parseRow = (rowStr: string) => 
+          rowStr.split('|').map(c => c.trim()).filter((c, i, arr) => !(i === 0 && c === '') && !(i === arr.length - 1 && c === ''));
+
+        const headers = parseRow(lines[0]);
+        const dataRows = lines.slice(2).map(parseRow);
+
+        return (
+          <div key={`table-${idx}`} className="my-8 overflow-x-auto rounded-2xl border border-slate-200 shadow-sm">
+            <table className="w-full text-left text-sm text-slate-700 border-collapse">
+              <thead className="bg-slate-900 text-white font-bold text-xs uppercase tracking-wider">
+                <tr>
+                  {headers.map((h, i) => (
+                    <th key={`th-${i}`} className="px-5 py-4 border-b border-slate-800">
+                      {renderInlineFormatting(h)}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {dataRows.map((row, rIdx) => (
+                  <tr key={`tr-${rIdx}`} className={rIdx % 2 === 0 ? 'bg-white hover:bg-slate-50' : 'bg-slate-50/70 hover:bg-slate-100/70'}>
+                    {row.map((cell, cIdx) => (
+                      <td key={`td-${cIdx}`} className="px-5 py-3.5 text-slate-800 font-medium">
+                        {renderInlineFormatting(cell)}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        );
+      }
+    }
+
+    // Ordered / Numbered List (1. Item 1 \n 2. Item 2 OR "1. Step one. 2. Step two.")
+    if (/^\d+\.\s/.test(trimmed) || (trimmed.includes('1.') && trimmed.includes('2.') && trimmed.includes('3.'))) {
+      let items: string[] = [];
+      if (trimmed.includes('\n')) {
+        items = trimmed.split('\n').map(l => l.replace(/^\d+\.\s*/, '').trim()).filter(Boolean);
+      } else {
+        items = trimmed.split(/\s*(?=\d+\.\s*)/).map(l => l.replace(/^\d+\.\s*/, '').trim()).filter(Boolean);
+      }
+
+      if (items.length > 1) {
+        return (
+          <ol key={`ol-${idx}`} className="space-y-3 my-6">
+            {items.map((item, i) => (
+              <li key={`ol-item-${idx}-${i}`} className="flex items-start gap-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                <span className="w-6 h-6 rounded-full bg-emerald-400 text-slate-950 font-black text-xs flex items-center justify-center shrink-0 mt-0.5 shadow-sm">
+                  {i + 1}
+                </span>
+                <span className="text-slate-800 text-base leading-relaxed font-medium">
+                  {renderInlineFormatting(item)}
+                </span>
+              </li>
+            ))}
+          </ol>
+        );
+      }
     }
 
     // Unordered List (- or *)
