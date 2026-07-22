@@ -10,8 +10,8 @@ export const runtime = 'edge';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://villageplumbers.co.nz'),
-  title: "Village Plumbers NZ | Connect with Local Plumbing Professionals 24/7",
-  description: "Connecting homeowners & businesses with available licensed, certificated local plumbing professionals across 16 New Zealand regions. 24/7 emergency response.",
+  title: "Village Plumbers NZ | Emergency Plumbing, Gasfitting & Drainlaying",
+  description: "Connect with available, independent, certificated local plumbing professionals across 16 New Zealand regions. Available 24/7.",
   keywords: ["Plumber NZ", "Find Local Plumber", "Emergency Plumbing New Zealand", "Blocked Drain Unblocking", "Hot Water Cylinder Repair"],
   publisher: "Village Plumbers NZ",
   robots: {
@@ -23,26 +23,12 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Village Plumbers NZ | Connect with Local Plumbing Professionals 24/7",
-    description: "Connecting homeowners & businesses with available licensed local plumbing professionals across New Zealand.",
+    title: "Village Plumbers NZ | Emergency Plumbing, Gasfitting & Drainlaying",
+    description: "Connect with available, independent, certificated local plumbing professionals across 16 New Zealand regions.",
     url: 'https://villageplumbers.co.nz',
     siteName: "Village Plumbers NZ",
     locale: 'en_NZ',
     type: 'website',
-    images: [
-      {
-        url: '/logo.png',
-        width: 800,
-        height: 600,
-        alt: "Village Plumbers NZ Logo",
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: "Village Plumbers NZ | Connect with Local Plumbing Professionals",
-    description: "Connecting homeowners & businesses with available licensed local plumbing professionals across New Zealand.",
-    images: ['/logo.png'],
   },
   icons: {
     icon: '/logo.png',
@@ -56,157 +42,142 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en-NZ" className={`scroll-smooth ${inter.variable} ${outfit.variable}`}>
-      <body suppressHydrationWarning className="bg-white text-gray-900 antialiased font-sans">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@graph": [
-                {
-                  "@type": "WebSite",
-                  "@id": "https://villageplumbers.co.nz/#website",
-                  "url": "https://villageplumbers.co.nz",
-                  "name": "Village Plumbers NZ",
-                  "description": "Connecting customers with available local plumbing professionals serving New Zealand.",
-                  "inLanguage": "en-NZ"
-                },
-                {
-                  "@type": "Service",
-                  "@id": "https://villageplumbers.co.nz/#service",
-                  "name": "Local Plumbing Connection Network",
-                  "provider": {
-                    "@type": "Organization",
-                    "name": "Village Plumbers NZ"
-                  },
-                  "areaServed": "NZ"
-                }
-              ]
-            })
-          }}
-        />
+      <body suppressHydrationWarning className="bg-slate-50 text-slate-900 antialiased font-sans flex flex-col min-h-screen">
         
-        {/* TOP EMERGENCY BAR */}
-        <div className="bg-sky-800 text-white hidden sm:block border-b border-sky-900">
-            <div className="max-w-7xl mx-auto px-4">
-                <div className="flex flex-col md:flex-row justify-between items-center py-2 text-xs md:text-sm font-semibold">
-                    <div className="flex items-center space-x-2">
-                        <span className="animate-pulse">💧</span>
-                        <span>Connecting customers with available, certificated local plumbing professionals serving your area</span>
-                    </div>
-                    <div className="flex items-center space-x-6">
-                        <a href="tel:0800845524" className="hover:text-sky-200 transition-colors flex items-center gap-2 font-bold">
-                            <span>📞</span> 0800 845 524
-                        </a>
-                    </div>
-                </div>
+        {/* TOP BAR (Reference Site Design) */}
+        <div className="bg-sky-500 text-slate-950 font-bold text-xs md:text-sm py-2 px-4">
+          <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-2">
+            <div className="flex items-center gap-4">
+              <span>📍 Serving All 16 New Zealand Regions</span>
+              <span className="hidden md:inline">|</span>
+              <span className="hidden md:inline">⚡ 24/7 Emergency Trade Dispatch</span>
             </div>
+            <div className="flex items-center gap-6">
+              <a href="mailto:contact@villageplumbers.co.nz" className="hover:underline hidden sm:inline">
+                ✉️ contact@villageplumbers.co.nz
+              </a>
+              <a href="tel:0800845524" className="hover:underline flex items-center gap-1 font-extrabold text-slate-950">
+                📞 0800 845 524
+              </a>
+            </div>
+          </div>
         </div>
 
         {/* MAIN NAVIGATION */}
-        <header className="sticky top-0 z-50 bg-slate-900 text-white shadow-xl shadow-slate-900/10">
-          <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+        <header className="bg-slate-900 text-white sticky top-0 z-50 shadow-xl border-b border-slate-800">
+          <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
             
-            <Link href="/" className="flex items-center gap-3 group">
-               <div className="relative flex items-center justify-center w-10 h-10 bg-sky-600 rounded-xl shadow-md group-hover:scale-105 transition-all">
-                 <span className="text-2xl">🔧</span>
-               </div>
-               
-               <div className="flex flex-col justify-center">
-                 <span className="font-extrabold text-xl tracking-tight leading-none text-white">Village Plumbers</span>
-                 <span className="font-bold text-xs tracking-[0.2em] text-sky-400 uppercase mt-0.5">New Zealand</span>
-               </div>
+            {/* Logo */}
+            <Link href="/" className="flex items-center gap-2">
+              <div className="w-10 h-10 bg-sky-500 rounded-xl flex items-center justify-center font-black text-slate-950 text-xl shadow-md shadow-sky-500/20">
+                💧
+              </div>
+              <span className="text-xl md:text-2xl font-black tracking-tight text-white">
+                Village Plumbers <span className="text-sky-400">NZ</span>
+              </span>
             </Link>
-            
+
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center space-x-8 font-medium text-sm text-slate-200">
-               <Link href="/" className="hover:text-sky-400 transition-colors">Home</Link>
-               <Link href="/about" className="hover:text-sky-400 transition-colors">About</Link>
-               <Link href="/#services" className="hover:text-sky-400 transition-colors">25 Core Services</Link>
-               <Link href="/#regions" className="hover:text-sky-400 transition-colors">16 Regions</Link>
-            </div>
-            
-            {/* Call to Action */}
-            <div className="flex items-center space-x-3 bg-sky-600 hover:bg-sky-500 text-white px-5 py-2.5 rounded-xl shadow-md transition-all">
-                <span className="text-xl">📞</span>
-                <div>
-                    <div className="text-[10px] text-sky-100 font-extrabold uppercase tracking-wider">Connect 24/7</div>
-                    <a href="tel:0800845524" className="text-sm font-extrabold text-white">
-                        0800 845 524
-                    </a>
+            <nav className="hidden lg:flex items-center gap-8 text-sm font-semibold">
+              <Link href="/" className="text-sky-400 hover:text-white transition-colors">Home</Link>
+              <Link href="/about" className="text-slate-300 hover:text-sky-400 transition-colors">About Us</Link>
+              <Link href="/#core-services" className="text-slate-300 hover:text-sky-400 transition-colors">Services</Link>
+              <Link href="/blog" className="text-slate-300 hover:text-sky-400 transition-colors">Blog & Guides</Link>
+              <Link href="/#contact-form" className="text-slate-300 hover:text-sky-400 transition-colors">Contact Us</Link>
+            </nav>
+
+            {/* Header Call Button (Reference Site Design) */}
+            <div className="flex items-center gap-3">
+              <a 
+                href="tel:0800845524"
+                className="bg-white text-slate-900 px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-sky-400 hover:text-slate-950 transition-all flex items-center gap-2 shadow-sm"
+              >
+                <span>📞</span>
+                <div className="text-left leading-tight hidden sm:block">
+                  <div className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Call 24/7</div>
+                  <div className="font-extrabold text-xs">0800 845 524</div>
                 </div>
+              </a>
             </div>
-            
+
           </div>
         </header>
 
-        <div className="min-h-screen flex flex-col">
-            {children}
-            
-            <footer className="bg-slate-950 text-white pt-16 pb-16 border-t border-slate-800">
-                <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-                    
-                    {/* Col 1 */}
-                    <div className="space-y-4">
-                        <Link href="/" className="flex items-center gap-3">
-                           <div className="w-10 h-10 bg-sky-600 rounded-xl flex items-center justify-center text-xl font-bold">
-                             🔧
-                           </div>
-                           <div className="flex flex-col">
-                             <span className="font-extrabold text-xl text-white">Village Plumbers</span>
-                             <span className="font-bold text-xs text-sky-400 uppercase tracking-widest">New Zealand</span>
-                           </div>
-                        </Link>
-                        <p className="text-slate-400 text-sm leading-relaxed">
-                            Connecting homeowners and commercial properties with available, licensed, and certificated local plumbing professionals across New Zealand.
-                        </p>
-                    </div>
+        {/* Page Content */}
+        <main className="flex-1">
+          {children}
+        </main>
 
-                    {/* Col 2 */}
-                    <div>
-                        <h4 className="text-white font-bold mb-4 text-base">Popular Core Services</h4>
-                        <ul className="space-y-2 text-sm text-slate-400">
-                            <li><Link href="/emergency-plumbing" className="hover:text-sky-400 transition-colors">Emergency Plumber</Link></li>
-                            <li><Link href="/blocked-drain-unblocking" className="hover:text-sky-400 transition-colors">Blocked Drain Unblocking</Link></li>
-                            <li><Link href="/hot-water-cylinder-installation" className="hover:text-sky-400 transition-colors">Hot Water Cylinder Installation</Link></li>
-                            <li><Link href="/gasfitting-repairs" className="hover:text-sky-400 transition-colors">Gasfitting and Gas Repairs</Link></li>
-                            <li><Link href="/burst-pipe-repair" className="hover:text-sky-400 transition-colors">Burst Pipe Repair</Link></li>
-                        </ul>
-                    </div>
-
-                    {/* Col 3 */}
-                    <div>
-                        <h4 className="text-white font-bold mb-4 text-base">Regional Hubs</h4>
-                        <ul className="space-y-2 text-sm text-slate-400">
-                            <li><Link href="/subdomain/auckland" className="hover:text-sky-400">Auckland Region</Link></li>
-                            <li><Link href="/subdomain/wellington" className="hover:text-sky-400">Wellington Region</Link></li>
-                            <li><Link href="/subdomain/canterbury" className="hover:text-sky-400">Canterbury (Christchurch)</Link></li>
-                            <li><Link href="/subdomain/waikato" className="hover:text-sky-400">Waikato (Hamilton)</Link></li>
-                            <li><Link href="/subdomain/bay-of-plenty" className="hover:text-sky-400">Bay of Plenty (Tauranga)</Link></li>
-                        </ul>
-                    </div>
-
-                    {/* Col 4 */}
-                    <div>
-                        <h4 className="text-white font-bold mb-4 text-base">Connect with Local Trade</h4>
-                        <p className="text-slate-400 text-sm mb-4">
-                            Looking for a plumber or drainlayer in your local suburb? Call our nationwide connection line.
-                        </p>
-                        <a href="tel:0800845524" className="inline-block bg-sky-600 hover:bg-sky-500 text-white font-extrabold px-6 py-3 rounded-xl transition-all shadow-lg">
-                            📞 0800 845 524
-                        </a>
-                    </div>
+        {/* FOOTER (Reference Site Design) */}
+        <footer className="bg-slate-950 text-white pt-16 pb-8 border-t border-slate-800 text-sm">
+          <div className="max-w-7xl mx-auto px-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+              
+              {/* Col 1: About */}
+              <div>
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-8 h-8 bg-sky-500 rounded-lg flex items-center justify-center font-bold text-slate-950 text-base">
+                    💧
+                  </div>
+                  <span className="text-xl font-black text-white">
+                    Village Plumbers <span className="text-sky-400">NZ</span>
+                  </span>
                 </div>
-                
-                {/* Legal & Lead-Gen Compliance Disclaimer */}
-                <div className="max-w-7xl mx-auto mt-12 pt-6 border-t border-slate-800 text-xs text-slate-500 space-y-2 text-center md:text-left">
-                    <p>
-                        <strong>Disclaimer:</strong> Village Plumbers NZ is an independent consumer matching and referral platform. We connect customers with available, independent, licensed and certificated plumbing, gasfitting, and drainlaying professionals serving your local area. All trade work in New Zealand is performed independently by qualified practitioners registered with the Plumbers, Gasfitters and Drainlayers Board (PGDB).
-                    </p>
-                    <p>&copy; {new Date().getFullYear()} Village Plumbers NZ. All rights reserved.</p>
+                <p className="text-slate-400 text-xs leading-relaxed mb-4">
+                  Connecting customers with available, independent, certificated local plumbing, gasfitting, and drainlaying professionals serving your area under PGDB rules.
+                </p>
+                <div className="text-xs text-slate-400 font-bold">
+                  📞 24/7 Dispatch: 0800 845 524
                 </div>
-            </footer>
-        </div>
+              </div>
+
+              {/* Col 2: Quick Links */}
+              <div>
+                <h4 className="text-base font-bold text-white mb-4 border-b border-slate-800 pb-2">Navigation</h4>
+                <ul className="space-y-2.5 text-xs text-slate-400">
+                  <li><Link href="/" className="hover:text-sky-400 transition-colors">Home Page</Link></li>
+                  <li><Link href="/about" className="hover:text-sky-400 transition-colors">About Village Plumbers</Link></li>
+                  <li><Link href="/#core-services" className="hover:text-sky-400 transition-colors">25 Core Services</Link></li>
+                  <li><Link href="/blog" className="hover:text-sky-400 transition-colors">Plumbing Blog & Guides</Link></li>
+                  <li><Link href="/#contact-form" className="hover:text-sky-400 transition-colors">Get Free Quote</Link></li>
+                </ul>
+              </div>
+
+              {/* Col 3: Popular Services */}
+              <div>
+                <h4 className="text-base font-bold text-white mb-4 border-b border-slate-800 pb-2">Popular Services</h4>
+                <ul className="space-y-2.5 text-xs text-slate-400">
+                  <li><Link href="/emergency-plumbing" className="hover:text-sky-400 transition-colors">Emergency Plumber</Link></li>
+                  <li><Link href="/blocked-drain-unblocking" className="hover:text-sky-400 transition-colors">Blocked Drain Unblocking</Link></li>
+                  <li><Link href="/hot-water-cylinder-repair" className="hover:text-sky-400 transition-colors">Hot Water Cylinder Repair</Link></li>
+                  <li><Link href="/gasfitting-repairs" className="hover:text-sky-400 transition-colors">Gasfitting & Repairs</Link></li>
+                  <li><Link href="/burst-pipe-repair" className="hover:text-sky-400 transition-colors">Burst Pipe Repair</Link></li>
+                </ul>
+              </div>
+
+              {/* Col 4: PGDB Disclaimer */}
+              <div>
+                <h4 className="text-base font-bold text-white mb-4 border-b border-slate-800 pb-2">Legal & Compliance</h4>
+                <p className="text-slate-400 text-xs leading-relaxed mb-4">
+                  We are a lead generation network. We connect customers with independent certificated trade practitioners registered with the Plumbers, Gasfitters and Drainlayers Board (PGDB).
+                </p>
+                <div className="text-[11px] bg-slate-900 border border-slate-800 p-3 rounded-xl text-slate-400">
+                  🛡️ Registered & Certificated Trades Network
+                </div>
+              </div>
+
+            </div>
+
+            <div className="pt-8 border-t border-slate-900 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-4">
+              <p>© {new Date().getFullYear()} Village Plumbers NZ. All rights reserved.</p>
+              <div className="flex gap-4">
+                <Link href="/about" className="hover:text-slate-300">About</Link>
+                <Link href="/blog" className="hover:text-slate-300">Blog</Link>
+                <Link href="/#contact-form" className="hover:text-slate-300">Contact</Link>
+              </div>
+            </div>
+          </div>
+        </footer>
 
       </body>
     </html>
