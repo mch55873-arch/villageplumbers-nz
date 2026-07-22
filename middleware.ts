@@ -16,6 +16,18 @@ export function middleware(req: NextRequest) {
   const isLocalhost = hostname.includes('localhost');
   const baseDomain = isLocalhost ? 'localhost' : 'villageplumbers.co.nz';
 
+  // 1. Redirect legacy apex /subdomain/... URLs to canonical subdomain hostnames (308 Permanent Redirect)
+  if ((hostname === baseDomain || hostname === `www.${baseDomain}`) && url.pathname.startsWith('/subdomain/')) {
+    const parts = url.pathname.replace(/^\/subdomain\//, '').split('/');
+    const sub = parts[0];
+    const rest = parts.slice(1).join('/');
+    if (sub) {
+      const targetUrl = `https://${sub}.${baseDomain}/${rest}`;
+      return NextResponse.redirect(targetUrl, 308);
+    }
+  }
+
+  // 2. Subdomain host rewriting
   if (hostname !== baseDomain && hostname.endsWith(baseDomain)) {
     let subdomain = hostname;
     if (hostname.endsWith(`.${baseDomain}`)) {
