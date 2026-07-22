@@ -48,8 +48,7 @@ function renderMarkdownContent(content: string) {
     // H2 Header
     if (trimmed.startsWith('## ')) {
       return (
-        <h2 key={`h2-${idx}`} className="text-2xl md:text-3xl font-extrabold text-slate-900 mt-10 mb-4 pt-6 border-t border-slate-200 flex items-center gap-2">
-          <span className="text-emerald-500 font-bold">#</span>
+        <h2 key={`h2-${idx}`} className="text-2xl md:text-3xl font-extrabold text-slate-900 mt-10 mb-4 pt-6 border-t border-slate-200">
           {trimmed.replace(/^##\s+/, '')}
         </h2>
       );
