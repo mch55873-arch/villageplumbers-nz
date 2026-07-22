@@ -7,7 +7,7 @@ export const config = {
   ],
 };
 
-export function proxy(req: NextRequest) {
+export function middleware(req: NextRequest) {
   const url = req.nextUrl;
   const hostname = req.headers.get('host') || '';
 
@@ -30,4 +30,4 @@ export function proxy(req: NextRequest) {
   return NextResponse.next();
 }
 
-export default proxy;
+export default middleware;
