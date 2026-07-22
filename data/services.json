@@ -1,67 +1,323 @@
 [
-  {"slug": "emergency-plumbing", "name": "Emergency Plumbing", "icon": "🚨", "category": "Emergency", "description": "24/7 rapid response emergency plumbing across New Zealand. Burst pipes, severe leaks, and overflowing drains fixed fast."},
-  {"slug": "blocked-drain-unblocking", "name": "Blocked Drain Unblocking", "icon": "💧", "category": "Drainage", "description": "Professional drain clearing using high-pressure hydro-jetting and CCTV cameras to unblock sinks, toilets, and main lines."},
-  {"slug": "drainlaying-repairs", "name": "Drainlaying & Drain Repairs", "icon": "🛠️", "category": "Drainage", "description": "Certified NZ drainlaying for new builds, replacements, and structural drain repairs."},
-  {"slug": "hot-water-cylinder-installation", "name": "Hot Water Cylinder Installation", "icon": "🔥", "category": "Hot Water", "description": "Expert hot water cylinder installation including mains pressure upgrades and energy-efficient systems."},
-  {"slug": "hot-water-cylinder-repair", "name": "Hot Water Cylinder Repair", "icon": "🔧", "category": "Hot Water", "description": "Fast repairs for leaking cylinders, thermostat failures, element replacements, and low hot water pressure."},
-  {"slug": "heat-pump-water-heater", "name": "Heat Pump Water Heater Installation", "icon": "⚡", "category": "Hot Water", "description": "Save up to 70% on water heating energy bills with eco-friendly heat pump water heater installations."},
-  {"slug": "gas-fitting-repairs", "name": "Gas Fitting & Gas Repair", "icon": "🔥", "category": "Gasfitting", "description": "Certificated NZ gas fitters for residential and commercial gas line installations, appliance connections, and safety checks."},
-  {"slug": "gas-water-heater-repair", "name": "Gas Water Heater Repair", "icon": "♨️", "category": "Gasfitting", "description": "Continuous flow gas hot water repairs (Calorifiers, Rinnai, Rheem) and gas line troubleshooting."},
-  {"slug": "leaking-tap-repair", "name": "Leaking Tap Repair & Replacement", "icon": "🚰", "category": "General Plumbing", "description": "Fix dripping taps, washer replacements, mixer tap upgrades, and ceramic disc tap repairs."},
-  {"slug": "burst-pipe-repair", "name": "Burst Pipe Repair", "icon": "💦", "category": "Emergency", "description": "Immediate leak isolation and burst pipe repairs for underground, in-wall, and ceiling pipework."},
-  {"slug": "toilet-installation-repair", "name": "Toilet Installation & Repair", "icon": "🚽", "category": "General Plumbing", "description": "Fix running toilets, unblock cisterns, replace flush valves, and install modern water-saving toilets."},
-  {"slug": "shower-repair-installation", "name": "Shower Repair & Installation", "icon": "🚿", "category": "Bathroom", "description": "Leaking shower head repairs, shower mixer installations, and custom shower plumbing."},
-  {"slug": "bathroom-renovations-plumbing", "name": "Bathroom Renovations Plumbing", "icon": "🛁", "category": "Renovations", "description": "Complete plumbing rough-ins, fixture fitting, and layout alterations for residential bathroom remodels."},
-  {"slug": "kitchen-plumbing-sink", "name": "Kitchen Plumbing & Sink Installation", "icon": "🍽️", "category": "Kitchen", "description": "New sink installs, tapware fitting, island bench rough-ins, and water filter connections."},
-  {"slug": "cctv-drain-inspection", "name": "CCTV Drain Camera Inspection", "icon": "📷", "category": "Drainage", "description": "High-definition camera inspections to locate root intrusions, pipe collapses, and hidden drainage defects."},
-  {"slug": "hydro-jetter-drain-cleaning", "name": "Hydro Jetter Drain Cleaning", "icon": "🌊", "category": "Drainage", "description": "High-pressure water jetting to scour grease, tree roots, and heavy debris from sewer lines."},
-  {"slug": "pipe-relining-trenchless", "name": "Pipe Relining (Trenchless Repair)", "icon": "🛠️", "category": "Drainage", "description": "No-dig pipe repair solution to restore damaged underground pipes without excavating lawns or driveways."},
-  {"slug": "water-leak-detection", "name": "Water Leak Detection", "icon": "🔍", "category": "General Plumbing", "description": "Acoustic and thermal leak detection to pinpoint concealed water leaks behind walls and underground."},
-  {"slug": "backflow-prevention-testing", "name": "Backflow Prevention Testing & Installation", "icon": "🛡️", "category": "Commercial", "description": "Annual backflow testing, IQP certification, and RPZ valve installations to keep water supplies safe."},
-  {"slug": "water-filter-installation", "name": "Water Filter & Purifier Installation", "icon": "🚰", "category": "Water Quality", "description": "Under-bench and whole-house water filtration system installations for clean, fresh drinking water."},
-  {"slug": "roofing-plumbing-spouting", "name": "Roofing Plumbing & Spouting Repairs", "icon": "🏠", "category": "Roofing", "description": "Fix roof leaks, install spouting, repair flashings, and maintain box gutters."},
-  {"slug": "gutter-downpipe-installation", "name": "Gutter & Downpipe Installation", "icon": "🌧️", "category": "Roofing", "description": "Marley PVC and Colorsteel gutter installations, downpipe repairs, and leaf guard fittings."},
-  {"slug": "commercial-plumbing-services", "name": "Commercial Plumbing Services", "icon": "🏢", "category": "Commercial", "description": "Preventative maintenance, scheduled plumbing inspections, and emergency services for NZ businesses."},
-  {"slug": "residential-maintenance-plumbing", "name": "Residential Maintenance Plumbing", "icon": "🏡", "category": "General Plumbing", "description": "Complete home plumbing health checks, pipe maintenance, and hardware replacements."},
-  {"slug": "sewer-line-repair", "name": "Sewer Line Repair & Replacement", "icon": "⚙️", "category": "Drainage", "description": "Repair broken sewer mains, eliminate root blockages, and install council compliant connections."},
-  {"slug": "stormwater-drain-installation", "name": "Stormwater Drain Installation & Repair", "icon": "🌧️", "category": "Drainage", "description": "Prevent surface flooding with custom stormwater drainage systems, cesspits, and soakholes."},
-  {"slug": "septic-tank-maintenance", "name": "Septic Tank Installation & Maintenance", "icon": "🚜", "category": "Rural", "description": "Rural wastewater system installs, septic tank plumbing repairs, and effluent field maintenance."},
-  {"slug": "water-pressure-upgrades", "name": "Water Pressure Troubleshooting & Upgrades", "icon": "📈", "category": "General Plumbing", "description": "Upgrade low pressure hot water to high mains pressure systems for luxury shower performance."},
-  {"slug": "garbage-disposal-installation", "name": "Garbage Disposal Installation & Repair", "icon": "♻️", "category": "Kitchen", "description": "InSinkErator installs, waste disposer unjamming, and replacement unit plumbing."},
-  {"slug": "dishwasher-installation", "name": "Dishwasher Installation Plumbing", "icon": "🧼", "category": "Kitchen", "description": "Professional dishwasher water inlet and waste hose plumbing connections."},
-  {"slug": "washing-machine-connections", "name": "Washing Machine Plumbing Connections", "icon": "🧺", "category": "Laundry", "description": "Laundry tub plumbing, washing machine tap upgrades, and waste outlet installations."},
-  {"slug": "gas-leak-detection", "name": "Gas Leak Detection & Safety Checks", "icon": "⚠️", "category": "Gasfitting", "description": "Emergency gas leak tracing, pipe pressure testing, and safety certification."},
-  {"slug": "gas-hob-oven-installation", "name": "Gas Hob & Oven Installation", "icon": "🍳", "category": "Gasfitting", "description": "Certificated connection of gas cooktops, free-standing gas ovens, and bayonet points."},
-  {"slug": "gas-fireplace-repair", "name": "Gas Fireplace Repair & Installation", "icon": "🪵", "category": "Gasfitting", "description": "Gas log fire servicing, flue repairs, igniter replacements, and safety checks."},
-  {"slug": "solar-hot-water-repairs", "name": "Solar Hot Water System Repairs", "icon": "☀️", "category": "Hot Water", "description": "Solar collector maintenance, solar cylinder valve replacements, and controller servicing."},
-  {"slug": "tempering-valve-calibration", "name": "Tempering Valve Installation & Calibration", "icon": "🌡️", "category": "Hot Water", "description": "Ensure safe tap water temperatures (under 55°C) to prevent scalding while preventing legionella."},
-  {"slug": "thermostatic-mixing-valve-tmv", "name": "Thermostatic Mixing Valve (TMV) Servicing", "icon": "🌡️", "category": "Commercial", "description": "Commercial TMV testing and maintenance for rest homes, schools, and healthcare facilities."},
-  {"slug": "water-main-replacement", "name": "Water Main Replacement & Repair", "icon": "🛣️", "category": "General Plumbing", "description": "Replace leaking underground water service pipes from the meter to your house."},
-  {"slug": "submersible-pump-repair", "name": "Submersible Pump Repair & Installation", "icon": "⚡", "category": "Pumps", "description": "Sumps, sewage pumps, and rainwater tank pump installation and repairs."},
-  {"slug": "sump-pump-maintenance", "name": "Sump Pump Maintenance", "icon": "🌊", "category": "Pumps", "description": "Basement sump pump testing, float switch replacements, and emergency pump installations."},
-  {"slug": "grease-trap-cleaning", "name": "Grease Trap Cleaning & Installation", "icon": "🍽️", "category": "Commercial", "description": "Commercial kitchen grease converter installations, sampling point plumbing, and maintenance."},
-  {"slug": "pre-purchase-plumbing-inspection", "name": "Pre-Purchase Home Plumbing Inspection", "icon": "📋", "category": "Inspections", "description": "Comprehensive pre-buy plumbing checks including pipe materials, cylinder age, and drainage status."},
-  {"slug": "water-pipe-insulation", "name": "Water Pipe Insulation & Freeze Protection", "icon": "❄️", "category": "General Plumbing", "description": "Protect exposed outdoor pipes from frost damage and winter freezing in colder NZ regions."},
-  {"slug": "overflow-pipe-repair", "name": "Overflow Pipe Repair", "icon": "💧", "category": "General Plumbing", "description": "Stop dripping header tank overflows, relief valve discharges, and balcony drain leaks."},
-  {"slug": "basin-vanity-plumbing", "name": "Basin & Vanity Plumbing", "icon": "🪞", "category": "Bathroom", "description": "Install new bathroom vanities, bottle traps, waste pop-ups, and basin tapware."},
-  {"slug": "bathtub-installation-plumbing", "name": "Bathtub Installation & Plumbing", "icon": "🛁", "category": "Bathroom", "description": "Freestanding bath fitting, acrylic tub plumbing, and bath filler tap installations."},
-  {"slug": "bidet-spray-installation", "name": "Bidet Spray & Toilet Bidet Installation", "icon": "🚽", "category": "Bathroom", "description": "Compliant bidet hand spray installations with backflow prevention mechanisms."},
-  {"slug": "outdoor-garden-tap", "name": "Outdoor Garden Hose Tap Installation", "icon": "🌿", "category": "General Plumbing", "description": "Install new frost-proof outdoor hose bibs and garden water connections."},
-  {"slug": "water-tank-harvesting", "name": "Water Tank & Rainwater Harvesting Setup", "icon": "🪣", "category": "Rural", "description": "Rainwater collection tank plumbing, UV filtration, and household pump integration."},
-  {"slug": "waste-disposal-unjamming", "name": "Waste Disposal Unit Unjamming & Repair", "icon": "⚙️", "category": "Kitchen", "description": "Clear stuck waste disposers, replace worn impellers, and repair leaking seals."},
-  {"slug": "slab-leak-location-repair", "name": "Slab Leak Location & Repair", "icon": "🧱", "category": "Emergency", "description": "Detect and repair hot/cold water pipe leaks underneath concrete foundation slabs."},
-  {"slug": "water-meter-relocation", "name": "Water Meter Relocation & Installation", "icon": "⏱️", "category": "General Plumbing", "description": "Sub-meter installation, council meter relocations, and private water meter setups."},
-  {"slug": "farm-rural-plumbing", "name": "Farm & Rural Plumbing Supplies & Repairs", "icon": "🚜", "category": "Rural", "description": "Stock trough plumbing, rural water line repairs, and pump shed pipework."},
-  {"slug": "industrial-plumbing-maintenance", "name": "Industrial Plumbing Maintenance", "icon": "🏭", "category": "Commercial", "description": "Heavy industry process pipework, compressed air line plumbing, and factory maintenance."},
-  {"slug": "drain-odour-location", "name": "Drain Odour Location & Elimination", "icon": "👃", "category": "Drainage", "description": "Smoke testing and trap inspection to locate foul sewer gas smells inside homes."},
-  {"slug": "water-softener-installation", "name": "Water Softener Unit Installation", "icon": "💧", "category": "Water Quality", "description": "Hard water treatment installations to reduce limescale buildup on tapware and cylinders."},
-  {"slug": "instantaneous-hot-water-repairs", "name": "Instantaneous Hot Water System Repairs", "icon": "🔥", "category": "Hot Water", "description": "Servicing electric and gas tankless hot water heaters for endless hot water."},
-  {"slug": "continuous-flow-gas-hot-water", "name": "Continuous Flow Gas Hot Water Installation", "icon": "♨️", "category": "Gasfitting", "description": "Convert from electric hot water cylinder to high-efficiency continuous flow gas water heating."},
-  {"slug": "underfloor-heating-plumbing", "name": "Underfloor Heating Plumbing & Maintenance", "icon": "🔥", "category": "Heating", "description": "Hydronic in-slab underfloor heating pipe installation, manifold balancing, and pump servicing."},
-  {"slug": "radiator-heating-repairs", "name": "Radiator Heating System Repairs", "icon": "🪵", "category": "Heating", "description": "Central heating radiator plumbing, boiler servicing, and system flushing."},
-  {"slug": "pressure-reducing-valve-replacement", "name": "Valve Replacement (Pressure Reducing Valves)", "icon": "⚙️", "category": "General Plumbing", "description": "Install pressure limiting valves to protect household tapware and appliances from high water pressure."},
-  {"slug": "pipe-thawing-cold-weather", "name": "Pipe Thawing & Cold Weather Plumbing", "icon": "🧊", "category": "Emergency", "description": "Safe electrical pipe thawing for frozen water lines during South Island winters."},
-  {"slug": "emergency-gas-shutoff-valve", "name": "Emergency Gas Shut-off Valve Installation", "icon": "🛑", "category": "Gasfitting", "description": "Seismic gas shutoff valves and emergency isolation valve installations for property protection."},
-  {"slug": "rv-caravan-plumbing", "name": "RV & Caravan Plumbing Hookups", "icon": "🚐", "category": "Specialist", "description": "Freshwater tank plumbing, greywater tank fittings, and gas compliance for motorhomes."},
-  {"slug": "plumbing-certificate-of-verification", "name": "Plumbing Certificate of Verification (NZ Code)", "icon": "📜", "category": "Inspections", "description": "Formal plumbing code compliance certificates (PS3 / Producer Statements) for NZ council sign-offs."}
+  {
+    "slug": "emergency-plumbing",
+    "name": "Emergency Plumber",
+    "icon": "🚨",
+    "category": "Emergency",
+    "isCore": true,
+    "description": "Connect with 24/7 available plumbing professionals serving your area for rapid emergency response."
+  },
+  {
+    "slug": "burst-pipe-repair",
+    "name": "Burst Pipe Repair",
+    "icon": "💦",
+    "category": "Emergency",
+    "isCore": true,
+    "description": "Fast leak isolation and burst pipe repairs for underground, in-wall, and ceiling pipework."
+  },
+  {
+    "slug": "blocked-drain-unblocking",
+    "name": "Blocked Drain Unblocking",
+    "icon": "💧",
+    "category": "Drainage",
+    "isCore": true,
+    "description": "Professional drain clearing services to unblock sinks, toilets, and main sewer drains."
+  },
+  {
+    "slug": "blocked-toilet-repair",
+    "name": "Blocked Toilet Repair",
+    "icon": "🚽",
+    "category": "Drainage",
+    "isCore": true,
+    "description": "Fast assistance to unblock stubborn toilet blockages, overflow issues, and cistern repairs."
+  },
+  {
+    "slug": "drain-repairs",
+    "name": "Drain Repairs",
+    "icon": "🛠️",
+    "category": "Drainage",
+    "isCore": true,
+    "description": "Structural drain laying and drain repairs for broken or damaged underground wastewater pipes."
+  },
+  {
+    "slug": "cctv-drain-inspection",
+    "name": "CCTV Drain Inspection",
+    "icon": "📷",
+    "category": "Drainage",
+    "isCore": true,
+    "description": "High-definition camera inspections to locate root intrusions, pipe collapses, and hidden drainage defects."
+  },
+  {
+    "slug": "hydro-jetting",
+    "name": "Hydro Jetting & High-Pressure Drain Cleaning",
+    "icon": "🌊",
+    "category": "Drainage",
+    "isCore": true,
+    "description": "High-pressure water jetting to scour grease, tree roots, and heavy debris from blocked sewer lines."
+  },
+  {
+    "slug": "sewer-line-repair",
+    "name": "Sewer Line Repair",
+    "icon": "⚙️",
+    "category": "Drainage",
+    "isCore": true,
+    "description": "Repair broken sewer mains, eliminate root blockages, and restore council-compliant wastewater connections."
+  },
+  {
+    "slug": "stormwater-drain-repair",
+    "name": "Stormwater Drain Repair",
+    "icon": "🌧️",
+    "category": "Drainage",
+    "isCore": true,
+    "description": "Prevent surface flooding with custom stormwater drainage repairs, cesspits, and soakhole maintenance."
+  },
+  {
+    "slug": "pipe-relining",
+    "name": "Pipe Relining",
+    "icon": "🛠️",
+    "category": "Drainage",
+    "isCore": true,
+    "description": "No-dig trenchless pipe repair solution to restore damaged underground pipes without excavating lawns or driveways."
+  },
+  {
+    "slug": "hot-water-cylinder-installation",
+    "name": "Hot Water Cylinder Installation and Replacement",
+    "icon": "🔥",
+    "category": "Hot Water",
+    "isCore": true,
+    "description": "Connect with local specialists for electric and gas hot water cylinder installations and replacements."
+  },
+  {
+    "slug": "hot-water-cylinder-repair",
+    "name": "Hot Water Cylinder Repair",
+    "icon": "🔧",
+    "category": "Hot Water",
+    "isCore": true,
+    "description": "Repairs for leaking cylinders, thermostat failures, element replacements, and low hot water pressure."
+  },
+  {
+    "slug": "no-hot-water-repair",
+    "name": "No Hot Water Repair",
+    "icon": "⚡",
+    "category": "Hot Water",
+    "isCore": true,
+    "description": "Urgent troubleshooting for hot water outages, tripped breakers, valve failures, and cold showers."
+  },
+  {
+    "slug": "gasfitting-repairs",
+    "name": "Gasfitting and Gas Repairs",
+    "icon": "🔥",
+    "category": "Gasfitting",
+    "isCore": true,
+    "description": "Connect with certificated local gasfitters for gas appliance connections, gas lines, and safety repairs."
+  },
+  {
+    "slug": "gas-leak-detection",
+    "name": "Gas Leak Detection",
+    "icon": "⚠️",
+    "category": "Gasfitting",
+    "isCore": true,
+    "description": "Urgent gas leak tracing, line isolation, pressure testing, and emergency gas safety repairs."
+  },
+  {
+    "slug": "gas-water-heater-repair",
+    "name": "Gas Water Heater Repair",
+    "icon": "♨️",
+    "category": "Gasfitting",
+    "isCore": true,
+    "description": "Continuous flow gas hot water repairs (Calorifiers, Rinnai, Rheem) and gas line troubleshooting."
+  },
+  {
+    "slug": "leaking-tap-repair",
+    "name": "Leaking Tap Repair",
+    "icon": "🚰",
+    "category": "General Plumbing",
+    "isCore": true,
+    "description": "Fix dripping taps, washer replacements, mixer tap repairs, and new tapware installations."
+  },
+  {
+    "slug": "leaking-pipe-repair",
+    "name": "Leaking Pipe Repair",
+    "icon": "🔍",
+    "category": "General Plumbing",
+    "isCore": true,
+    "description": "Trace and repair concealed water pipe leaks behind walls, under floors, and in ceilings."
+  },
+  {
+    "slug": "toilet-installation-repair",
+    "name": "Toilet Installation and Repair",
+    "icon": "🚽",
+    "category": "General Plumbing",
+    "isCore": true,
+    "description": "Fix running toilets, unblock cisterns, replace flush valves, and install modern water-saving toilets."
+  },
+  {
+    "slug": "water-leak-detection",
+    "name": "Water Leak Detection",
+    "icon": "🔍",
+    "category": "General Plumbing",
+    "isCore": true,
+    "description": "Acoustic and thermal leak detection to pinpoint hidden water leaks and prevent structural water damage."
+  },
+  {
+    "slug": "water-pressure-repairs",
+    "name": "Water Pressure Repairs",
+    "icon": "📈",
+    "category": "General Plumbing",
+    "isCore": true,
+    "description": "Troubleshoot low water pressure and upgrade low-pressure cylinders to high mains pressure systems."
+  },
+  {
+    "slug": "shower-repair-installation",
+    "name": "Shower Repair and Installation",
+    "icon": "🚿",
+    "category": "Bathroom",
+    "isCore": true,
+    "description": "Leaking shower mixer repairs, shower rose replacements, and complete shower plumbing installations."
+  },
+  {
+    "slug": "bathroom-plumbing",
+    "name": "Bathroom Plumbing",
+    "icon": "🛁",
+    "category": "Bathroom",
+    "isCore": true,
+    "description": "Plumbing rough-ins, vanity installations, bath fitting, and fixture upgrades for bathroom renovations."
+  },
+  {
+    "slug": "kitchen-plumbing",
+    "name": "Kitchen Plumbing",
+    "icon": "🍽️",
+    "category": "Kitchen",
+    "isCore": true,
+    "description": "Sink installations, mixer tap fitting, dishwasher connections, and kitchen renovation plumbing."
+  },
+  {
+    "slug": "commercial-plumbing",
+    "name": "Commercial Plumbing",
+    "icon": "🏢",
+    "category": "Commercial",
+    "isCore": true,
+    "description": "Scheduled maintenance, commercial drain clearing, and emergency plumbing for local businesses."
+  },
+
+  {
+    "slug": "underfloor-underground-leak-detection",
+    "name": "Underfloor & Underground Leak Detection",
+    "icon": "🧱",
+    "category": "Emergency",
+    "isCore": false,
+    "targetTag": "all",
+    "description": "Acoustic detection and repair for concealed water leaks underneath concrete foundations and subfloors."
+  },
+  {
+    "slug": "waste-disposal-unit-installation-repair",
+    "name": "Waste Disposal Unit Installation & Repair",
+    "icon": "♻️",
+    "category": "Kitchen",
+    "isCore": false,
+    "targetTag": "all",
+    "description": "InSinkErator and waste disposer unit repairs, jam clearing, and replacement unit installations."
+  },
+  {
+    "slug": "outdoor-tap-installation-repair",
+    "name": "Outdoor Tap Installation & Repair",
+    "icon": "🌿",
+    "category": "General Plumbing",
+    "isCore": false,
+    "targetTag": "all",
+    "description": "Install new outdoor hose taps, frost-resistant brass hose bibs, and garden water supply lines."
+  },
+  {
+    "slug": "pressure-reducing-valve-replacement",
+    "name": "Pressure Reducing Valve & Pressure Limiting Valve Replacement",
+    "icon": "⚙️",
+    "category": "General Plumbing",
+    "isCore": false,
+    "targetTag": "all",
+    "description": "Replace pressure limiting valves (PLV) to safeguard household appliances from high mains pressure."
+  },
+  {
+    "slug": "roof-plumbing-spouting-repairs",
+    "name": "Roof Plumbing & Spouting Repairs",
+    "icon": "🏠",
+    "category": "Roofing",
+    "isCore": false,
+    "targetTag": "all",
+    "description": "Spouting leak repairs, Marley PVC & Colorsteel gutter replacements, flashings, and downpipe maintenance."
+  },
+  {
+    "slug": "drainage-sump-pump-installation-repair",
+    "name": "Drainage & Sump Pump Installation and Repair",
+    "icon": "🌊",
+    "category": "Drainage",
+    "isCore": false,
+    "targetTag": "all",
+    "description": "Basement sump pump testing, float switch repairs, and subsoil groundwater pump installations."
+  },
+
+  {
+    "slug": "pipe-thawing-freeze-protection",
+    "name": "Pipe Thawing & Freeze Protection",
+    "icon": "🧊",
+    "category": "Specialist",
+    "isCore": false,
+    "targetTag": "cold_only",
+    "description": "Safe pipe thawing and frost insulation for frozen water lines in colder South Island & alpine regions."
+  },
+  {
+    "slug": "radiator-underfloor-heating",
+    "name": "Underfloor & Radiator Heating Maintenance",
+    "icon": "🔥",
+    "category": "Heating",
+    "isCore": false,
+    "targetTag": "cold_only",
+    "description": "Hydronic in-slab underfloor heating and radiator central heating boiler repairs and flushing."
+  },
+
+  {
+    "slug": "septic-tank-maintenance",
+    "name": "Septic System Installation & Repairs",
+    "icon": "🚜",
+    "category": "Rural",
+    "isCore": false,
+    "targetTag": "rural_only",
+    "description": "Rural wastewater system plumbing, septic tank repairs, and effluent drainfield maintenance."
+  },
+  {
+    "slug": "farm-rural-plumbing",
+    "name": "Farm & Rural Plumbing Repairs",
+    "icon": "🚜",
+    "category": "Rural",
+    "isCore": false,
+    "targetTag": "rural_only",
+    "description": "Stock trough plumbing, rural water line repairs, trough float valves, and shed pipework."
+  },
+  {
+    "slug": "water-tank-rainwater-harvesting",
+    "name": "Water Tank & Rainwater Harvesting Setup",
+    "icon": "🪣",
+    "category": "Rural",
+    "isCore": false,
+    "targetTag": "rural_only",
+    "description": "Rainwater collection tank plumbing, UV filtration systems, and pressure pump integration."
+  },
+  {
+    "slug": "submersible-pump-repair",
+    "name": "Submersible & Water Tank Pump Repair",
+    "icon": "⚡",
+    "category": "Pumps",
+    "isCore": false,
+    "targetTag": "rural_only",
+    "description": "Bore pumps, water tank pressure pumps, and rural water supply pump repair services."
+  },
+
+  {
+    "slug": "industrial-plumbing-maintenance",
+    "name": "Industrial Plumbing Maintenance",
+    "icon": "🏭",
+    "category": "Commercial",
+    "isCore": false,
+    "targetTag": "industrial_only",
+    "description": "Industrial process pipework, factory water lines, and commercial backflow testing."
+  }
 ]

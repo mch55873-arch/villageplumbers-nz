@@ -10,9 +10,9 @@ export const runtime = 'edge';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://villageplumbers.co.nz'),
-  title: "Village Plumbers NZ | 24/7 Emergency Plumbing & Drainlaying",
-  description: "Certified New Zealand plumbers available 24/7 across all 16 regions. Emergency plumbing, blocked drain clearing, hot water cylinder repairs & gasfitting.",
-  keywords: ["Plumber NZ", "Emergency Plumber New Zealand", "Blocked Drain Unblocking", "Hot Water Cylinder Repair", "Gas Fitter NZ", "Local Plumber Near Me"],
+  title: "Village Plumbers NZ | Connect with Local Plumbing Professionals 24/7",
+  description: "Connecting homeowners & businesses with available licensed, certificated local plumbing professionals across 16 New Zealand regions. 24/7 emergency response.",
+  keywords: ["Plumber NZ", "Find Local Plumber", "Emergency Plumbing New Zealand", "Blocked Drain Unblocking", "Hot Water Cylinder Repair"],
   publisher: "Village Plumbers NZ",
   robots: {
     index: true,
@@ -23,8 +23,8 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Village Plumbers NZ | 24/7 Emergency Plumbing & Drainlaying",
-    description: "Certified New Zealand plumbers available 24/7 across all 16 regions.",
+    title: "Village Plumbers NZ | Connect with Local Plumbing Professionals 24/7",
+    description: "Connecting homeowners & businesses with available licensed local plumbing professionals across New Zealand.",
     url: 'https://villageplumbers.co.nz',
     siteName: "Village Plumbers NZ",
     locale: 'en_NZ',
@@ -40,8 +40,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Village Plumbers NZ | 24/7 Emergency Plumbing",
-    description: "Certified New Zealand plumbers available 24/7 across all 16 regions.",
+    title: "Village Plumbers NZ | Connect with Local Plumbing Professionals",
+    description: "Connecting homeowners & businesses with available licensed local plumbing professionals across New Zealand.",
     images: ['/logo.png'],
   },
   icons: {
@@ -64,51 +64,22 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@graph": [
                 {
-                  "@type": ["Organization", "Plumber"],
-                  "@id": "https://villageplumbers.co.nz/#organization",
-                  "name": "Village Plumbers NZ",
-                  "url": "https://villageplumbers.co.nz",
-                  "logo": {
-                    "@type": "ImageObject",
-                    "@id": "https://villageplumbers.co.nz/#logo",
-                    "url": "https://villageplumbers.co.nz/logo.png",
-                    "caption": "Village Plumbers NZ",
-                    "inLanguage": "en-NZ"
-                  },
-                  "contactPoint": {
-                    "@type": "ContactPoint",
-                    "telephone": "+64-800-845-524",
-                    "contactType": "customer service",
-                    "areaServed": "NZ",
-                    "availableLanguage": "English"
-                  }
-                },
-                {
                   "@type": "WebSite",
                   "@id": "https://villageplumbers.co.nz/#website",
                   "url": "https://villageplumbers.co.nz",
                   "name": "Village Plumbers NZ",
-                  "publisher": {
-                    "@id": "https://villageplumbers.co.nz/#organization"
-                  },
+                  "description": "Connecting customers with available local plumbing professionals serving New Zealand.",
                   "inLanguage": "en-NZ"
                 },
                 {
-                  "@type": ["LocalBusiness", "Plumber"],
-                  "@id": "https://villageplumbers.co.nz/#localbusiness",
-                  "name": "Village Plumbers NZ",
-                  "description": "24/7 Certified Plumbing, Gasfitting & Drainlaying Services Across New Zealand.",
-                  "url": "https://villageplumbers.co.nz",
-                  "telephone": "0800 845 524",
-                  "priceRange": "$$",
-                  "address": {
-                    "@type": "PostalAddress",
-                    "streetAddress": "Nationwide Service",
-                    "addressLocality": "Auckland",
-                    "addressRegion": "Auckland",
-                    "postalCode": "1010",
-                    "addressCountry": "NZ"
-                  }
+                  "@type": "Service",
+                  "@id": "https://villageplumbers.co.nz/#service",
+                  "name": "Local Plumbing Connection Network",
+                  "provider": {
+                    "@type": "Organization",
+                    "name": "Village Plumbers NZ"
+                  },
+                  "areaServed": "NZ"
                 }
               ]
             })
@@ -116,15 +87,15 @@ export default function RootLayout({
         />
         
         {/* TOP EMERGENCY BAR */}
-        <div className="bg-sky-700 text-white hidden sm:block border-b border-sky-800">
+        <div className="bg-sky-800 text-white hidden sm:block border-b border-sky-900">
             <div className="max-w-7xl mx-auto px-4">
-                <div className="flex flex-col md:flex-row justify-between items-center py-2 text-xs md:text-sm font-bold">
+                <div className="flex flex-col md:flex-row justify-between items-center py-2 text-xs md:text-sm font-semibold">
                     <div className="flex items-center space-x-2">
                         <span className="animate-pulse">💧</span>
-                        <span>24/7 Emergency Plumbing, Gasfitting & Drainlaying - Licensed & Certificated NZ Plumbers</span>
+                        <span>Connecting customers with available, certificated local plumbing professionals serving your area</span>
                     </div>
                     <div className="flex items-center space-x-6">
-                        <a href="tel:0800845524" className="hover:text-sky-200 transition-colors flex items-center gap-2">
+                        <a href="tel:0800845524" className="hover:text-sky-200 transition-colors flex items-center gap-2 font-bold">
                             <span>📞</span> 0800 845 524
                         </a>
                     </div>
@@ -150,17 +121,16 @@ export default function RootLayout({
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-8 font-medium text-sm text-slate-200">
                <Link href="/" className="hover:text-sky-400 transition-colors">Home</Link>
-               <Link href="/about" className="hover:text-sky-400 transition-colors">About Us</Link>
-               <Link href="/#services" className="hover:text-sky-400 transition-colors">65 Services</Link>
+               <Link href="/about" className="hover:text-sky-400 transition-colors">About</Link>
+               <Link href="/#services" className="hover:text-sky-400 transition-colors">25 Core Services</Link>
                <Link href="/#regions" className="hover:text-sky-400 transition-colors">16 Regions</Link>
-               <Link href="/blog" className="hover:text-sky-400 transition-colors">Blog</Link>
             </div>
             
             {/* Call to Action */}
             <div className="flex items-center space-x-3 bg-sky-600 hover:bg-sky-500 text-white px-5 py-2.5 rounded-xl shadow-md transition-all">
                 <span className="text-xl">📞</span>
                 <div>
-                    <div className="text-[10px] text-sky-100 font-extrabold uppercase tracking-wider">24/7 Hotline</div>
+                    <div className="text-[10px] text-sky-100 font-extrabold uppercase tracking-wider">Connect 24/7</div>
                     <a href="tel:0800845524" className="text-sm font-extrabold text-white">
                         0800 845 524
                     </a>
@@ -188,39 +158,39 @@ export default function RootLayout({
                            </div>
                         </Link>
                         <p className="text-slate-400 text-sm leading-relaxed">
-                            Certified plumbing, gasfitting, and drainlaying across 16 NZ regions and all major suburbs. 24/7 emergency service guaranteed.
+                            Connecting homeowners and commercial properties with available, licensed, and certificated local plumbing professionals across New Zealand.
                         </p>
                     </div>
 
                     {/* Col 2 */}
                     <div>
-                        <h4 className="text-white font-bold mb-4 text-base">Popular Services</h4>
+                        <h4 className="text-white font-bold mb-4 text-base">Popular Core Services</h4>
                         <ul className="space-y-2 text-sm text-slate-400">
-                            <li><Link href="/emergency-plumbing" className="hover:text-sky-400 transition-colors">Emergency Plumbing</Link></li>
+                            <li><Link href="/emergency-plumbing" className="hover:text-sky-400 transition-colors">Emergency Plumber</Link></li>
                             <li><Link href="/blocked-drain-unblocking" className="hover:text-sky-400 transition-colors">Blocked Drain Unblocking</Link></li>
-                            <li><Link href="/hot-water-cylinder-repair" className="hover:text-sky-400 transition-colors">Hot Water Cylinder Repair</Link></li>
-                            <li><Link href="/gas-fitting-repairs" className="hover:text-sky-400 transition-colors">Gas Fitting & Gas Repairs</Link></li>
-                            <li><Link href="/burst-pipe-repair" className="hover:text-sky-400 transition-colors">Burst Pipe Repairs</Link></li>
+                            <li><Link href="/hot-water-cylinder-installation" className="hover:text-sky-400 transition-colors">Hot Water Cylinder Installation</Link></li>
+                            <li><Link href="/gasfitting-repairs" className="hover:text-sky-400 transition-colors">Gasfitting and Gas Repairs</Link></li>
+                            <li><Link href="/burst-pipe-repair" className="hover:text-sky-400 transition-colors">Burst Pipe Repair</Link></li>
                         </ul>
                     </div>
 
                     {/* Col 3 */}
                     <div>
-                        <h4 className="text-white font-bold mb-4 text-base">Key Regions</h4>
+                        <h4 className="text-white font-bold mb-4 text-base">Regional Hubs</h4>
                         <ul className="space-y-2 text-sm text-slate-400">
-                            <li><span className="text-sky-400">■</span> Auckland Region</li>
-                            <li><span className="text-sky-400">■</span> Wellington Region</li>
-                            <li><span className="text-sky-400">■</span> Canterbury (Christchurch)</li>
-                            <li><span className="text-sky-400">■</span> Waikato (Hamilton)</li>
-                            <li><span className="text-sky-400">■</span> Bay of Plenty (Tauranga)</li>
+                            <li><Link href="/subdomain/auckland" className="hover:text-sky-400">Auckland Region</Link></li>
+                            <li><Link href="/subdomain/wellington" className="hover:text-sky-400">Wellington Region</Link></li>
+                            <li><Link href="/subdomain/canterbury" className="hover:text-sky-400">Canterbury (Christchurch)</Link></li>
+                            <li><Link href="/subdomain/waikato" className="hover:text-sky-400">Waikato (Hamilton)</Link></li>
+                            <li><Link href="/subdomain/bay-of-plenty" className="hover:text-sky-400">Bay of Plenty (Tauranga)</Link></li>
                         </ul>
                     </div>
 
                     {/* Col 4 */}
                     <div>
-                        <h4 className="text-white font-bold mb-4 text-base">24/7 Emergency Support</h4>
+                        <h4 className="text-white font-bold mb-4 text-base">Connect with Local Trade</h4>
                         <p className="text-slate-400 text-sm mb-4">
-                            Facing a plumbing emergency in NZ? Call our nationwide toll-free hotline right now.
+                            Looking for a plumber or drainlayer in your local suburb? Call our nationwide connection line.
                         </p>
                         <a href="tel:0800845524" className="inline-block bg-sky-600 hover:bg-sky-500 text-white font-extrabold px-6 py-3 rounded-xl transition-all shadow-lg">
                             📞 0800 845 524
@@ -228,8 +198,12 @@ export default function RootLayout({
                     </div>
                 </div>
                 
-                <div className="max-w-7xl mx-auto mt-12 pt-6 border-t border-slate-800 text-center text-xs text-slate-500">
-                    &copy; {new Date().getFullYear()} Village Plumbers NZ. All rights reserved. Registered Certified Plumbers, Gasfitters & Drainlayers.
+                {/* Legal & Lead-Gen Compliance Disclaimer */}
+                <div className="max-w-7xl mx-auto mt-12 pt-6 border-t border-slate-800 text-xs text-slate-500 space-y-2 text-center md:text-left">
+                    <p>
+                        <strong>Disclaimer:</strong> Village Plumbers NZ is an independent consumer matching and referral platform. We connect customers with available, independent, licensed and certificated plumbing, gasfitting, and drainlaying professionals serving your local area. All trade work in New Zealand is performed independently by qualified practitioners registered with the Plumbers, Gasfitters and Drainlayers Board (PGDB).
+                    </p>
+                    <p>&copy; {new Date().getFullYear()} Village Plumbers NZ. All rights reserved.</p>
                 </div>
             </footer>
         </div>

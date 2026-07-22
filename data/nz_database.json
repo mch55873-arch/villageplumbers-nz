@@ -3,6 +3,10 @@
     {
       "code": "auckland",
       "name": "Auckland",
+      "isColdRegion": false,
+      "isRural": false,
+      "isIndustrial": true,
+      "hasGas": true,
       "cities": [
         {"slug": "ponsonby", "name": "Ponsonby", "zip": "1011", "subdomain": "ponsonby-auckland"},
         {"slug": "newmarket", "name": "Newmarket", "zip": "1023", "subdomain": "newmarket-auckland"},
@@ -25,6 +29,10 @@
     {
       "code": "wellington",
       "name": "Wellington",
+      "isColdRegion": false,
+      "isRural": false,
+      "isIndustrial": true,
+      "hasGas": true,
       "cities": [
         {"slug": "te-aro", "name": "Te Aro", "zip": "6011", "subdomain": "te-aro-wellington"},
         {"slug": "thorndon", "name": "Thorndon", "zip": "6011", "subdomain": "thorndon-wellington"},
@@ -47,6 +55,10 @@
     {
       "code": "canterbury",
       "name": "Canterbury",
+      "isColdRegion": true,
+      "isRural": true,
+      "isIndustrial": true,
+      "hasGas": true,
       "cities": [
         {"slug": "christchurch-central", "name": "Christchurch Central", "zip": "8011", "subdomain": "christchurch-central-canterbury"},
         {"slug": "riccarton", "name": "Riccarton", "zip": "8041", "subdomain": "riccarton-canterbury"},
@@ -69,6 +81,10 @@
     {
       "code": "waikato",
       "name": "Waikato",
+      "isColdRegion": false,
+      "isRural": true,
+      "isIndustrial": true,
+      "hasGas": true,
       "cities": [
         {"slug": "hamilton-central", "name": "Hamilton Central", "zip": "3204", "subdomain": "hamilton-central-waikato"},
         {"slug": "frankton", "name": "Frankton", "zip": "3204", "subdomain": "frankton-waikato"},
@@ -91,6 +107,10 @@
     {
       "code": "bay-of-plenty",
       "name": "Bay of Plenty",
+      "isColdRegion": false,
+      "isRural": true,
+      "isIndustrial": true,
+      "hasGas": true,
       "cities": [
         {"slug": "tauranga-central", "name": "Tauranga Central", "zip": "3110", "subdomain": "tauranga-central-bay-of-plenty"},
         {"slug": "mount-maunganui", "name": "Mount Maunganui", "zip": "3116", "subdomain": "mount-maunganui-bay-of-plenty"},
@@ -113,6 +133,10 @@
     {
       "code": "manawatu-whanganui",
       "name": "Manawatu-Whanganui",
+      "isColdRegion": false,
+      "isRural": true,
+      "isIndustrial": false,
+      "hasGas": true,
       "cities": [
         {"slug": "palmerston-north-central", "name": "Palmerston North Central", "zip": "4410", "subdomain": "palmerston-north-central-manawatu-whanganui"},
         {"slug": "hokowhitu", "name": "Hokowhitu", "zip": "4410", "subdomain": "hokowhitu-manawatu-whanganui"},
@@ -135,6 +159,10 @@
     {
       "code": "hawkes-bay",
       "name": "Hawke's Bay",
+      "isColdRegion": false,
+      "isRural": true,
+      "isIndustrial": false,
+      "hasGas": true,
       "cities": [
         {"slug": "napier-central", "name": "Napier Central", "zip": "4110", "subdomain": "napier-central-hawkes-bay"},
         {"slug": "taradale", "name": "Taradale", "zip": "4112", "subdomain": "taradale-hawkes-bay"},
@@ -157,6 +185,10 @@
     {
       "code": "taranaki",
       "name": "Taranaki",
+      "isColdRegion": false,
+      "isRural": true,
+      "isIndustrial": false,
+      "hasGas": true,
       "cities": [
         {"slug": "new-plymouth-central", "name": "New Plymouth Central", "zip": "4310", "subdomain": "new-plymouth-central-taranaki"},
         {"slug": "strandon", "name": "Strandon", "zip": "4312", "subdomain": "strandon-taranaki"},
@@ -179,6 +211,10 @@
     {
       "code": "northland",
       "name": "Northland",
+      "isColdRegion": false,
+      "isRural": true,
+      "isIndustrial": false,
+      "hasGas": true,
       "cities": [
         {"slug": "whangarei-central", "name": "Whangarei Central", "zip": "0110", "subdomain": "whangarei-central-northland"},
         {"slug": "regent", "name": "Regent", "zip": "0112", "subdomain": "regent-northland"},
@@ -201,6 +237,10 @@
     {
       "code": "southland",
       "name": "Southland",
+      "isColdRegion": true,
+      "isRural": true,
+      "isIndustrial": false,
+      "hasGas": true,
       "cities": [
         {"slug": "invercargill-central", "name": "Invercargill Central", "zip": "9810", "subdomain": "invercargill-central-southland"},
         {"slug": "gladstone", "name": "Gladstone", "zip": "9810", "subdomain": "gladstone-southland"},
@@ -223,6 +263,10 @@
     {
       "code": "nelson",
       "name": "Nelson",
+      "isColdRegion": false,
+      "isRural": false,
+      "isIndustrial": false,
+      "hasGas": true,
       "cities": [
         {"slug": "nelson-central", "name": "Nelson Central", "zip": "7010", "subdomain": "nelson-central-nelson"},
         {"slug": "stoke", "name": "Stoke", "zip": "7011", "subdomain": "stoke-nelson"},
@@ -245,6 +289,10 @@
     {
       "code": "marlborough",
       "name": "Marlborough",
+      "isColdRegion": false,
+      "isRural": true,
+      "isIndustrial": false,
+      "hasGas": true,
       "cities": [
         {"slug": "blenheim-central", "name": "Blenheim Central", "zip": "7201", "subdomain": "blenheim-central-marlborough"},
         {"slug": "springlands", "name": "Springlands", "zip": "7201", "subdomain": "springlands-marlborough"},
@@ -267,6 +315,10 @@
     {
       "code": "tasman",
       "name": "Tasman",
+      "isColdRegion": false,
+      "isRural": true,
+      "isIndustrial": false,
+      "hasGas": true,
       "cities": [
         {"slug": "richmond", "name": "Richmond", "zip": "7020", "subdomain": "richmond-tasman"},
         {"slug": "motueka", "name": "Motueka", "zip": "7120", "subdomain": "motueka-tasman"},
@@ -289,6 +341,10 @@
     {
       "code": "gisborne",
       "name": "Gisborne",
+      "isColdRegion": false,
+      "isRural": true,
+      "isIndustrial": false,
+      "hasGas": true,
       "cities": [
         {"slug": "gisborne-central", "name": "Gisborne Central", "zip": "4010", "subdomain": "gisborne-central-gisborne"},
         {"slug": "kaiti", "name": "Kaiti", "zip": "4010", "subdomain": "kaiti-gisborne"},
@@ -311,6 +367,10 @@
     {
       "code": "west-coast",
       "name": "West Coast",
+      "isColdRegion": true,
+      "isRural": true,
+      "isIndustrial": false,
+      "hasGas": true,
       "cities": [
         {"slug": "greymouth-central", "name": "Greymouth Central", "zip": "7805", "subdomain": "greymouth-central-west-coast"},
         {"slug": "cobden", "name": "Cobden", "zip": "7805", "subdomain": "cobden-west-coast"},
@@ -333,6 +393,10 @@
     {
       "code": "otago",
       "name": "Otago",
+      "isColdRegion": true,
+      "isRural": true,
+      "isIndustrial": false,
+      "hasGas": true,
       "cities": [
         {"slug": "dunedin-central", "name": "Dunedin Central", "zip": "9016", "subdomain": "dunedin-central-otago"},
         {"slug": "north-dunedin", "name": "North Dunedin", "zip": "9016", "subdomain": "north-dunedin-otago"},
