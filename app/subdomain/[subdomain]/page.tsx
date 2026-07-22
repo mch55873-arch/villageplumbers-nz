@@ -5,13 +5,7 @@ import type { Metadata } from 'next';
 import nzDatabase from '../../../data/nz_database.json';
 import servicesData from '../../../data/services.json';
 
-export async function generateStaticParams() {
-  // Pre-render main 16 regions. All 256 city subdomains render dynamically on-demand!
-  return (nzDatabase.regions || [])
-    .map((reg: any) => reg.code || reg.slug)
-    .filter((code: any) => typeof code === 'string' && code.trim().length > 0)
-    .map((code: string) => ({ subdomain: code }));
-}
+export const revalidate = 86400;
 
 export async function generateMetadata({ params }: { params: Promise<{ subdomain: string }> }): Promise<Metadata> {
   const resolvedParams = await params;
@@ -64,7 +58,8 @@ export default async function SubdomainPage({ params }: { params: Promise<{ subd
     let foundParentReg: any = null;
 
     for (const r of nzDatabase.regions) {
-      const sub = r.suburbs?.find((s: any) => s.slug === resolvedParams.subdomain);
+      const cities = r.cities || r.suburbs || [];
+      const sub = cities.find((s: any) => (s.subdomain || s.slug) === resolvedParams.subdomain);
       if (sub) {
         foundSub = sub;
         foundParentReg = r;
@@ -78,7 +73,8 @@ export default async function SubdomainPage({ params }: { params: Promise<{ subd
       isColdRegion = foundParentReg.isColdRegion || false;
       isRural = foundParentReg.isRural || false;
       isIndustrial = foundParentReg.isIndustrial || false;
-      nearbySuburbs = foundParentReg.suburbs?.filter((s: any) => s.slug !== foundSub.slug) || [];
+      const parentCities = foundParentReg.cities || foundParentReg.suburbs || [];
+      nearbySuburbs = parentCities.filter((s: any) => (s.subdomain || s.slug) !== (foundSub.subdomain || foundSub.slug));
     } else {
       locName = resolvedParams.subdomain
         .split('-')

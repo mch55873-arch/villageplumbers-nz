@@ -5,30 +5,7 @@ import type { Metadata } from 'next';
 import nzDatabase from '../../../../data/nz_database.json';
 import servicesData from '../../../../data/services.json';
 
-export async function generateStaticParams() {
-  const params: Array<{ subdomain: string; service: string }> = [];
-
-  // Pre-render main 16 regions for core services to stay under Cloudflare Pages 20,000 files limit.
-  // All 256 city subdomains and additional services render dynamically on-demand via Next.js ISR/Edge!
-  const mainRegions = (nzDatabase.regions || [])
-    .map((reg: any) => reg.code || reg.slug)
-    .filter((code: any) => typeof code === 'string' && code.trim().length > 0);
-
-  const coreServices = (servicesData || [])
-    .filter((s: any) => s && s.isCore && typeof s.slug === 'string')
-    .map((s: any) => s.slug);
-
-  mainRegions.forEach((subdomain) => {
-    coreServices.forEach((service) => {
-      params.push({
-        subdomain: String(subdomain),
-        service: String(service),
-      });
-    });
-  });
-
-  return params;
-}
+export const revalidate = 86400;
 
 export async function generateMetadata({ params }: { params: Promise<{ subdomain: string, service: string }> }): Promise<Metadata> {
   const resolvedParams = await params;
@@ -75,7 +52,8 @@ export default async function SubdomainServicePage({ params }: { params: Promise
     let foundParentReg: any = null;
 
     for (const r of nzDatabase.regions) {
-      const sub = r.suburbs?.find((s: any) => s.slug === resolvedParams.subdomain);
+      const cities = r.cities || r.suburbs || [];
+      const sub = cities.find((s: any) => (s.subdomain || s.slug) === resolvedParams.subdomain);
       if (sub) {
         foundSub = sub;
         foundParentReg = r;
@@ -85,7 +63,8 @@ export default async function SubdomainServicePage({ params }: { params: Promise
 
     if (foundSub) {
       locName = `${foundSub.name}, ${foundParentReg.name}`;
-      nearbySuburbs = foundParentReg.suburbs?.filter((s: any) => s.slug !== foundSub.slug) || [];
+      const parentCities = foundParentReg.cities || foundParentReg.suburbs || [];
+      nearbySuburbs = parentCities.filter((s: any) => (s.subdomain || s.slug) !== (foundSub.subdomain || foundSub.slug));
     } else {
       locName = resolvedParams.subdomain
         .split('-')
