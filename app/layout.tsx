@@ -6,8 +6,6 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"], variable: '--font-inter', display: 'swap' });
 const outfit = Outfit({ subsets: ["latin"], variable: '--font-outfit', display: 'swap' });
 
-export const runtime = 'edge';
-
 export const metadata: Metadata = {
   metadataBase: new URL('https://villageplumbers.co.nz'),
   title: "Village Plumbers NZ | Emergency Plumbing, Gasfitting & Drainlaying",

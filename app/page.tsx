@@ -499,8 +499,8 @@ export default function HomePage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
             {regions.map((reg: any) => (
               <Link 
-                key={reg.slug}
-                href={`/subdomain/${reg.slug}`}
+                key={reg.code}
+                href={`/subdomain/${reg.code}`}
                 className="bg-slate-900 hover:bg-emerald-400 hover:text-slate-950 border border-slate-800 p-4 rounded-xl font-bold text-sm transition-all text-center"
               >
                 📍 {reg.name}
