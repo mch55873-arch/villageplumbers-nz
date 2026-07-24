@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 
 export const config = {
   matcher: [
-    '/((?!api|_next/static|_next/image|favicon.ico|images|logo.png|robots.txt|sitemap.xml).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|images|logo.png|robots.txt|sitemap.xml|sitemaps).*)',
   ],
 };
 
@@ -15,6 +15,10 @@ export function middleware(req: NextRequest) {
   const hostname = rawHost.split(':')[0].toLowerCase();
   const isLocalhost = hostname.includes('localhost');
   const baseDomain = isLocalhost ? 'localhost' : 'villageplumbers.co.nz';
+
+  if (url.pathname.startsWith('/sitemaps') || url.pathname === '/sitemap.xml') {
+    return NextResponse.next();
+  }
 
   // 1. Redirect legacy apex /subdomain/... URLs to canonical subdomain hostnames (308 Permanent Redirect)
   if ((hostname === baseDomain || hostname === `www.${baseDomain}`) && url.pathname.startsWith('/subdomain/')) {
@@ -35,7 +39,7 @@ export function middleware(req: NextRequest) {
     }
     
     if (subdomain !== 'www' && subdomain.length > 0 && subdomain !== baseDomain) {
-      const excludedPaths = ['/about', '/contact', '/blog', '/services', '/areas-we-serve', '/author'];
+      const excludedPaths = ['/about', '/contact', '/blog', '/services', '/areas-we-serve', '/author', '/sitemaps', '/sitemap.xml'];
       const isExcluded = excludedPaths.some(p => url.pathname === p || url.pathname.startsWith(`${p}/`));
       
       if (!isExcluded) {
