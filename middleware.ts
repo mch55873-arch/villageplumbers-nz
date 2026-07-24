@@ -1,14 +1,20 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { sitemapIndex, coreSitemap, regionSitemap, type RegionItem } from './src/sitemaps';
+import database from './data/nz_database.json';
+
+const REGIONS = database.regions as RegionItem[];
+const REGION_BY_CODE = new Map(REGIONS.map((r) => [r.code.toLowerCase(), r]));
 
 export const config = {
   matcher: [
-    '/((?!api|_next/static|_next/image|favicon.ico|images|logo.png|robots.txt|sitemap.xml|sitemaps).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|images|logo.png|robots.txt).*)',
   ],
 };
 
 export function middleware(req: NextRequest) {
   const url = req.nextUrl;
+  const path = url.pathname;
   const rawHost = req.headers.get('host') || req.headers.get('x-forwarded-host') || '';
   
   // Cleanly strip port numbers (e.g. :443, :3000)
@@ -16,8 +22,23 @@ export function middleware(req: NextRequest) {
   const isLocalhost = hostname.includes('localhost');
   const baseDomain = isLocalhost ? 'localhost' : 'villageplumbers.co.nz';
 
-  if (url.pathname.startsWith('/sitemaps') || url.pathname === '/sitemap.xml') {
-    return NextResponse.next();
+  // DIRECT SITEMAP HANDLERS INSIDE MIDDLEWARE (0ms Edge Execution)
+  if (path === '/sitemap.xml') {
+    return sitemapIndex(REGIONS, req.method);
+  }
+
+  if (path === '/sitemaps/core.xml') {
+    return coreSitemap(REGIONS, req.method);
+  }
+
+  const sitemapMatch = path.match(/^\/sitemaps\/(.+)-(\d+)\.xml$/);
+  if (sitemapMatch) {
+    const regionCode = sitemapMatch[1].toLowerCase();
+    const region = REGION_BY_CODE.get(regionCode);
+    if (region) {
+      const sitemap = regionSitemap(region, Number(sitemapMatch[2]), req.method);
+      if (sitemap) return sitemap;
+    }
   }
 
   // 1. Redirect legacy apex /subdomain/... URLs to canonical subdomain hostnames (308 Permanent Redirect)
@@ -39,7 +60,7 @@ export function middleware(req: NextRequest) {
     }
     
     if (subdomain !== 'www' && subdomain.length > 0 && subdomain !== baseDomain) {
-      const excludedPaths = ['/about', '/contact', '/blog', '/services', '/areas-we-serve', '/author', '/sitemaps', '/sitemap.xml'];
+      const excludedPaths = ['/about', '/contact', '/blog', '/services', '/areas-we-serve', '/author'];
       const isExcluded = excludedPaths.some(p => url.pathname === p || url.pathname.startsWith(`${p}/`));
       
       if (!isExcluded) {
