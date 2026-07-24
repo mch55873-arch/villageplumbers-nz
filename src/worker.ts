@@ -50,9 +50,9 @@ async function cached(request: Request, ctx: Ctx, render: () => Response) {
   if (request.method === "HEAD") return render();
   const cache = (caches as CacheStorage & { default: Cache }).default;
   const hit = await cache.match(request);
-  if (hit) return hit;
+  if (hit && hit.status === 200) return hit;
   const result = render();
-  if (result.ok) ctx.waitUntil(cache.put(request, result.clone()));
+  if (result.status === 200) ctx.waitUntil(cache.put(request, result.clone()));
   return result;
 }
 
