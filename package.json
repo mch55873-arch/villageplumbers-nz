@@ -6,8 +6,9 @@
     "node": ">=22.0.0"
   },
   "scripts": {
+    "prebuild": "node scripts/build-sitemaps.js",
     "dev": "next dev",
-    "build": "next build --webpack",
+    "build": "node scripts/build-sitemaps.js && next build --webpack",
     "start": "next start",
     "cf:build": "opennextjs-cloudflare build",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
