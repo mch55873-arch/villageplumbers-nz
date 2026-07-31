@@ -1,4 +1,9 @@
-import database from "../data/nz_database.json";
+import os
+
+print("=== GENERATING RICH LONG-FORM MOLD REPLICA CONTENT FOR VILLAGE PLUMBERS NZ ===")
+
+# Create rich locationTemplates.ts
+templates_code = '''import database from "../data/nz_database.json";
 import servicesData from "../data/services.json";
 import articlesData from "../data/articles.json";
 
@@ -804,9 +809,9 @@ export function notFoundPage(message: string) {
   return `<!doctype html><html><head><meta name="robots" content="noindex"><meta name="viewport" content="width=device-width,initial-scale=1"><title>404 | ${BRAND}</title><style>${CSS}</style></head><body>${header()}<main class="sec-dark"><div class="wrap"><h1>404 Not Found</h1><p>${esc(message)}</p><a class="btn-cta" href="https://${DOMAIN}/">Back to Home</a></div></main>${footer()}</body></html>`;
 }
 
-export function privacyPolicyPage() { return shell(`Privacy Policy | ${BRAND}`, "Privacy Policy", `https://${DOMAIN}/privacy-policy/`, "<main class="sec-white"><div class="wrap"><h1>Privacy Policy</h1><p>We respect your privacy. All information collected is strictly used for service dispatch.</p></div></main>"); }
-export function termsOfServicePage() { return shell(`Terms | ${BRAND}`, "Terms", `https://${DOMAIN}/terms/`, "<main class="sec-white"><div class="wrap"><h1>Terms of Service</h1><p>Terms and conditions for ${BRAND} New Zealand emergency plumbing network.</p></div></main>"); }
-export function disclaimerPage() { return shell(`Disclaimer | ${BRAND}`, "Disclaimer", `https://${DOMAIN}/disclaimer/`, "<main class="sec-white"><div class="wrap"><h1>Disclaimer</h1><p>Independent contractor referral service disclaimer.</p></div></main>"); }
+export function privacyPolicyPage() { return shell(`Privacy Policy | ${BRAND}`, "Privacy Policy", `https://${DOMAIN}/privacy-policy/`, "<main class=\"sec-white\"><div class=\"wrap\"><h1>Privacy Policy</h1><p>We respect your privacy. All information collected is strictly used for service dispatch.</p></div></main>"); }
+export function termsOfServicePage() { return shell(`Terms | ${BRAND}`, "Terms", `https://${DOMAIN}/terms/`, "<main class=\"sec-white\"><div class=\"wrap\"><h1>Terms of Service</h1><p>Terms and conditions for ${BRAND} New Zealand emergency plumbing network.</p></div></main>"); }
+export function disclaimerPage() { return shell(`Disclaimer | ${BRAND}`, "Disclaimer", `https://${DOMAIN}/disclaimer/`, "<main class=\"sec-white\"><div class=\"wrap\"><h1>Disclaimer</h1><p>Independent contractor referral service disclaimer.</p></div></main>"); }
 
 export function areasWeServePage(regions: RegionItem[]) {
   const canonical = `https://${DOMAIN}/areas-we-serve/`;
@@ -814,3 +819,8 @@ export function areasWeServePage(regions: RegionItem[]) {
   const body = `<main><section class="page-hero"><div class="wrap"><div class="crumb-trail"><a href="https://${DOMAIN}/">Home</a> / Areas</div><h1>All New Zealand <span>Service Regions Directory</span></h1></div></section><section class="sec-gray" style="padding:70px 0;"><div class="wrap"><div class="dir-grid">${regionPills}</div></div></section></main>`;
   return shell(`All New Zealand Service Regions Directory | ${BRAND}`, "Complete directory of all New Zealand plumbing service areas.", canonical, body);
 }
+'''
+
+with open("src/locationTemplates.ts", "w", encoding="utf-8") as f:
+  f.write(templates_code)
+print("[OK] Generated full rich long-form content for locationTemplates.ts")
