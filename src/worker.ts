@@ -25,15 +25,22 @@ type Env = { ASSETS: { fetch(input: Request | string): Promise<Response> } };
 type Ctx = { waitUntil(promise: Promise<unknown>): void };
 
 const DOMAIN = "villageplumbers.co.nz";
-const REGIONS = database.regions as RegionItem[];
-const REGION_BY_CODE = new Map(REGIONS.map((r) => [r.code.toLowerCase(), r]));
-
-// Map all city subdomains for fast O(1) lookup
+const rawRegions: RegionItem[] = (database as any).regions || (database as any).default?.regions || [];
+const REGION_BY_CODE = new Map<string, RegionItem>();
 const CITY_BY_SUBDOMAIN = new Map<string, { region: RegionItem; city: CityItem }>();
-for (const region of REGIONS) {
-  for (const city of region.cities) {
-    if (city.subdomain) {
-      CITY_BY_SUBDOMAIN.set(city.subdomain.toLowerCase(), { region, city });
+
+for (const r of rawRegions) {
+  if (r && r.code) {
+    const code = r.code.toLowerCase();
+    REGION_BY_CODE.set(code, r);
+    // Also map slug without -region if any
+    REGION_BY_CODE.set(code.replace(/-region$/, ""), r);
+  }
+  if (r && r.cities) {
+    for (const c of r.cities) {
+      if (c && c.subdomain) {
+        CITY_BY_SUBDOMAIN.set(c.subdomain.toLowerCase(), { region: r, city: c });
+      }
     }
   }
 }
