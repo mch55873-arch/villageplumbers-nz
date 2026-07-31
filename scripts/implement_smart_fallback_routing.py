@@ -1,4 +1,8 @@
-import database from "../data/nz_database.json";
+import os
+
+print("=== IMPLEMENTING SMART ZERO-404 FUZZY ROUTING ENGINE IN SRC/WORKER.TS ===")
+
+new_worker_code = '''import database from "../data/nz_database.json";
 import servicesData from "../data/services.json";
 import articlesData from "../data/articles.json";
 import {
@@ -142,7 +146,7 @@ export default {
       if (region) return cached(request, ctx, () => regionSitemap(region, method));
     }
     if (path === "/robots.txt") {
-      const txt = `User-agent: *\nAllow: /\n\nSitemap: https://${DOMAIN}/sitemap.xml\n`;
+      const txt = `User-agent: *\\nAllow: /\\n\\nSitemap: https://${DOMAIN}/sitemap.xml\\n`;
       return htmlResponse(txt, method, 200, { "content-type": "text/plain" });
     }
 
@@ -179,7 +183,7 @@ export default {
       if (path === "/" || path === "") return cached(request, ctx, () => htmlResponse(homePage(rawRegions), method));
       
       // Smart path fallback for indexed location URLs like /porirua-wellington/ or /locations/auckland/
-      const cleanPathSlug = path.replace(/^\/+/, "").replace(/\/+$|\/.*$/, "").toLowerCase();
+      const cleanPathSlug = path.replace(/^\\/+/, "").replace(/\\/+$|\\/.*$/, "").toLowerCase();
       if (cleanPathSlug) {
         const resolved = resolveSubdomain(cleanPathSlug);
         if (resolved.type === "suburb" && resolved.city) {
@@ -211,3 +215,9 @@ export default {
     return cached(request, ctx, () => htmlResponse(homePage(rawRegions), method));
   },
 };
+'''
+
+with open("src/worker.ts", "w", encoding="utf-8") as f:
+  f.write(new_worker_code)
+
+print("[OK] Smart Zero-404 Fuzzy Routing Engine written to src/worker.ts")
