@@ -2,6 +2,9 @@ import database from "../data/nz_database.json";
 import servicesData from "../data/services.json";
 import articlesData from "../data/articles.json";
 
+const rawServices: any[] = (servicesData as any).default || (Array.isArray(servicesData) ? servicesData : []);
+const rawArticles: any[] = (articlesData as any).default || (Array.isArray(articlesData) ? articlesData : []);
+
 export type RegionItem = (typeof database.regions)[number];
 export type CityItem = RegionItem["cities"][number];
 
@@ -344,7 +347,7 @@ function markdownToHtml(md: string): string {
 export function homePage(regions: RegionItem[]) {
   const canonical = `https://${DOMAIN}/`;
   const regionPills = regions.map(r => `<a class="dir-card-white" href="https://${r.code.toLowerCase()}.${DOMAIN}/"><span>📍 ${esc(r.name)}</span></a>`).join("");
-  const topServicesCards = servicesData.slice(0, 6).map((s: any) => `<div class="service-hub-card"><div><div class="service-hub-icon">${s.icon || '🔧'}</div><h3>${esc(s.name || s.title)}</h3><p>${esc(s.description || s.summary)}</p></div><a href="https://${DOMAIN}/services/${s.slug}/">Read More →</a></div>`).join("");
+  const topServicesCards = rawServices.slice(0, 6).map((s: any) => `<div class="service-hub-card"><div><div class="service-hub-icon">${s.icon || '🔧'}</div><h3>${esc(s.name || s.title)}</h3><p>${esc(s.description || s.summary)}</p></div><a href="https://${DOMAIN}/services/${s.slug}/">Read More →</a></div>`).join("");
 
   const schema = {
     "@context": "https://schema.org",
