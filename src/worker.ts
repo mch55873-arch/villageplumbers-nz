@@ -119,7 +119,7 @@ export default {
 
     // 5. Main Domain Homepage
     if (hostname === DOMAIN || hostname === `www.${DOMAIN}`) {
-      if (path === "") return cached(request, ctx, () => htmlResponse(homePage(REGIONS), method));
+      if (path === "/" || path === "") return cached(request, ctx, () => htmlResponse(homePage(REGIONS), method));
       return notFound("The requested page was not found.", method);
     }
 
@@ -130,13 +130,13 @@ export default {
       // Match Region Subdomain (e.g., auckland.villageplumbers.co.nz)
       const regionMatch = REGION_BY_CODE.get(sub);
       if (regionMatch) {
-        if (path === "") return cached(request, ctx, () => htmlResponse(regionPage(regionMatch), method));
+        if (path === "/" || path === "") return cached(request, ctx, () => htmlResponse(regionPage(regionMatch), method));
       }
 
       // Match Suburb Subdomain (e.g., ponsonby-auckland.villageplumbers.co.nz)
       const cityMatch = CITY_BY_SUBDOMAIN.get(sub);
       if (cityMatch) {
-        if (path === "") return cached(request, ctx, () => htmlResponse(suburbPage(cityMatch.region, cityMatch.city, hostname), method));
+        if (path === "/" || path === "") return cached(request, ctx, () => htmlResponse(suburbPage(cityMatch.region, cityMatch.city, hostname), method));
       }
 
       return notFound(`The requested local page for "${sub}" was not found.`, method);
