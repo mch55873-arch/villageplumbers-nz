@@ -1,6 +1,6 @@
 import os
 
-print("=== GENERATING RICH LONG-FORM MOLD REPLICA CONTENT FOR VILLAGE PLUMBERS NZ ===")
+print("=== FIXING ESCAPED QUOTES IN RICH VILLAGE PLUMBERS CONTENT GENERATOR ===")
 
 # Create rich locationTemplates.ts
 templates_code = '''import database from "../data/nz_database.json";
@@ -796,22 +796,16 @@ export function suburbPage(region: RegionItem, city: CityItem, host: string) {
   </section>
   </main>`;
 
-  return shell(`24/7 Emergency Plumbing in ${city.name}, ${region.name} | ${BRAND}`, `24/7 local plumber in ${city.name}, ${region.name}.`, canonical, body, {
-    "@context": "https://schema.org",
-    "@type": "Plumber",
-    name: `${BRAND} ${city.name}`,
-    telephone: PHONE_DISPLAY,
-    areaServed: city.name
-  });
+  return shell(`24/7 Emergency Plumbing in ${city.name}, ${region.name} | ${BRAND}`, `24/7 local plumber in ${city.name}, ${region.name}.`, canonical, body);
 }
 
 export function notFoundPage(message: string) {
   return `<!doctype html><html><head><meta name="robots" content="noindex"><meta name="viewport" content="width=device-width,initial-scale=1"><title>404 | ${BRAND}</title><style>${CSS}</style></head><body>${header()}<main class="sec-dark"><div class="wrap"><h1>404 Not Found</h1><p>${esc(message)}</p><a class="btn-cta" href="https://${DOMAIN}/">Back to Home</a></div></main>${footer()}</body></html>`;
 }
 
-export function privacyPolicyPage() { return shell(`Privacy Policy | ${BRAND}`, "Privacy Policy", `https://${DOMAIN}/privacy-policy/`, "<main class=\"sec-white\"><div class=\"wrap\"><h1>Privacy Policy</h1><p>We respect your privacy. All information collected is strictly used for service dispatch.</p></div></main>"); }
-export function termsOfServicePage() { return shell(`Terms | ${BRAND}`, "Terms", `https://${DOMAIN}/terms/`, "<main class=\"sec-white\"><div class=\"wrap\"><h1>Terms of Service</h1><p>Terms and conditions for ${BRAND} New Zealand emergency plumbing network.</p></div></main>"); }
-export function disclaimerPage() { return shell(`Disclaimer | ${BRAND}`, "Disclaimer", `https://${DOMAIN}/disclaimer/`, "<main class=\"sec-white\"><div class=\"wrap\"><h1>Disclaimer</h1><p>Independent contractor referral service disclaimer.</p></div></main>"); }
+export function privacyPolicyPage() { return shell(`Privacy Policy | ${BRAND}`, "Privacy Policy", `https://${DOMAIN}/privacy-policy/`, `<main class="sec-white"><div class="wrap"><h1>Privacy Policy</h1><p>We respect your privacy. All information collected is strictly used for service dispatch.</p></div></main>`); }
+export function termsOfServicePage() { return shell(`Terms | ${BRAND}`, "Terms", `https://${DOMAIN}/terms/`, `<main class="sec-white"><div class="wrap"><h1>Terms of Service</h1><p>Terms and conditions for ${BRAND} New Zealand emergency plumbing network.</p></div></main>`); }
+export function disclaimerPage() { return shell(`Disclaimer | ${BRAND}`, "Disclaimer", `https://${DOMAIN}/disclaimer/`, `<main class="sec-white"><div class="wrap"><h1>Disclaimer</h1><p>Independent contractor referral service disclaimer.</p></div></main>`); }
 
 export function areasWeServePage(regions: RegionItem[]) {
   const canonical = `https://${DOMAIN}/areas-we-serve/`;
@@ -823,4 +817,4 @@ export function areasWeServePage(regions: RegionItem[]) {
 
 with open("src/locationTemplates.ts", "w", encoding="utf-8") as f:
   f.write(templates_code)
-print("[OK] Generated full rich long-form content for locationTemplates.ts")
+print("[OK] Re-generated clean locationTemplates.ts without syntax errors")
