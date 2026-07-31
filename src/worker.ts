@@ -133,7 +133,7 @@ export default {
         if (path === "") return cached(request, ctx, () => htmlResponse(regionPage(regionMatch), method));
       }
 
-      # Match Suburb Subdomain (e.g., ponsonby-auckland.villageplumbers.co.nz)
+      // Match Suburb Subdomain (e.g., ponsonby-auckland.villageplumbers.co.nz)
       const cityMatch = CITY_BY_SUBDOMAIN.get(sub);
       if (cityMatch) {
         if (path === "") return cached(request, ctx, () => htmlResponse(suburbPage(cityMatch.region, cityMatch.city, hostname), method));
