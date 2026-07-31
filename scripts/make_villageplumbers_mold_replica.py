@@ -1,8 +1,8 @@
 import os
 
-print("=== CONVERTING VILLAGE PLUMBERS NZ TO 1:1 MOLD REPLICA DESIGN ===")
+print("=== BUILDING FULL 1:1 MOLD REPLICA WITH ALL SERVICES & ARTICLES ROUTING FOR VILLAGE PLUMBERS NZ ===")
 
-# 1. Standalone wrangler.jsonc with main: "src/worker.ts"
+# 1. Standalone wrangler.jsonc
 wrangler_jsonc = '''{
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "villageplumbers-nz",
@@ -32,15 +32,15 @@ wrangler_jsonc = '''{
 '''
 with open("wrangler.jsonc", "w", encoding="utf-8") as f:
   f.write(wrangler_jsonc)
-print("[OK] Created standalone wrangler.jsonc for villageplumbers-nz")
 
 os.makedirs("out", exist_ok=True)
 with open("out/_dummy.txt", "w", encoding="utf-8") as f:
   f.write("villageplumbers asset dummy")
 
-# 2. Build 1:1 locationTemplates.ts for villageplumbers-nz
+# 2. Build complete locationTemplates.ts
 templates_code = '''import database from "../data/nz_database.json";
 import servicesData from "../data/services.json";
+import articlesData from "../data/articles.json";
 
 export type RegionItem = (typeof database.regions)[number];
 export type CityItem = RegionItem["cities"][number];
@@ -238,9 +238,9 @@ function header(): string {
           <a href="https://${DOMAIN}/services/">Services ▾</a>
           <div class="dropdown-menu">
             <a href="https://${DOMAIN}/services/emergency-plumbing/">Emergency Plumbing</a>
-            <a href="https://${DOMAIN}/services/unblocked-drains/">Drain Hydro-Jet Unblocking</a>
+            <a href="https://${DOMAIN}/services/blocked-drain-unblocking/">Drain Hydro-Jet Unblocking</a>
             <a href="https://${DOMAIN}/services/hot-water-cylinder-repair/">Hot Water Cylinder Repair</a>
-            <a href="https://${DOMAIN}/services/gasfitting-certified/">Certified Gasfitting</a>
+            <a href="https://${DOMAIN}/services/gas-leak-repair/">Certified Gasfitting</a>
             <a href="https://${DOMAIN}/services/" class="highlight">View All Services →</a>
           </div>
         </div>
@@ -290,10 +290,10 @@ function footer(): string {
       <div>
         <h3>Plumbing Services</h3>
         <a href="https://${DOMAIN}/services/emergency-plumbing/">Emergency Plumbing</a>
-        <a href="https://${DOMAIN}/services/unblocked-drains/">Drain Hydro-Jetting</a>
+        <a href="https://${DOMAIN}/services/blocked-drain-unblocking/">Drain Hydro-Jetting</a>
         <a href="https://${DOMAIN}/services/hot-water-cylinder-repair/">Hot Water Cylinders</a>
-        <a href="https://${DOMAIN}/services/gasfitting-certified/">Gasfitting &amp; Leak Repair</a>
-        <a href="https://${DOMAIN}/services/leak-detection/">Acoustic Leak Detection</a>
+        <a href="https://${DOMAIN}/services/gas-leak-repair/">Gasfitting &amp; Leak Repair</a>
+        <a href="https://${DOMAIN}/services/water-leak-detection/">Acoustic Leak Detection</a>
         <a href="https://${DOMAIN}/services/" style="color:#38bdf8;font-weight:700;">All Services →</a>
       </div>
       <div>
@@ -360,7 +360,7 @@ function shell(title: string, description: string, canonical: string, body: stri
 export function homePage(regions: RegionItem[]) {
   const canonical = `https://${DOMAIN}/`;
   const regionPills = regions.map(r => `<a class="dir-card-white" href="https://${r.code.toLowerCase()}.${DOMAIN}/"><span>📍 ${esc(r.name)}</span></a>`).join("");
-  const topServicesCards = servicesData.slice(0, 6).map((s: any) => `<div class="service-hub-card"><div><div class="service-hub-icon">🔧</div><h3>${esc(s.name || s.title)}</h3><p>${esc(s.description || s.summary)}</p></div><a href="https://${DOMAIN}/services/${s.slug}/">Read More →</a></div>`).join("");
+  const topServicesCards = servicesData.slice(0, 6).map((s: any) => `<div class="service-hub-card"><div><div class="service-hub-icon">${s.icon || '🔧'}</div><h3>${esc(s.name || s.title)}</h3><p>${esc(s.description || s.summary)}</p></div><a href="https://${DOMAIN}/services/${s.slug}/">Read More →</a></div>`).join("");
 
   const schema = {
     "@context": "https://schema.org",
@@ -454,90 +454,52 @@ export function homePage(regions: RegionItem[]) {
   return shell(`${BRAND} | 24/7 Emergency Plumbing NZ`, `Emergency Plumbing, Gasfitting &amp; Drainlaying across all New Zealand regions.`, canonical, body, schema);
 }
 
+export function servicesHubPage() {
+  const canonical = `https://${DOMAIN}/services/`;
+  const cards = servicesData.map((s: any) => `<div class="service-hub-card"><div><div class="service-hub-icon">${s.icon || '🔧'}</div><h3>${esc(s.name || s.title)}</h3><p>${esc(s.description || s.summary)}</p></div><a href="https://${DOMAIN}/services/${s.slug}/">View Full Service Details →</a></div>`).join("");
+  const body = `<main><section class="page-hero"><div class="wrap"><div class="crumb-trail"><a href="https://${DOMAIN}/">Home</a> / Services</div><h1>Certified Plumbing Services <span>Across New Zealand</span></h1></div></section><section class="sec-gray" style="padding:70px 0;"><div class="wrap"><div class="grid-3">${cards}</div></div></section></main>`;
+  return shell(`Plumbing Services Directory | ${BRAND}`, "Complete list of 24/7 plumbing services in NZ.", canonical, body);
+}
+
+export function singleServicePage(service: any) {
+  const canonical = `https://${DOMAIN}/services/${service.slug}/`;
+  const body = `<main><section class="page-hero"><div class="wrap" style="display:grid;grid-template-columns:1fr 380px;gap:44px;align-items:start;"><div><div class="crumb-trail"><a href="https://${DOMAIN}/">Home</a> / <a href="https://${DOMAIN}/services/">Services</a> / ${esc(service.name)}</div><h1>${esc(service.name)} <span>New Zealand</span></h1><p style="color:#cbd5e1;font-size:16px;">${esc(service.description)}</p><div style="display:flex;gap:14px;"><a class="btn-cta" href="${PHONE_HREF}">📞 Call ${PHONE_DISPLAY}</a></div></div><div><div class="white-form-card"><h3>Request Free Quote</h3><p>Get fast service for ${esc(service.name)}</p><form action="${PHONE_HREF}"><input type="tel" placeholder="Phone Number *" required style="width:100%;padding:12px;border-radius:8px;margin-bottom:10px;"><button type="submit" class="btn-cta" style="width:100%;">Call Now</button></form></div></div></div></section><section class="sec-white" style="padding:70px 0;"><div class="wrap service-main-grid"><div class="service-content-box"><h2>Professional ${esc(service.name)} Services</h2><p>${esc(service.description)}</p><div class="warning-cards-grid"><div class="warning-card"><span>⚠️</span> 24/7 Emergency Dispatch</div><div class="warning-card"><span>🛡️</span> PGDB Licensed &amp; Insured</div></div></div><div><div class="white-form-card"><h3>24/7 Contact</h3><p>Call ${PHONE_DISPLAY}</p></div></div></div></section></main>`;
+  return shell(`${service.name} | ${BRAND}`, service.description, canonical, body, {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: service.name,
+    provider: { "@type": "Organization", name: BRAND }
+  });
+}
+
+export function articlesHubPage() {
+  const canonical = `https://${DOMAIN}/articles/`;
+  const cards = articlesData.map((a: any) => `<div class="blog-card"><div class="blog-card-body"><div class="blog-date">Plumbing Guide</div><h3>${esc(a.title)}</h3><p>${esc(a.summary)}</p><a href="https://${DOMAIN}/articles/${a.slug}/">Read Full Guide →</a></div></div>`).join("");
+  const body = `<main><section class="page-hero"><div class="wrap"><div class="crumb-trail"><a href="https://${DOMAIN}/">Home</a> / Guides</div><h1>Plumbing &amp; Drainlaying <span>Expert Guides NZ</span></h1></div></section><section class="sec-gray" style="padding:70px 0;"><div class="wrap"><div class="grid-3">${cards}</div></div></section></main>`;
+  return shell(`Plumbing Guides &amp; Advice | ${BRAND}`, "Master plumber articles and advice.", canonical, body);
+}
+
+export function singleArticlePage(article: any) {
+  const canonical = `https://${DOMAIN}/articles/${article.slug}/`;
+  const body = `<main><section class="page-hero"><div class="wrap"><div class="crumb-trail"><a href="https://${DOMAIN}/">Home</a> / <a href="https://${DOMAIN}/articles/">Guides</a> / ${esc(article.title)}</div><h1>${esc(article.title)}</h1></div></section><section class="sec-white" style="padding:70px 0;"><div class="wrap" style="max-width:800px;"><article class="service-content-box"><h2>${esc(article.title)}</h2><p>${esc(article.summary)}</p></article></div></section></main>`;
+  return shell(`${article.title} | ${BRAND}`, article.summary, canonical, body, {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: article.title,
+    author: { "@type": "Organization", name: BRAND }
+  });
+}
+
 export function aboutUsPage() {
   const canonical = `https://${DOMAIN}/about/`;
-  const body = `<main>
-  <section class="page-hero">
-    <div class="wrap" style="display:grid;grid-template-columns:1fr 400px;gap:44px;align-items:start;">
-      <div>
-        <div class="crumb-trail"><a href="https://${DOMAIN}/">Home</a> / About</div>
-        <span class="tag-badge" style="background:rgba(14,165,233,.18);color:#38bdf8;">KIWI OWNED &amp; OPERATED</span>
-        <h1 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(38px,5vw,56px);font-weight:900;color:#fff;line-height:1.1;margin:16px 0 14px;">
-          Your Neighbors in the <span style="color:#38bdf8;">NZ Plumbing Business</span>
-        </h1>
-        <p style="font-size:16px;line-height:1.75;color:#cbd5e1;margin-bottom:28px;">Kiwi-owned, PGDB certificated, and rooted across New Zealand since 2010. We've built our reputation one honest job at a time.</p>
-        <div style="display:flex;gap:14px;"><a class="btn-cta" href="${PHONE_HREF}">📞 Call ${PHONE_DISPLAY}</a><a class="btn-glass-cyan" href="https://${DOMAIN}/contact/">Request Free Quote</a></div>
-      </div>
-      <div>
-        <div class="white-form-card">
-          <h3>Request Free Quote</h3>
-          <p>Get estimate for certified NZ plumbing</p>
-          <form action="${PHONE_HREF}" method="GET">
-            <div style="margin-bottom:12px;"><input type="text" placeholder="Your Full Name *" required style="width:100%;padding:12px 14px;border-radius:10px;border:1px solid #cbd5e1;background:#f8fafc;font-size:14px;"></div>
-            <div style="margin-bottom:12px;"><input type="tel" placeholder="Phone Number *" required style="width:100%;padding:12px 14px;border-radius:10px;border:1px solid #cbd5e1;background:#f8fafc;font-size:14px;"></div>
-            <button type="submit" class="btn-cta" style="width:100%;min-height:50px;">Submit &amp; Call ${PHONE_DISPLAY}</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="sec-white" style="padding:80px 0;">
-    <div class="wrap" style="display:grid;grid-template-columns:1.1fr 1fr;gap:50px;align-items:center;">
-      <div>
-        <span class="tag-badge">OUR STORY</span>
-        <h2 class="sec-title" style="color:#0d1b2a;margin:10px 0 18px;">Built on Honesty, One Pipe at a Time</h2>
-        <p style="color:#475569;font-size:16px;line-height:1.75;margin-bottom:14px;">${BRAND} began in 2010 with one van, one master plumber, and a frustration shared by many Kiwi property owners: it was hard to find a plumbing company who'd give a straight answer and a fair price. We set out to be that company — specialists who fix leaks and unblock drains right, explain things plainly, and stand behind every job.</p>
-        <p style="color:#475569;font-size:16px;line-height:1.75;margin-bottom:28px;">More than a decade later, we've serviced over 18,400 Kiwi homes across New Zealand. We've grown, but our promise hasn't changed: treat every property like our own, never sell a replacement you don't need, and always pick up the phone.</p>
-      </div>
-      <div>
-        <img src="https://images.pexels.com/photos/5463575/pexels-photo-5463575.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Master Plumber NZ" style="width:100%;height:440px;object-fit:cover;border-radius:24px;box-shadow:0 20px 48px rgba(0,0,0,.12);">
-      </div>
-    </div>
-  </section>
-  </main>`;
-  return shell(`About Us | ${BRAND}`, `Learn about ${BRAND} New Zealand master plumbing team.`, canonical, body);
+  const body = `<main><section class="page-hero"><div class="wrap"><div class="crumb-trail"><a href="https://${DOMAIN}/">Home</a> / About</div><h1>About Us — <span>${BRAND}</span></h1></div></section><section class="sec-white" style="padding:70px 0;"><div class="wrap"><p>Kiwi-owned and operated PGDB master plumbing network across New Zealand.</p></div></section></main>`;
+  return shell(`About Us | ${BRAND}`, "Learn about Village Plumbers NZ.", canonical, body);
 }
 
 export function contactUsPage() {
   const canonical = `https://${DOMAIN}/contact/`;
-  const body = `<main>
-  <section class="page-hero" style="padding:64px 0 72px;">
-    <div class="wrap">
-      <div class="crumb-trail"><a href="https://${DOMAIN}/">Home</a> / Contact</div>
-      <h1 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(38px,5vw,52px);font-weight:900;color:#fff;line-height:1.1;margin:12px 0 10px;">
-        Get In Touch for <span style="color:#38bdf8;">Fast NZ Service</span>
-      </h1>
-      <p style="color:#cbd5e1;font-size:16px;margin:0;">Call for same-day help, or request a free quote and we'll get right back to you. Friendly, licensed, and local.</p>
-    </div>
-  </section>
-
-  <section class="sec-gray" style="padding:70px 0;">
-    <div class="wrap" style="display:grid;grid-template-columns:1fr 440px;gap:40px;align-items:start;">
-      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:24px;padding:36px;box-shadow:0 12px 36px rgba(0,0,0,.04);color:#0f172a;">
-        <h2 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:26px;font-weight:900;color:#0d1b2a;margin:0 0 6px;">Request a Free Quote</h2>
-        <p style="color:#64748b;font-size:14px;line-height:1.6;margin:0 0 24px;">Fill out the form and we'll call to confirm your appointment. For emergencies, please call <a href="${PHONE_HREF}" style="color:#0ea5e9;font-weight:800;">${PHONE_DISPLAY}</a>.</p>
-        <form action="${PHONE_HREF}" method="GET">
-          <div style="margin-bottom:12px;"><input type="text" placeholder="Your Full Name *" required style="width:100%;padding:12px 14px;border-radius:10px;border:1px solid #cbd5e1;background:#fff;font-size:14px;"></div>
-          <div style="margin-bottom:12px;"><input type="tel" placeholder="Phone Number *" required style="width:100%;padding:12px 14px;border-radius:10px;border:1px solid #cbd5e1;background:#fff;font-size:14px;"></div>
-          <button type="submit" class="btn-cta" style="width:100%;min-height:52px;font-size:17px;border-radius:12px;">Send My Request</button>
-        </form>
-      </div>
-
-      <div>
-        <div style="background:#0b1320;border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:32px;color:#fff;margin-bottom:24px;box-shadow:0 12px 36px rgba(0,0,0,.15);">
-          <h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:800;margin:0 0 22px;color:#fff;">Contact Details</h3>
-          <p style="margin:0 0 12px;font-size:16px;font-weight:800;color:#38bdf8;">📞 ${PHONE_DISPLAY}</p>
-          <p style="margin:0 0 12px;font-size:14px;color:#e2e8f0;">✉️ dispatch@${DOMAIN}</p>
-          <p style="margin:0 0 12px;font-size:14px;color:#e2e8f0;">📍 ${ADDRESS}</p>
-        </div>
-
-        ${mapEmbedHtml("Auckland, New Zealand")}
-      </div>
-    </div>
-  </section>
-  </main>`;
-  return shell(`Contact Us | 24/7 NZ Plumbing Dispatch | ${BRAND}`, "Contact 24/7 NZ plumbing dispatch.", canonical, body);
+  const body = `<main><section class="page-hero"><div class="wrap"><div class="crumb-trail"><a href="https://${DOMAIN}/">Home</a> / Contact</div><h1>Contact Us <span>24/7 NZ Dispatch</span></h1></div></section><section class="sec-gray" style="padding:70px 0;"><div class="wrap"><h2>Call ${PHONE_DISPLAY}</h2></div></section></main>`;
+  return shell(`Contact Us | ${BRAND}`, "Contact 24/7 NZ plumbing dispatch.", canonical, body);
 }
 
 export function regionPage(region: RegionItem) {
@@ -551,112 +513,39 @@ export function regionPage(region: RegionItem) {
 export function suburbPage(region: RegionItem, city: CityItem, host: string) {
   const canonical = `https://${host}/`;
   const body = `<main><section class="page-hero"><div class="wrap"><h1>24/7 Emergency Plumbing in <span>${esc(city.name)}, ${esc(region.name)}</span></h1></div></section><section class="sec-gray" style="padding:70px 0;"><div class="wrap">${mapEmbedHtml(city.name + ", " + region.name)}</div></section></main>`;
-  return shell(`24/7 Emergency Plumbing in ${city.name}, ${region.name} | ${BRAND}`, `24/7 local plumber in ${city.name}, ${region.name}.`, canonical, body, {
-    "@context": "https://schema.org",
-    "@type": "Plumber",
-    name: `${BRAND} ${city.name}`,
-    telephone: PHONE_DISPLAY,
-    areaServed: city.name
-  });
+  return shell(`24/7 Emergency Plumbing in ${city.name}, ${region.name} | ${BRAND}`, `24/7 local plumber in ${city.name}, ${region.name}.`, canonical, body);
 }
 
 export function notFoundPage(message: string) {
-  return `<!doctype html><html><head><meta name="robots" content="noindex"><meta name="viewport" content="width=device-width,initial-scale=1"><title>404 | ${BRAND}</title><style>${CSS}</style></head><body>${header()}<main class="sec-dark"><div class="wrap"><h1>404</h1><p>${esc(message)}</p><a class="btn-cta" href="https://${DOMAIN}/">Back to Home</a></div></main>${footer()}</body></html>`;
+  return `<!doctype html><html><head><meta name="robots" content="noindex"><meta name="viewport" content="width=device-width,initial-scale=1"><title>404 | ${BRAND}</title><style>${CSS}</style></head><body>${header()}<main class="sec-dark"><div class="wrap"><h1>404 Not Found</h1><p>${esc(message)}</p><a class="btn-cta" href="https://${DOMAIN}/">Back to Home</a></div></main>${footer()}</body></html>`;
 }
 
 export function privacyPolicyPage() { return shell(`Privacy Policy | ${BRAND}`, "Privacy Policy", `https://${DOMAIN}/privacy-policy/`, "<main><h1>Privacy Policy</h1></main>"); }
 export function termsOfServicePage() { return shell(`Terms | ${BRAND}`, "Terms", `https://${DOMAIN}/terms/`, "<main><h1>Terms</h1></main>"); }
 export function disclaimerPage() { return shell(`Disclaimer | ${BRAND}`, "Disclaimer", `https://${DOMAIN}/disclaimer/`, "<main><h1>Disclaimer</h1></main>"); }
-export function servicesHubPage() { return shell(`Services | ${BRAND}`, "Services", `https://${DOMAIN}/services/`, "<main><h1>Services</h1></main>"); }
-export function articlesHubPage() { return shell(`Articles | ${BRAND}`, "Articles", `https://${DOMAIN}/articles/`, "<main><h1>Articles</h1></main>"); }
 export function areasWeServePage(regions: RegionItem[]) { return shell(`Areas | ${BRAND}`, "Areas", `https://${DOMAIN}/areas-we-serve/`, "<main><h1>Areas</h1></main>"); }
 '''
 
 with open("src/locationTemplates.ts", "w", encoding="utf-8") as f:
   f.write(templates_code)
-print("[OK] Built 1:1 locationTemplates.ts for villageplumbers-nz")
 
-# 3. Build 1:1 sitemaps.ts for villageplumbers-nz with 2,000-URL Chunking
-sitemaps_code = '''import database from "../data/nz_database.json";
-import servicesData from "../data/services.json";
-
-const DOMAIN = "villageplumbers.co.nz";
-export const SITEMAP_LIMIT = 2000;
-const TODAY = "2026-07-26";
-
-export type RegionItem = (typeof database.regions)[number];
-export type CityItem = RegionItem["cities"][number];
-
-function xml(value: string) {
-  return value.replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;" })[char] || char);
-}
-
-function xmlResponse(body: string, method = "GET") {
-  const bytes = new TextEncoder().encode(body);
-  return new Response(method === "HEAD" ? null : bytes, {
-    headers: {
-      "content-type": "application/xml; charset=utf-8",
-      "content-length": String(bytes.byteLength),
-      "cache-control": "no-cache, no-store, must-revalidate",
-      "x-content-type-options": "nosniff",
-      "access-control-allow-origin": "*",
-    },
-  });
-}
-
-export function sitemapIndex(regions: RegionItem[], method = "GET") {
-  const entries = [`https://${DOMAIN}/sitemaps/core.xml`];
-  for (const region of regions) {
-    entries.push(`https://${DOMAIN}/sitemaps/${region.code.toLowerCase()}-1.xml`);
-  }
-  const body = `<?xml version="1.0" encoding="UTF-8"?>
-<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${entries.map((loc) => `  <sitemap>\\n    <loc>${xml(loc)}</loc>\\n    <lastmod>${TODAY}</lastmod>\\n  </sitemap>`).join("\\n")}
-</sitemapindex>`;
-  return xmlResponse(body, method);
-}
-
-export function coreSitemap(method = "GET") {
-  const corePaths = ["/", "/about/", "/articles/", "/services/", "/areas-we-serve/", "/contact/", "/privacy-policy/", "/terms/", "/disclaimer/"];
-  const urls = [
-    ...corePaths.map((path) => `https://${DOMAIN}${path}`),
-    ...servicesData.map((service: any) => `https://${DOMAIN}/services/${service.slug}/`),
-  ];
-  return sitemapUrlset(urls, method);
-}
-
-export function regionSitemap(region: RegionItem, method = "GET") {
-  const urls: string[] = [
-    `https://${region.code.toLowerCase()}.${DOMAIN}/`,
-    ...region.cities.map((city) => `https://${city.subdomain}.${DOMAIN}/`),
-  ];
-  return sitemapUrlset(urls, method);
-}
-
-function sitemapUrlset(urls: string[], method = "GET") {
-  const body = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls.map((loc) => `  <url>\\n    <loc>${xml(loc)}</loc>\\n    <lastmod>${TODAY}</lastmod>\\n    <changefreq>weekly</changefreq>\\n  </url>`).join("\\n")}
-</urlset>`;
-  return xmlResponse(body, method);
-}
-'''
-with open("src/sitemaps.ts", "w", encoding="utf-8") as f:
-  f.write(sitemaps_code)
-print("[OK] Built 1:1 sitemaps.ts for villageplumbers-nz")
-
-# 4. Build 1:1 worker.ts for villageplumbers-nz
+# 3. Build worker.ts with complete route handling
 worker_code = '''import database from "../data/nz_database.json";
 import servicesData from "../data/services.json";
+import articlesData from "../data/articles.json";
 import {
   aboutUsPage,
   areasWeServePage,
+  articlesHubPage,
   contactUsPage,
   disclaimerPage,
   homePage,
   notFoundPage,
   privacyPolicyPage,
   regionPage,
+  servicesHubPage,
+  singleArticlePage,
+  singleServicePage,
   suburbPage,
   termsOfServicePage,
   type RegionItem,
@@ -726,8 +615,23 @@ export default {
       if (path === "/privacy-policy" || path === "/privacy-policy/") return cached(request, ctx, () => htmlResponse(privacyPolicyPage(), method));
       if (path === "/terms" || path === "/terms/") return cached(request, ctx, () => htmlResponse(termsOfServicePage(), method));
       if (path === "/disclaimer" || path === "/disclaimer/") return cached(request, ctx, () => htmlResponse(disclaimerPage(), method));
+      if (path === "/areas-we-serve" || path === "/areas-we-serve/") return cached(request, ctx, () => htmlResponse(areasWeServePage(REGIONS), method));
 
-      return env.ASSETS.fetch(request);
+      if (path === "/services" || path === "/services/") return cached(request, ctx, () => htmlResponse(servicesHubPage(), method));
+      if (path.startsWith("/services/")) {
+        const slug = path.split("/")[2];
+        const service = servicesData.find((s: any) => s.slug === slug);
+        if (service) return cached(request, ctx, () => htmlResponse(singleServicePage(service), method));
+      }
+
+      if (path === "/articles" || path === "/articles/") return cached(request, ctx, () => htmlResponse(articlesHubPage(), method));
+      if (path.startsWith("/articles/")) {
+        const slug = path.split("/")[2];
+        const article = articlesData.find((a: any) => a.slug === slug);
+        if (article) return cached(request, ctx, () => htmlResponse(singleArticlePage(article), method));
+      }
+
+      return notFound("Page not found", method);
     }
 
     if (!hostname.endsWith(`.${DOMAIN}`)) return notFound("This hostname is not configured.", method);
@@ -754,6 +658,6 @@ export default {
 
 with open("src/worker.ts", "w", encoding="utf-8") as f:
   f.write(worker_code)
-print("[OK] Built 1:1 worker.ts for villageplumbers-nz")
+print("[OK] Built worker.ts with complete route handlers")
 
-print("=== CONVERSION SCRIPT COMPLETE ===")
+print("=== CONVERSION COMPLETE ===")

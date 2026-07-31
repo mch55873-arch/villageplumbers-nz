@@ -1,14 +1,19 @@
 import database from "../data/nz_database.json";
 import servicesData from "../data/services.json";
+import articlesData from "../data/articles.json";
 import {
   aboutUsPage,
   areasWeServePage,
+  articlesHubPage,
   contactUsPage,
   disclaimerPage,
   homePage,
   notFoundPage,
   privacyPolicyPage,
   regionPage,
+  servicesHubPage,
+  singleArticlePage,
+  singleServicePage,
   suburbPage,
   termsOfServicePage,
   type RegionItem,
@@ -78,8 +83,23 @@ export default {
       if (path === "/privacy-policy" || path === "/privacy-policy/") return cached(request, ctx, () => htmlResponse(privacyPolicyPage(), method));
       if (path === "/terms" || path === "/terms/") return cached(request, ctx, () => htmlResponse(termsOfServicePage(), method));
       if (path === "/disclaimer" || path === "/disclaimer/") return cached(request, ctx, () => htmlResponse(disclaimerPage(), method));
+      if (path === "/areas-we-serve" || path === "/areas-we-serve/") return cached(request, ctx, () => htmlResponse(areasWeServePage(REGIONS), method));
 
-      return env.ASSETS.fetch(request);
+      if (path === "/services" || path === "/services/") return cached(request, ctx, () => htmlResponse(servicesHubPage(), method));
+      if (path.startsWith("/services/")) {
+        const slug = path.split("/")[2];
+        const service = servicesData.find((s: any) => s.slug === slug);
+        if (service) return cached(request, ctx, () => htmlResponse(singleServicePage(service), method));
+      }
+
+      if (path === "/articles" || path === "/articles/") return cached(request, ctx, () => htmlResponse(articlesHubPage(), method));
+      if (path.startsWith("/articles/")) {
+        const slug = path.split("/")[2];
+        const article = articlesData.find((a: any) => a.slug === slug);
+        if (article) return cached(request, ctx, () => htmlResponse(singleArticlePage(article), method));
+      }
+
+      return notFound("Page not found", method);
     }
 
     if (!hostname.endsWith(`.${DOMAIN}`)) return notFound("This hostname is not configured.", method);
