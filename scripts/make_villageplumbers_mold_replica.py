@@ -1,4 +1,45 @@
-import database from "../data/nz_database.json";
+import os
+
+print("=== CONVERTING VILLAGE PLUMBERS NZ TO 1:1 MOLD REPLICA DESIGN ===")
+
+# 1. Standalone wrangler.jsonc with main: "src/worker.ts"
+wrangler_jsonc = '''{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "villageplumbers-nz",
+  "main": "src/worker.ts",
+  "compatibility_date": "2026-07-24",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "assets": {
+    "directory": "./out"
+  },
+  "routes": [
+    {
+      "pattern": "villageplumbers.co.nz/*",
+      "zone_name": "villageplumbers.co.nz"
+    },
+    {
+      "pattern": "www.villageplumbers.co.nz/*",
+      "zone_name": "villageplumbers.co.nz"
+    },
+    {
+      "pattern": "*.villageplumbers.co.nz/*",
+      "zone_name": "villageplumbers.co.nz"
+    }
+  ]
+}
+'''
+with open("wrangler.jsonc", "w", encoding="utf-8") as f:
+  f.write(wrangler_jsonc)
+print("[OK] Created standalone wrangler.jsonc for villageplumbers-nz")
+
+os.makedirs("out", exist_ok=True)
+with open("out/_dummy.txt", "w", encoding="utf-8") as f:
+  f.write("villageplumbers asset dummy")
+
+# 2. Build 1:1 locationTemplates.ts for villageplumbers-nz
+templates_code = '''import database from "../data/nz_database.json";
 import servicesData from "../data/services.json";
 
 export type RegionItem = (typeof database.regions)[number];
@@ -529,3 +570,190 @@ export function disclaimerPage() { return shell(`Disclaimer | ${BRAND}`, "Discla
 export function servicesHubPage() { return shell(`Services | ${BRAND}`, "Services", `https://${DOMAIN}/services/`, "<main><h1>Services</h1></main>"); }
 export function articlesHubPage() { return shell(`Articles | ${BRAND}`, "Articles", `https://${DOMAIN}/articles/`, "<main><h1>Articles</h1></main>"); }
 export function areasWeServePage(regions: RegionItem[]) { return shell(`Areas | ${BRAND}`, "Areas", `https://${DOMAIN}/areas-we-serve/`, "<main><h1>Areas</h1></main>"); }
+'''
+
+with open("src/locationTemplates.ts", "w", encoding="utf-8") as f:
+  f.write(templates_code)
+print("[OK] Built 1:1 locationTemplates.ts for villageplumbers-nz")
+
+# 3. Build 1:1 sitemaps.ts for villageplumbers-nz with 2,000-URL Chunking
+sitemaps_code = '''import database from "../data/nz_database.json";
+import servicesData from "../data/services.json";
+
+const DOMAIN = "villageplumbers.co.nz";
+export const SITEMAP_LIMIT = 2000;
+const TODAY = "2026-07-26";
+
+export type RegionItem = (typeof database.regions)[number];
+export type CityItem = RegionItem["cities"][number];
+
+function xml(value: string) {
+  return value.replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;" })[char] || char);
+}
+
+function xmlResponse(body: string, method = "GET") {
+  const bytes = new TextEncoder().encode(body);
+  return new Response(method === "HEAD" ? null : bytes, {
+    headers: {
+      "content-type": "application/xml; charset=utf-8",
+      "content-length": String(bytes.byteLength),
+      "cache-control": "no-cache, no-store, must-revalidate",
+      "x-content-type-options": "nosniff",
+      "access-control-allow-origin": "*",
+    },
+  });
+}
+
+export function sitemapIndex(regions: RegionItem[], method = "GET") {
+  const entries = [`https://${DOMAIN}/sitemaps/core.xml`];
+  for (const region of regions) {
+    entries.push(`https://${DOMAIN}/sitemaps/${region.code.toLowerCase()}-1.xml`);
+  }
+  const body = `<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${entries.map((loc) => `  <sitemap>\\n    <loc>${xml(loc)}</loc>\\n    <lastmod>${TODAY}</lastmod>\\n  </sitemap>`).join("\\n")}
+</sitemapindex>`;
+  return xmlResponse(body, method);
+}
+
+export function coreSitemap(method = "GET") {
+  const corePaths = ["/", "/about/", "/articles/", "/services/", "/areas-we-serve/", "/contact/", "/privacy-policy/", "/terms/", "/disclaimer/"];
+  const urls = [
+    ...corePaths.map((path) => `https://${DOMAIN}${path}`),
+    ...servicesData.map((service: any) => `https://${DOMAIN}/services/${service.slug}/`),
+  ];
+  return sitemapUrlset(urls, method);
+}
+
+export function regionSitemap(region: RegionItem, method = "GET") {
+  const urls: string[] = [
+    `https://${region.code.toLowerCase()}.${DOMAIN}/`,
+    ...region.cities.map((city) => `https://${city.subdomain}.${DOMAIN}/`),
+  ];
+  return sitemapUrlset(urls, method);
+}
+
+function sitemapUrlset(urls: string[], method = "GET") {
+  const body = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls.map((loc) => `  <url>\\n    <loc>${xml(loc)}</loc>\\n    <lastmod>${TODAY}</lastmod>\\n    <changefreq>weekly</changefreq>\\n  </url>`).join("\\n")}
+</urlset>`;
+  return xmlResponse(body, method);
+}
+'''
+with open("src/sitemaps.ts", "w", encoding="utf-8") as f:
+  f.write(sitemaps_code)
+print("[OK] Built 1:1 sitemaps.ts for villageplumbers-nz")
+
+# 4. Build 1:1 worker.ts for villageplumbers-nz
+worker_code = '''import database from "../data/nz_database.json";
+import servicesData from "../data/services.json";
+import {
+  aboutUsPage,
+  areasWeServePage,
+  contactUsPage,
+  disclaimerPage,
+  homePage,
+  notFoundPage,
+  privacyPolicyPage,
+  regionPage,
+  suburbPage,
+  termsOfServicePage,
+  type RegionItem,
+  type CityItem,
+} from "./locationTemplates";
+import { coreSitemap, regionSitemap, sitemapIndex } from "./sitemaps";
+
+type Env = { ASSETS: { fetch(input: Request | string): Promise<Response> } };
+type Ctx = { waitUntil(promise: Promise<unknown>): void };
+
+const DOMAIN = "villageplumbers.co.nz";
+const REGIONS = database.regions as RegionItem[];
+const REGION_BY_CODE = new Map(REGIONS.map((r) => [r.code.toLowerCase(), r]));
+
+function htmlResponse(html: string, method = "GET", status = 200, extra: Record<string, string> = {}) {
+  const bytes = new TextEncoder().encode(html);
+  return new Response(method === "HEAD" ? null : bytes, {
+    status,
+    headers: {
+      "content-type": "text/html; charset=utf-8",
+      "content-length": String(bytes.byteLength),
+      "cache-control": "no-cache, no-store, must-revalidate",
+      "x-content-type-options": "nosniff",
+      ...extra,
+    },
+  });
+}
+
+function notFound(message: string, method = "GET") {
+  return htmlResponse(notFoundPage(message), method, 404, { "x-robots-tag": "noindex" });
+}
+
+async function cached(request: Request, ctx: Ctx, render: () => Response) {
+  if (request.method === "HEAD") return render();
+  return render();
+}
+
+export default {
+  async fetch(request: Request, env: Env, ctx: Ctx): Promise<Response> {
+    const method = request.method;
+    if (method !== "GET" && method !== "HEAD") {
+      return new Response("Method Not Allowed", { status: 405 });
+    }
+
+    const url = new URL(request.url);
+    const hostname = url.hostname.toLowerCase();
+    const path = url.pathname;
+
+    if (hostname === DOMAIN || hostname === `www.${DOMAIN}`) {
+      if (path === "/") return cached(request, ctx, () => htmlResponse(homePage(REGIONS), method));
+      if (path === "/sitemap.xml") return cached(request, ctx, () => sitemapIndex(REGIONS, method));
+      if (path === "/sitemaps/core.xml") return cached(request, ctx, () => coreSitemap(method));
+      if (path.startsWith("/sitemaps/") && path.endsWith(".xml")) {
+        const filename = path.slice("/sitemaps/".length, -".xml".length);
+        const parts = filename.replace(/^region-/, "").split("-");
+        const regionCode = parts[0].toLowerCase();
+        const region = REGION_BY_CODE.get(regionCode);
+        if (region) return cached(request, ctx, () => regionSitemap(region, method));
+      }
+      if (path === "/robots.txt") {
+        const txt = `User-agent: *\\nAllow: /\\n\\nSitemap: https://${DOMAIN}/sitemap.xml\\n`;
+        return htmlResponse(txt, method, 200, { "content-type": "text/plain" });
+      }
+
+      if (path === "/about" || path === "/about/") return cached(request, ctx, () => htmlResponse(aboutUsPage(), method));
+      if (path === "/contact" || path === "/contact/") return cached(request, ctx, () => htmlResponse(contactUsPage(), method));
+      if (path === "/privacy-policy" || path === "/privacy-policy/") return cached(request, ctx, () => htmlResponse(privacyPolicyPage(), method));
+      if (path === "/terms" || path === "/terms/") return cached(request, ctx, () => htmlResponse(termsOfServicePage(), method));
+      if (path === "/disclaimer" || path === "/disclaimer/") return cached(request, ctx, () => htmlResponse(disclaimerPage(), method));
+
+      return env.ASSETS.fetch(request);
+    }
+
+    if (!hostname.endsWith(`.${DOMAIN}`)) return notFound("This hostname is not configured.", method);
+
+    const sub = hostname.slice(0, -(DOMAIN.length + 1));
+    const regionMatch = REGION_BY_CODE.get(sub);
+
+    if (regionMatch) {
+      if (path === "/") return cached(request, ctx, () => htmlResponse(regionPage(regionMatch), method));
+    }
+
+    for (const region of REGIONS) {
+      for (const city of region.cities) {
+        if (city.subdomain.toLowerCase() === sub) {
+          if (path === "/") return cached(request, ctx, () => htmlResponse(suburbPage(region, city, hostname), method));
+        }
+      }
+    }
+
+    return notFound("The requested local page was not found.", method);
+  },
+};
+'''
+
+with open("src/worker.ts", "w", encoding="utf-8") as f:
+  f.write(worker_code)
+print("[OK] Built 1:1 worker.ts for villageplumbers-nz")
+
+print("=== CONVERSION SCRIPT COMPLETE ===")

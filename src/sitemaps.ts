@@ -1,9 +1,9 @@
-import servicesData from "../data/services.json";
 import database from "../data/nz_database.json";
+import servicesData from "../data/services.json";
 
 const DOMAIN = "villageplumbers.co.nz";
 export const SITEMAP_LIMIT = 2000;
-const URLS_PER_CITY = servicesData.length + 1;
+const TODAY = "2026-07-26";
 
 export type RegionItem = (typeof database.regions)[number];
 export type CityItem = RegionItem["cities"][number];
@@ -18,9 +18,7 @@ function xmlResponse(body: string, method = "GET") {
     headers: {
       "content-type": "application/xml; charset=utf-8",
       "content-length": String(bytes.byteLength),
-      "cache-control": "public, max-age=86400, s-maxage=604800, stale-while-revalidate=2592000",
-      "cdn-cache-control": "public, max-age=604800",
-      "cloudflare-cdn-cache-control": "public, max-age=604800",
+      "cache-control": "no-cache, no-store, must-revalidate",
       "x-content-type-options": "nosniff",
       "access-control-allow-origin": "*",
     },
@@ -30,54 +28,36 @@ function xmlResponse(body: string, method = "GET") {
 export function sitemapIndex(regions: RegionItem[], method = "GET") {
   const entries = [`https://${DOMAIN}/sitemaps/core.xml`];
   for (const region of regions) {
-    const chunks = Math.ceil((region.cities.length * URLS_PER_CITY) / SITEMAP_LIMIT);
-    for (let chunk = 1; chunk <= chunks; chunk++) {
-      entries.push(`https://${DOMAIN}/sitemaps/${region.code}-${chunk}.xml`);
-    }
+    entries.push(`https://${DOMAIN}/sitemaps/${region.code.toLowerCase()}-1.xml`);
   }
-  const body = `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries.map((loc) => `  <sitemap><loc>${xml(loc)}</loc></sitemap>`).join("\n")}\n</sitemapindex>`;
+  const body = `<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${entries.map((loc) => `  <sitemap>\n    <loc>${xml(loc)}</loc>\n    <lastmod>${TODAY}</lastmod>\n  </sitemap>`).join("\n")}
+</sitemapindex>`;
   return xmlResponse(body, method);
 }
 
-export function coreSitemap(regions: RegionItem[], method = "GET") {
-  const corePaths = [
-    "/",
-    "/about",
-    "/blog",
-    "/services",
-    "/areas-we-serve",
-    "/contact",
-    "/privacy-policy",
-    "/terms",
-    "/disclaimer",
-    "/provider-disclosure",
-  ];
+export function coreSitemap(method = "GET") {
+  const corePaths = ["/", "/about/", "/articles/", "/services/", "/areas-we-serve/", "/contact/", "/privacy-policy/", "/terms/", "/disclaimer/"];
   const urls = [
     ...corePaths.map((path) => `https://${DOMAIN}${path}`),
-    ...servicesData.map((service) => `https://${DOMAIN}/${service.slug}`),
-    ...regions.map((region) => `https://${region.code}.${DOMAIN}/`),
+    ...servicesData.map((service: any) => `https://${DOMAIN}/services/${service.slug}/`),
   ];
   return sitemapUrlset(urls, method);
 }
 
-export function regionSitemap(region: RegionItem, chunk: number, method = "GET") {
-  if (!Number.isInteger(chunk) || chunk < 1) return null;
-  const start = (chunk - 1) * SITEMAP_LIMIT;
-  const total = region.cities.length * URLS_PER_CITY;
-  if (start >= total) return null;
-  const end = Math.min(total, start + SITEMAP_LIMIT);
-  const urls: string[] = [];
-  for (let index = start; index < end; index++) {
-    const cityIndex = Math.floor(index / URLS_PER_CITY);
-    const pageIndex = index % URLS_PER_CITY;
-    const city = region.cities[cityIndex];
-    const host = `${city.subdomain}.${DOMAIN}`;
-    urls.push(pageIndex === 0 ? `https://${host}/` : `https://${host}/${servicesData[pageIndex - 1].slug}`);
-  }
+export function regionSitemap(region: RegionItem, method = "GET") {
+  const urls: string[] = [
+    `https://${region.code.toLowerCase()}.${DOMAIN}/`,
+    ...region.cities.map((city) => `https://${city.subdomain}.${DOMAIN}/`),
+  ];
   return sitemapUrlset(urls, method);
 }
 
 function sitemapUrlset(urls: string[], method = "GET") {
-  const body = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map((loc) => `  <url><loc>${xml(loc)}</loc></url>`).join("\n")}\n</urlset>`;
+  const body = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls.map((loc) => `  <url>\n    <loc>${xml(loc)}</loc>\n    <lastmod>${TODAY}</lastmod>\n    <changefreq>weekly</changefreq>\n  </url>`).join("\n")}
+</urlset>`;
   return xmlResponse(body, method);
 }
