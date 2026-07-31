@@ -84,7 +84,7 @@ export default {
     }
 
     // 1. Core Sitemaps & Robots.txt
-    if (path === "/sitemap.xml") return cached(request, ctx, () => sitemapIndex(REGIONS, method));
+    if (path === "/sitemap.xml") return cached(request, ctx, () => sitemapIndex(rawRegions, method));
     if (path === "/sitemaps/core.xml") return cached(request, ctx, () => coreSitemap(method));
     if (path.startsWith("/sitemaps/") && path.endsWith(".xml")) {
       const filename = path.slice("/sitemaps/".length, -".xml".length);
@@ -104,7 +104,7 @@ export default {
     if (path === "/privacy-policy") return cached(request, ctx, () => htmlResponse(privacyPolicyPage(), method));
     if (path === "/terms") return cached(request, ctx, () => htmlResponse(termsOfServicePage(), method));
     if (path === "/disclaimer") return cached(request, ctx, () => htmlResponse(disclaimerPage(), method));
-    if (path === "/areas-we-serve") return cached(request, ctx, () => htmlResponse(areasWeServePage(REGIONS), method));
+    if (path === "/areas-we-serve") return cached(request, ctx, () => htmlResponse(areasWeServePage(rawRegions), method));
 
     // 3. Services Hub & Single Service Pages
     if (path === "/services") return cached(request, ctx, () => htmlResponse(servicesHubPage(), method));
@@ -126,7 +126,7 @@ export default {
 
     // 5. Main Domain Homepage
     if (hostname === DOMAIN || hostname === `www.${DOMAIN}`) {
-      if (path === "/" || path === "") return cached(request, ctx, () => htmlResponse(homePage(REGIONS), method));
+      if (path === "/" || path === "") return cached(request, ctx, () => htmlResponse(homePage(rawRegions), method));
       return notFound("The requested page was not found.", method);
     }
 
